@@ -3,571 +3,407 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Samurai Portfolio | The Way of the Warrior</title>
-    <link rel="stylesheet" href="./css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Samurai Portfolio | Code with Honor</title>
+    <meta name="description" content="Professional portfolio with samurai theme featuring stunning animations">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/icons/samurai-favicon.png">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
     <!-- Loading Screen -->
     <div class="loading-screen">
-        <div class="samurai-logo">
-            <svg viewBox="0 0 100 100" class="samurai-mask">
-                <path d="M50,10 C30,10 15,25 15,45 C15,65 30,90 50,90 C70,90 85,65 85,45 C85,25 70,10 50,10 Z" />
-            </svg>
-        </div>
-        <div class="loading-text">
-            <span class="japanese">侍</span>
-            <span class="english">LOADING</span>
+        <div class="samurai-loader">
+            <div class="helmet animate__animated animate__pulse animate__infinite"></div>
+            <div class="quote animate__animated animate__fadeIn animate__delay-1s">
+                "Victory is reserved for those who are willing to pay its price."
+            </div>
         </div>
     </div>
-
-    <!-- Particles Background -->
-    <div id="particles-js"></div>
-
-    <!-- Header -->
-    <header class="header">
-        <div class="logo">
-            <span class="japanese-text">侍</span>
-            <span class="english-text">SAMURAI</span>
-        </div>
-        <nav class="nav">
-            <ul class="nav-links">
-                <li><a href="#home" class="nav-link active">Home</a></li>
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#skills" class="nav-link">Skills</a></li>
-                <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
-                <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-            <div class="menu-toggle">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
+    
+    <!-- Navigation -->
+    <nav class="samurai-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="kanji">侍</span>
+                <span class="name">SAMURAI DEV</span>
             </div>
-        </nav>
-    </header>
-
+            <div class="nav-links">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#portfolio" class="nav-link">Portfolio</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#testimonials" class="nav-link">Testimonials</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-hamburger">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </div>
+        </div>
+    </nav>
+    
     <!-- Hero Section -->
-    <section id="home" class="hero">
+    <section id="home" class="hero-section">
+        <div id="particles-js" class="particles-bg"></div>
         <div class="hero-content">
-            <h1 class="hero-title" data-aos="fade-up" data-aos-duration="1000">
-                <span class="japanese-accent">武士道</span>
-                THE WAY OF THE CODE WARRIOR
-            </h1>
-            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
-                Web Developer & Digital Craftsman
-            </p>
-            <div class="hero-quote" data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
-                <span class="quote-marks">"</span>
-                <span class="quote-text">The path of the developer is like that of the samurai: discipline, precision, and unwavering dedication.</span>
-                <span class="quote-marks">"</span>
+            <div class="hero-text">
+                <h1 class="hero-title animate__animated animate__fadeInDown">
+                    <span class="line1">The Way of</span>
+                    <span class="line2">The Samurai</span>
+                </h1>
+                <p class="hero-subtitle animate__animated animate__fadeIn animate__delay-1s">
+                    Code with honor. Design with discipline. Build with precision.
+                </p>
+                <div class="hero-buttons animate__animated animate__fadeIn animate__delay-1-5s">
+                    <a href="#portfolio" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-outline">Hire Me</a>
+                </div>
             </div>
-            <div class="hero-cta" data-aos="fade-up" data-aos-delay="600" data-aos-duration="1000">
-                <a href="#portfolio" class="btn btn-primary">View My Work</a>
-                <a href="#contact" class="btn btn-secondary">Contact Me</a>
+            <div class="hero-image animate__animated animate__fadeInRight">
+                <img src="images/samurai-illustration.png" alt="Samurai Illustration">
             </div>
         </div>
-        <div class="hero-scroll">
-            <div class="scroll-indicator">
-                <span>Scroll</span>
-                <i class="fas fa-chevron-down"></i>
-            </div>
+        <div class="scroll-down animate__animated animate__fadeIn animate__delay-2s">
+            <span>Scroll Down</span>
+            <div class="arrow"></div>
         </div>
     </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
+    
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio-section">
         <div class="section-header" data-aos="fade-up">
-            <h2 class="section-title">About <span class="accent">Me</span></h2>
-            <div class="section-divider"></div>
-        </div>
-        <div class="about-content">
-            <div class="about-image" data-aos="fade-right">
-                <div class="image-container">
-                    <img src="https://via.placeholder.com/400x500" alt="Portrait">
-                    <div class="image-overlay"></div>
-                </div>
-            </div>
-            <div class="about-text" data-aos="fade-left">
-                <h3 class="japanese-accent">私について</h3>
-                <h3>The Developer's Journey</h3>
-                <p>Like the samurai of ancient Japan, I follow a path of continuous improvement and mastery. My journey in web development has been guided by the principles of precision, efficiency, and aesthetic beauty.</p>
-                <p>With each project, I strive to create digital experiences that honor both form and function—crafting interfaces that are not only visually striking but also intuitively usable.</p>
-                
-                <div class="about-facts">
-                    <div class="fact">
-                        <span class="fact-number">5+</span>
-                        <span class="fact-text">Years Experience</span>
-                    </div>
-                    <div class="fact">
-                        <span class="fact-number">50+</span>
-                        <span class="fact-text">Projects Completed</span>
-                    </div>
-                    <div class="fact">
-                        <span class="fact-number">30+</span>
-                        <span class="fact-text">Satisfied Clients</span>
-                    </div>
-                </div>
-                
-                <a href="#" class="btn btn-download">
-                    <i class="fas fa-download"></i> Download CV
-                </a>
+            <h2 class="section-title">My <span>Portfolio</span></h2>
+            <p class="section-subtitle">Projects forged with honor and precision</p>
+            <div class="section-divider">
+                <div class="divider-line"></div>
+                <div class="divider-icon"><i class="fas fa-katana"></i></div>
+                <div class="divider-line"></div>
             </div>
         </div>
         
-        <!-- Career Timeline -->
-        <div class="timeline" data-aos="fade-up">
-            <h3 class="timeline-title">My Path</h3>
-            <div class="timeline-container">
-                <div class="timeline-item" data-aos="fade-up">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">2022 - Present</div>
-                    <div class="timeline-content">
-                        <h4>Senior Frontend Developer</h4>
-                        <p>Leading the development of modern web applications with a focus on performance and accessibility.</p>
+        <div class="portfolio-filters" data-aos="fade-up" data-aos-delay="100">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="web">Web</button>
+            <button class="filter-btn" data-filter="app">App</button>
+            <button class="filter-btn" data-filter="design">Design</button>
+            <button class="filter-btn" data-filter="game">Game</button>
+        </div>
+        
+        <div class="portfolio-grid">
+            <!-- Portfolio items will be dynamically loaded here -->
+            <div class="portfolio-item" data-category="web" data-aos="fade-up" data-aos-delay="200">
+                <div class="portfolio-image">
+                    <img src="images/projects/project1.jpg" alt="Project 1">
+                    <div class="portfolio-overlay">
+                        <h3>Samurai E-Commerce</h3>
+                        <p>Full-stack e-commerce platform with samurai theme</p>
+                        <a href="#" class="portfolio-link">View Details</a>
                     </div>
                 </div>
-                <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">2020 - 2022</div>
-                    <div class="timeline-content">
-                        <h4>Web Developer</h4>
-                        <p>Created responsive websites and applications for diverse clients across multiple industries.</p>
+            </div>
+            
+            <div class="portfolio-item" data-category="app" data-aos="fade-up" data-aos-delay="300">
+                <div class="portfolio-image">
+                    <img src="images/projects/project2.jpg" alt="Project 2">
+                    <div class="portfolio-overlay">
+                        <h3>Bushido Fitness App</h3>
+                        <p>Mobile application for martial arts training</p>
+                        <a href="#" class="portfolio-link">View Details</a>
                     </div>
                 </div>
-                <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">2018 - 2020</div>
-                    <div class="timeline-content">
-                        <h4>UI/UX Designer</h4>
-                        <p>Designed user interfaces with a focus on user experience and visual aesthetics.</p>
-                    </div>
-                </div>
-                <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-date">2016 - 2018</div>
-                    <div class="timeline-content">
-                        <h4>Junior Developer</h4>
-                        <p>Started professional journey working on HTML, CSS, and JavaScript foundations.</p>
-                    </div>
+            </div>
+            
+            <!-- More portfolio items -->
+        </div>
+        
+        <div class="portfolio-modal">
+            <div class="modal-content">
+                <span class="modal-close">&times;</span>
+                <div class="modal-body">
+                    <!-- Modal content will be loaded here -->
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
+    
+    <!-- About Section -->
+    <section id="about" class="about-section">
         <div class="section-header" data-aos="fade-up">
-            <h2 class="section-title">Technical <span class="accent">Skills</span></h2>
-            <div class="section-divider"></div>
+            <h2 class="section-title">About <span>Me</span></h2>
+            <p class="section-subtitle">The path I've walked</p>
+            <div class="section-divider">
+                <div class="divider-line"></div>
+                <div class="divider-icon"><i class="fas fa-helmet-battle"></i></div>
+                <div class="divider-line"></div>
+            </div>
         </div>
-        <div class="skills-content">
-            <div class="skills-text" data-aos="fade-right">
-                <h3 class="japanese-accent">スキル</h3>
-                <h3>The Weapons of a Digital Samurai</h3>
-                <p>A master samurai is proficient with many weapons, just as I have mastered various technologies to create exceptional digital experiences.</p>
-                <p>From front-end development to back-end systems, I wield a diverse array of technical skills to meet any challenge with precision and creativity.</p>
+        
+        <div class="about-content">
+            <div class="about-image" data-aos="fade-right">
+                <img src="images/samurai-profile.jpg" alt="Profile Image">
+                <div class="about-badge">
+                    <span>10+</span>
+                    <small>Years Experience</small>
+                </div>
+            </div>
+            
+            <div class="about-text" data-aos="fade-left">
+                <h3>The Warrior's Journey</h3>
+                <p>Like a samurai perfecting his craft, I've dedicated my life to mastering the art of web development. My journey began in the dojo of code, where I learned discipline, patience, and the way of clean, efficient programming.</p>
+                
+                <div class="about-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2010-2013</div>
+                        <div class="timeline-content">
+                            <h4>Apprentice Developer</h4>
+                            <p>Learned the fundamentals at Tokyo Tech Institute</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-date">2013-2016</div>
+                        <div class="timeline-content">
+                            <h4>Junior Web Samurai</h4>
+                            <p>Worked at Digital Shogun agency</p>
+                        </div>
+                    </div>
+                    
+                    <!-- More timeline items -->
+                </div>
+                
+                <a href="#" class="btn btn-primary">Download Resume</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Skills Section -->
+    <section id="skills" class="skills-section">
+        <div class="section-header" data-aos="fade-up">
+            <h2 class="section-title">My <span>Skills</span></h2>
+            <p class="section-subtitle">Weapons in my arsenal</p>
+            <div class="section-divider">
+                <div class="divider-line"></div>
+                <div class="divider-icon"><i class="fas fa-swords"></i></div>
+                <div class="divider-line"></div>
+            </div>
+        </div>
+        
+        <div class="skills-container">
+            <div class="skills-chart" data-aos="fade-right">
+                <canvas id="skillsRadarChart"></canvas>
             </div>
             
             <div class="skills-bars" data-aos="fade-left">
                 <div class="skill-item">
                     <div class="skill-info">
-                        <span class="skill-name">HTML5 & CSS3</span>
-                        <span class="skill-percentage">95%</span>
+                        <span>HTML/CSS</span>
+                        <span>95%</span>
                     </div>
                     <div class="skill-bar">
-                        <div class="skill-progress" data-progress="95"></div>
+                        <div class="skill-progress" data-width="95%"></div>
                     </div>
                 </div>
                 
                 <div class="skill-item">
                     <div class="skill-info">
-                        <span class="skill-name">JavaScript</span>
-                        <span class="skill-percentage">90%</span>
+                        <span>JavaScript</span>
+                        <span>90%</span>
                     </div>
                     <div class="skill-bar">
-                        <div class="skill-progress" data-progress="90"></div>
+                        <div class="skill-progress" data-width="90%"></div>
                     </div>
                 </div>
                 
-                <div class="skill-item">
-                    <div class="skill-info">
-                        <span class="skill-name">React</span>
-                        <span class="skill-percentage">85%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-progress="85"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-item">
-                    <div class="skill-info">
-                        <span class="skill-name">Node.js</span>
-                        <span class="skill-percentage">80%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-progress="80"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-item">
-                    <div class="skill-info">
-                        <span class="skill-name">UI/UX Design</span>
-                        <span class="skill-percentage">75%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-progress="75"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Technologies -->
-        <div class="technologies" data-aos="fade-up">
-            <h3>Technologies & Tools</h3>
-            <div class="tech-grid">
-                <div class="tech-item" data-aos="zoom-in" data-aos-delay="0">
-                    <i class="fab fa-html5"></i>
-                    <span>HTML5</span>
-                </div>
-                <div class="tech-item" data-aos="zoom-in" data-aos-delay="100">
-                    <i class="fab fa-css3-alt"></i>
-                    <span>CSS3</span>
-                </div>
-                <div class="tech-item" data-aos="zoom-in" data-aos-delay="200">
-                    <i class="fab fa-js"></i>
-                    <span>JavaScript</span>
-                </div>
-                <div class="tech-item" data-aos="zoom-in" data-aos-delay="300">
-                    <i class="fab fa-react"></i>
-                    <span>React</span>
-                </div>
-                <div class="tech-item" data-aos="zoom-in" data-aos-delay="400">
-                    <i class="fab fa-node-js"></i>
-                    <span>Node.js</span>
-                </div>
-                <div class="tech-item" data-aos="zoom-in" data-aos-delay="500">
-                    <i class="fab fa-sass"></i>
-                    <span>Sass</span>
-                </div>
-                <div class="tech-item" data-aos="zoom-in" data-aos-delay="600">
-                    <i class="fab fa-git-alt"></i>
-                    <span>Git</span>
-                </div>
-                <div class="tech-item" data-aos="zoom-in" data-aos-delay="700">
-                    <i class="fab fa-figma"></i>
-                    <span>Figma</span>
-                </div>
+                <!-- More skill items -->
             </div>
         </div>
     </section>
-
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio">
-        <div class="section-header" data-aos="fade-up">
-            <h2 class="section-title">My <span class="accent">Work</span></h2>
-            <div class="section-divider"></div>
-        </div>
-        
-        <!-- Filter Buttons -->
-        <div class="portfolio-filter" data-aos="fade-up">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="web">Web Design</button>
-            <button class="filter-btn" data-filter="app">Apps</button>
-            <button class="filter-btn" data-filter="ui">UI/UX</button>
-        </div>
-        
-        <!-- Portfolio Grid -->
-        <div class="portfolio-grid">
-            <div class="portfolio-item web" data-aos="fade-up">
-                <div class="portfolio-img">
-                    <img src="https://via.placeholder.com/600x450" alt="Project 1">
-                    <div class="portfolio-overlay">
-                        <div class="portfolio-info">
-                            <h4>Corporate Website</h4>
-                            <p>Web Design</p>
-                            <a href="#" class="portfolio-link" data-project="project1">
-                                <i class="fas fa-plus"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="portfolio-item app" data-aos="fade-up" data-aos-delay="100">
-                <div class="portfolio-img">
-                    <img src="https://via.placeholder.com/600x450" alt="Project 2">
-                    <div class="portfolio-overlay">
-                        <div class="portfolio-info">
-                            <h4>Task Manager App</h4>
-                            <p>Mobile Application</p>
-                            <a href="#" class="portfolio-link" data-project="project2">
-                                <i class="fas fa-plus"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="portfolio-item ui" data-aos="fade-up" data-aos-delay="200">
-                <div class="portfolio-img">
-                    <img src="https://via.placeholder.com/600x450" alt="Project 3">
-                    <div class="portfolio-overlay">
-                        <div class="portfolio-info">
-                            <h4>E-commerce Dashboard</h4>
-                            <p>UI/UX Design</p>
-                            <a href="#" class="portfolio-link" data-project="project3">
-                                <i class="fas fa-plus"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="portfolio-item web" data-aos="fade-up" data-aos-delay="300">
-                <div class="portfolio-img">
-                    <img src="https://via.placeholder.com/600x450" alt="Project 4">
-                    <div class="portfolio-overlay">
-                        <div class="portfolio-info">
-                            <h4>Restaurant Website</h4>
-                            <p>Web Design</p>
-                            <a href="#" class="portfolio-link" data-project="project4">
-                                <i class="fas fa-plus"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="portfolio-item app" data-aos="fade-up" data-aos-delay="400">
-                <div class="portfolio-img">
-                    <img src="https://via.placeholder.com/600x450" alt="Project 5">
-                    <div class="portfolio-overlay">
-                        <div class="portfolio-info">
-                            <h4>Fitness Tracker</h4>
-                            <p>Mobile Application</p>
-                            <a href="#" class="portfolio-link" data-project="project5">
-                                <i class="fas fa-plus"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="portfolio-item ui" data-aos="fade-up" data-aos-delay="500">
-                <div class="portfolio-img">
-                    <img src="https://via.placeholder.com/600x450" alt="Project 6">
-                    <div class="portfolio-overlay">
-                        <div class="portfolio-info">
-                            <h4>Music Player App</h4>
-                            <p>UI/UX Design</p>
-                            <a href="#" class="portfolio-link" data-project="project6">
-                                <i class="fas fa-plus"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Project Modal -->
-    <div class="project-modal">
-        <div class="modal-content">
-            <span class="modal-close">&times;</span>
-            <div class="modal-body">
-                <!-- Content will be dynamically loaded here via JavaScript -->
-            </div>
-        </div>
-    </div>
-
+    
     <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials">
+    <section id="testimonials" class="testimonials-section">
         <div class="section-header" data-aos="fade-up">
-            <h2 class="section-title">Client <span class="accent">Feedback</span></h2>
-            <div class="section-divider"></div>
+            <h2 class="section-title">Client <span>Testimonials</span></h2>
+            <p class="section-subtitle">Words from those I've served</p>
+            <div class="section-divider">
+                <div class="divider-line"></div>
+                <div class="divider-icon"><i class="fas fa-scroll"></i></div>
+                <div class="divider-line"></div>
+            </div>
         </div>
         
-        <div class="testimonial-slider" data-aos="fade-up">
-            <div class="testimonial-track">
-                <div class="testimonial-item">
+        <div class="testimonials-slider" data-aos="fade-up">
+            <div class="slider-container">
+                <div class="testimonial-slide active">
                     <div class="testimonial-content">
-                        <div class="testimonial-text">
+                        <div class="testimonial-quote">
                             <i class="fas fa-quote-left"></i>
-                            <p>Working with this developer was an incredible experience. Their attention to detail and commitment to excellence brought our vision to life perfectly.</p>
+                            <p>Working with this developer was like having a master samurai on our team. His code is as sharp as a katana and just as precise.</p>
+                            <i class="fas fa-quote-right"></i>
                         </div>
                         <div class="testimonial-author">
-                            <div class="author-img">
-                                <img src="https://via.placeholder.com/100x100" alt="Client 1">
-                            </div>
+                            <img src="images/clients/client1.jpg" alt="Client 1">
                             <div class="author-info">
-                                <h4>Sarah Johnson</h4>
-                                <p>CEO, TechNova</p>
+                                <h4>Daichi Tanaka</h4>
+                                <span>CEO, Sakura Tech</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="testimonial-item">
-                    <div class="testimonial-content">
-                        <div class="testimonial-text">
-                            <i class="fas fa-quote-left"></i>
-                            <p>The website exceeded our expectations. The unique animations and responsive design have significantly improved our user engagement metrics.</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <div class="author-img">
-                                <img src="https://via.placeholder.com/100x100" alt="Client 2">
-                            </div>
-                            <div class="author-info">
-                                <h4>David Chen</h4>
-                                <p>Marketing Director, Horizon</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-item">
-                    <div class="testimonial-content">
-                        <div class="testimonial-text">
-                            <i class="fas fa-quote-left"></i>
-                            <p>A true digital craftsman. Their code is as clean and efficient as their designs are beautiful. We've already started our next project together.</p>
-                        </div>
-                        <div class="testimonial-author">
-                            <div class="author-img">
-                                <img src="https://via.placeholder.com/100x100" alt="Client 3">
-                            </div>
-                            <div class="author-info">
-                                <h4>Emily Rodriguez</h4>
-                                <p>Founder, Artisan Studios</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- More testimonial slides -->
             </div>
             
-            <div class="testimonial-nav">
-                <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
-                <div class="testimonial-dots">
-                    <span class="dot active"></span>
-                    <span class="dot"></span>
-                    <span class="dot"></span>
-                </div>
-                <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+            <div class="slider-controls">
+                <button class="slider-prev"><i class="fas fa-chevron-left"></i></button>
+                <div class="slider-dots"></div>
+                <button class="slider-next"><i class="fas fa-chevron-right"></i></button>
             </div>
         </div>
     </section>
-
+    
     <!-- Contact Section -->
-    <section id="contact" class="contact">
+    <section id="contact" class="contact-section">
         <div class="section-header" data-aos="fade-up">
-            <h2 class="section-title">Get In <span class="accent">Touch</span></h2>
-            <div class="section-divider"></div>
+            <h2 class="section-title">Get In <span>Touch</span></h2>
+            <p class="section-subtitle">Send me a message like an ancient scroll</p>
+            <div class="section-divider">
+                <div class="divider-line"></div>
+                <div class="divider-icon"><i class="fas fa-envelope"></i></div>
+                <div class="divider-line"></div>
+            </div>
         </div>
         
-        <div class="contact-content">
+        <div class="contact-container">
             <div class="contact-info" data-aos="fade-right">
-                <h3 class="japanese-accent">連絡先</h3>
-                <h3>Let's Begin Your Journey</h3>
-                <p>Ready to elevate your digital presence? I'm available for freelance projects, collaborations, and full-time opportunities.</p>
+                <h3>Contact Information</h3>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <h4>Location</h4>
+                        <p>Tokyo, Japan</p>
+                    </div>
+                </div>
                 
                 <div class="info-item">
-                    <i class="fas fa-envelope"></i>
-                    <div>
+                    <div class="info-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="info-content">
                         <h4>Email</h4>
                         <p>contact@samuraidev.com</p>
                     </div>
                 </div>
                 
                 <div class="info-item">
-                    <i class="fas fa-phone"></i>
-                    <div>
+                    <div class="info-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="info-content">
                         <h4>Phone</h4>
-                        <p>+1 (555) 123-4567</p>
+                        <p>+81 80-1234-5678</p>
                     </div>
                 </div>
                 
-                <div class="info-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div>
-                        <h4>Location</h4>
-                        <p>Tokyo, Japan</p>
-                    </div>
-                </div>
-                
-                <div class="social-links">
-                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-dribbble"></i></a>
+                <div class="contact-social">
+                    <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
             
             <div class="contact-form" data-aos="fade-left">
                 <form id="contactForm">
                     <div class="form-group">
-                        <input type="text" id="name" placeholder="Your Name" required>
-                        <div class="input-focus-effect"></div>
+                        <input type="text" id="name" name="name" required>
+                        <label for="name">Your Name</label>
                     </div>
                     
                     <div class="form-group">
-                        <input type="email" id="email" placeholder="Your Email" required>
-                        <div class="input-focus-effect"></div>
+                        <input type="email" id="email" name="email" required>
+                        <label for="email">Your Email</label>
                     </div>
                     
                     <div class="form-group">
-                        <input type="text" id="subject" placeholder="Subject">
-                        <div class="input-focus-effect"></div>
+                        <input type="text" id="subject" name="subject" required>
+                        <label for="subject">Subject</label>
                     </div>
                     
                     <div class="form-group">
-                        <textarea id="message" placeholder="Your Message" required></textarea>
-                        <div class="input-focus-effect"></div>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                        <label for="message">Your Message</label>
                     </div>
                     
-                    <button type="submit" class="btn btn-submit">
-                        <span class="btn-text">Send Message</span>
+                    <button type="submit" class="btn btn-primary">
+                        <span>Send Message</span>
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </form>
             </div>
         </div>
     </section>
-
+    
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="samurai-footer">
         <div class="footer-content">
             <div class="footer-logo">
-                <span class="japanese-text">侍</span>
-                <span class="english-text">SAMURAI</span>
+                <span class="kanji">侍</span>
+                <span class="name">SAMURAI DEV</span>
             </div>
-            <p class="footer-quote">"The way of the samurai is found in death" - Yamamoto Tsunetomo</p>
-            <div class="footer-nav">
+            
+            <div class="footer-links">
                 <a href="#home">Home</a>
+                <a href="#portfolio">Portfolio</a>
                 <a href="#about">About</a>
                 <a href="#skills">Skills</a>
-                <a href="#portfolio">Portfolio</a>
                 <a href="#testimonials">Testimonials</a>
                 <a href="#contact">Contact</a>
             </div>
+            
             <div class="footer-social">
-                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-dribbble"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
+        
         <div class="footer-bottom">
-            <p>&copy; 2025 Samurai Developer. All rights reserved.</p>
+            <p>&copy; 2023 Samurai Dev. All rights reserved. <span>Code with honor.</span></p>
         </div>
     </footer>
-
-    <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    
+    <!-- Back to Top Button -->
+    <a href="#home" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    
+    <!-- JavaScript Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/particles.js"></script>
+    
+    <!-- Main JavaScript -->
+    <script src="js/gsap-animations.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
