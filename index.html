@@ -12,129 +12,571 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     
-    <!-- CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            red: '#c1272d',
+                        },
+                        dark: {
+                            black: '#0a0a0a',
+                        },
+                        purple: {
+                            black: '#1a1a2e',
+                        },
+                        gold: {
+                            accent: '#d4af37',
+                        },
+                        light: {
+                            gray: '#f5f5f5',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans JP', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-red': 'pulse-red 2s infinite',
+                        'bounce': 'bounce 2s infinite',
+                        'sword-slash': 'sword-slash 1s ease-out',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'pulse-red': {
+                            '0%, 100%': { 'box-shadow': '0 0 0 0 rgba(193, 39, 45, 0.7)' },
+                            '70%': { 'box-shadow': '0 0 0 10px rgba(193, 39, 45, 0)' },
+                        },
+                        bounce: {
+                            '0%, 20%, 50%, 80%, 100%': { transform: 'rotate(-45deg) translateY(0)' },
+                            '40%': { transform: 'rotate(-45deg) translateY(-10px)' },
+                            '60%': { transform: 'rotate(-45deg) translateY(-5px)' },
+                        },
+                        'sword-slash': {
+                            '0%': { transform: 'rotate(0) scale(1)', opacity: '0' },
+                            '50%': { transform: 'rotate(180deg) scale(1.5)', opacity: '1' },
+                            '100%': { transform: 'rotate(360deg) scale(1)', opacity: '0' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- AOS (Animate On Scroll) -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        .text-stroke {
+            -webkit-text-stroke: 1px #c1272d;
+            color: transparent;
+        }
+        
+        .glow-red {
+            text-shadow: 0 0 10px rgba(193, 39, 45, 0.7);
+        }
+        
+        .sword-slash {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            pointer-events: none;
+        }
+        
+        .skill-progress {
+            transition: width 1.5s ease;
+        }
+        
+        .portfolio-overlay {
+            transition: all 0.3s ease;
+        }
+        
+        .portfolio-image img {
+            transition: transform 0.5s ease;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        .portfolio-item:hover .portfolio-image img {
+            transform: scale(1.1);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #c1272d;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .back-to-top {
+            transition: all 0.3s ease;
+        }
+        
+        .loading-screen {
+            transition: opacity 1s ease;
+        }
+        
+        .modal-content {
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-slide {
+            transition: all 0.3s ease;
+        }
+        
+        .slider-dot {
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon, .footer-social a {
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input, .form-group textarea {
+            transition: all 0.3s ease;
+        }
+        
+        .form-group label {
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus + label,
+        .form-group textarea:focus + label,
+        .form-group input:not(:placeholder-shown) + label,
+        .form-group textarea:not(:placeholder-shown) + label {
+            top: -10px;
+            left: 10px;
+            font-size: 0.8rem;
+            background-color: #0a0a0a;
+            padding: 0 5px;
+            color: #c1272d;
+            opacity: 1;
+        }
+
+        /* Improved Responsive Adjustments */
+        @media (max-width: 1024px) {
+            .hero-content {
+                padding-top: 6rem;
+            }
+            
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .about-content {
+                gap: 3rem;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.8rem;
+                line-height: 1.2;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .hero-image img {
+                max-height: 60vh;
+            }
+            
+            .about-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .about-image {
+                margin: 0 auto;
+            }
+            
+            .about-badge {
+                right: 50%;
+                transform: translateX(50%);
+                bottom: -1.5rem;
+            }
+            
+            .skills-container {
+                flex-direction: column;
+            }
+            
+            .skills-chart {
+                max-width: 100%;
+                margin-bottom: 2rem;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .contact-info, .contact-form {
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .testimonial-content {
+                padding: 1.5rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+            
+            .footer-links {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 0.75rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .portfolio-filters {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            
+            .filter-btn {
+                margin: 0.25rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .testimonial-slide {
+                padding: 0 1rem;
+            }
+            
+            .contact-form {
+                padding: 1.5rem;
+            }
+            
+            .footer-links a {
+                font-size: 0.9rem;
+                padding: 0.5rem;
+            }
+            
+            .nav-brand .name {
+                font-size: 1rem;
+            }
+            
+            .nav-brand .kanji {
+                font-size: 2rem;
+            }
+        }
+
+        /* Improved Centering */
+        .container {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        
+        .hero-section, 
+        .portfolio-section, 
+        .about-section, 
+        .skills-section, 
+        .testimonials-section, 
+        .contact-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: auto;
+            padding: 4rem 0;
+        }
+        
+        .hero-section {
+            min-height: 100vh;
+        }
+        
+        .hero-content {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            margin-bottom: 3rem;
+        }
+        
+        /* Improved Image Handling */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .portfolio-image {
+            height: auto;
+            min-height: 250px;
+        }
+        
+        /* Better Button Sizing */
+        .btn {
+            min-width: 180px;
+            text-align: center;
+        }
+    </style>
 </head>
-<body>
+<body class="font-sans bg-dark-black text-white overflow-x-hidden leading-relaxed">
     <!-- Loading Screen -->
-    <div class="loading-screen">
-        <div class="samurai-loader">
-            <div class="helmet animate__animated animate__pulse animate__infinite"></div>
-            <div class="quote animate__animated animate__fadeIn animate__delay-1s">
+    <div class="loading-screen fixed inset-0 w-full h-full bg-dark-black flex justify-center items-center z-[9999]">
+        <div class="samurai-loader text-center">
+            <div class="helmet w-24 h-24 bg-[url('./image/samurai.png')] bg-contain bg-no-repeat bg-center mx-auto mb-8 animate-pulse"></div>
+            <div class="quote italic text-gray-400 max-w-xs mx-auto animate-fadeIn animate-delay-1000">
                 "Victory is reserved for those who are willing to pay its price."
             </div>
         </div>
     </div>
     
     <!-- Navigation -->
-    <nav class="samurai-nav">
-        <div class="nav-container">
-            <div class="nav-brand">
-                <span class="kanji">侍</span>
-                <span class="name">SAMURAI DEV</span>
+    <nav class="samurai-nav fixed top-0 left-0 w-full py-5 z-[1000] transition-all">
+        <div class="nav-container container mx-auto px-5 flex justify-between items-center">
+            <div class="nav-brand flex items-center font-bold text-xl">
+                <span class="kanji text-3xl mr-2 text-primary-red">侍</span>
+                <span class="name tracking-wider">SAMURAI DEV</span>
             </div>
-            <div class="nav-links">
-                <a href="#home" class="nav-link active">Home</a>
-                <a href="#portfolio" class="nav-link">Portfolio</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#testimonials" class="nav-link">Testimonials</a>
-                <a href="#contact" class="nav-link">Contact</a>
+            <div class="nav-links hidden md:flex">
+                <a href="#home" class="nav-link relative mx-4 font-medium tracking-wider transition-all active text-primary-red">Home</a>
+                <a href="#portfolio" class="nav-link relative mx-4 font-medium tracking-wider transition-all">Portfolio</a>
+                <a href="#about" class="nav-link relative mx-4 font-medium tracking-wider transition-all">About</a>
+                <a href="#skills" class="nav-link relative mx-4 font-medium tracking-wider transition-all">Skills</a>
+                <a href="#testimonials" class="nav-link relative mx-4 font-medium tracking-wider transition-all">Testimonials</a>
+                <a href="#contact" class="nav-link relative mx-4 font-medium tracking-wider transition-all">Contact</a>
             </div>
-            <div class="nav-hamburger">
-                <div class="hamburger-line"></div>
-                <div class="hamburger-line"></div>
-                <div class="hamburger-line"></div>
+            <div class="nav-hamburger md:hidden cursor-pointer">
+                <div class="hamburger-line w-6 h-0.5 bg-white my-1 transition-all"></div>
+                <div class="hamburger-line w-6 h-0.5 bg-white my-1 transition-all"></div>
+                <div class="hamburger-line w-6 h-0.5 bg-white my-1 transition-all"></div>
             </div>
         </div>
     </nav>
     
+    <!-- Mobile Menu -->
+    <div class="mobile-menu fixed top-20 left-[-100%] w-full h-[calc(100vh-80px)] bg-dark-black flex flex-col items-center justify-center transition-all z-[999] md:hidden">
+        <a href="#home" class="nav-link text-2xl my-4 transition-all text-primary-red">Home</a>
+        <a href="#portfolio" class="nav-link text-2xl my-4 transition-all">Portfolio</a>
+        <a href="#about" class="nav-link text-2xl my-4 transition-all">About</a>
+        <a href="#skills" class="nav-link text-2xl my-4 transition-all">Skills</a>
+        <a href="#testimonials" class="nav-link text-2xl my-4 transition-all">Testimonials</a>
+        <a href="#contact" class="nav-link text-2xl my-4 transition-all">Contact</a>
+    </div>
+    
     <!-- Hero Section -->
-    <section id="home" class="hero-section">
-        <div id="particles-js" class="particles-bg"></div>
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1 class="hero-title animate__animated animate__fadeInDown">
-                    <span class="line1">The Way of</span>
-                    <span class="line2">The Samurai</span>
+    <section id="home" class="hero-section h-screen relative overflow-hidden flex items-center">
+        <div id="particles-js" class="particles-bg absolute inset-0 w-full h-full z-10"></div>
+        <div class="hero-content container mx-auto px-5 relative z-20 flex flex-col md:flex-row items-center justify-center pt-20 md:pt-0">
+            <div class="hero-text flex-1 max-w-2xl text-center md:text-left mb-12 md:mb-0">
+                <h1 class="hero-title text-5xl sm:text-6xl md:text-7xl font-serif font-bold leading-tight mb-5 animate-fadeInDown">
+                    <span class="line1 block">The Way of</span>
+                    <span class="line2 block text-primary-red glow-red">The Samurai</span>
                 </h1>
-                <p class="hero-subtitle animate__animated animate__fadeIn animate__delay-1s">
+                <p class="hero-subtitle text-xl opacity-90 mb-8 animate-fadeIn animate-delay-1000">
                     Code with honor. Design with discipline. Build with precision.
                 </p>
-                <div class="hero-buttons animate__animated animate__fadeIn animate__delay-1-5s">
-                    <a href="#portfolio" class="btn btn-primary">View My Work</a>
-                    <a href="#contact" class="btn btn-outline">Hire Me</a>
+                <div class="hero-buttons flex flex-wrap justify-center md:justify-start animate-fadeIn animate-delay-1500">
+                    <a href="#portfolio" class="btn btn-primary inline-block px-8 py-3 bg-primary-red text-white rounded border-2 border-primary-red uppercase tracking-wider font-medium mr-4 mb-4 hover:bg-transparent hover:text-primary-red transition-all">
+                        View My Work
+                    </a>
+                    <a href="#contact" class="btn btn-outline inline-block px-8 py-3 bg-transparent text-white rounded border-2 border-white uppercase tracking-wider font-medium mb-4 hover:bg-white hover:text-dark-black transition-all">
+                        Hire Me
+                    </a>
                 </div>
             </div>
-            <div class="hero-image animate__animated animate__fadeInRight">
-                <img src="images/samurai-illustration.png" alt="Samurai Illustration">
+            <div class="hero-image flex-1 text-center animate-fadeInRight">
+                <img src="image/s.png" alt="Samurai Illustration" class="max-w-full h-auto max-h-[80vh] mx-auto float">
             </div>
         </div>
-        <div class="scroll-down animate__animated animate__fadeIn animate__delay-2s">
-            <span>Scroll Down</span>
-            <div class="arrow"></div>
+        <div class="scroll-down absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-20 cursor-pointer animate-fadeIn animate-delay-2000">
+            <span class="mb-2 text-sm tracking-widest">Scroll Down</span>
+            <div class="arrow w-5 h-5 border-l-2 border-b-2 border-white transform -rotate-45 animate-bounce"></div>
         </div>
     </section>
     
     <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio-section">
-        <div class="section-header" data-aos="fade-up">
-            <h2 class="section-title">My <span>Portfolio</span></h2>
-            <p class="section-subtitle">Projects forged with honor and precision</p>
-            <div class="section-divider">
-                <div class="divider-line"></div>
-                <div class="divider-icon"><i class="fas fa-katana"></i></div>
-                <div class="divider-line"></div>
+    <section id="portfolio" class="portfolio-section py-24 bg-purple-black">
+        <div class="section-header container mx-auto px-5 text-center" data-aos="fade-up">
+            <h2 class="section-title text-4xl font-serif font-bold mb-4 relative inline-block">
+                My <span class="text-primary-red">Portfolio</span>
+            </h2>
+            <p class="section-subtitle text-lg text-gray-400 mb-5">
+                Projects forged with honor and precision
+            </p>
+            <div class="section-divider flex items-center justify-center mt-5">
+                <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
+                <div class="divider-icon text-primary-red text-xl"><i class="fas fa-katana"></i></div>
+                <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
             </div>
         </div>
         
-        <div class="portfolio-filters" data-aos="fade-up" data-aos-delay="100">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="web">Web</button>
-            <button class="filter-btn" data-filter="app">App</button>
-            <button class="filter-btn" data-filter="design">Design</button>
-            <button class="filter-btn" data-filter="game">Game</button>
+        <div class="portfolio-filters container mx-auto px-5 flex flex-wrap justify-center mb-10 gap-2" data-aos="fade-up" data-aos-delay="100">
+            <button class="filter-btn px-5 py-2 bg-transparent text-white border border-gray-600 rounded-full cursor-pointer transition-all hover:bg-primary-red hover:border-primary-red active">
+                All
+            </button>
+            <button class="filter-btn px-5 py-2 bg-transparent text-white border border-gray-600 rounded-full cursor-pointer transition-all hover:bg-primary-red hover:border-primary-red">
+                Web
+            </button>
+            <button class="filter-btn px-5 py-2 bg-transparent text-white border border-gray-600 rounded-full cursor-pointer transition-all hover:bg-primary-red hover:border-primary-red">
+                App
+            </button>
+            <button class="filter-btn px-5 py-2 bg-transparent text-white border border-gray-600 rounded-full cursor-pointer transition-all hover:bg-primary-red hover:border-primary-red">
+                Design
+            </button>
+            <button class="filter-btn px-5 py-2 bg-transparent text-white border border-gray-600 rounded-full cursor-pointer transition-all hover:bg-primary-red hover:border-primary-red">
+                Game
+            </button>
         </div>
         
-        <div class="portfolio-grid">
-            <!-- Portfolio items will be dynamically loaded here -->
-            <div class="portfolio-item" data-category="web" data-aos="fade-up" data-aos-delay="200">
-                <div class="portfolio-image">
-                    <img src="images/projects/project1.jpg" alt="Project 1">
-                    <div class="portfolio-overlay">
-                        <h3>Samurai E-Commerce</h3>
-                        <p>Full-stack e-commerce platform with samurai theme</p>
-                        <a href="#" class="portfolio-link">View Details</a>
+        <div class="portfolio-grid container mx-auto px-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Portfolio Item 1 -->
+            <div class="portfolio-item relative overflow-hidden rounded-lg shadow-xl" data-aos="fade-up" data-aos-delay="200" data-category="web">
+                <div class="portfolio-image relative overflow-hidden h-64">
+                    <img src="images/projects/ecommerce.jpg" alt="Samurai E-Commerce" class="w-full h-full object-cover">
+                    <div class="portfolio-overlay absolute inset-0 w-full h-full bg-primary-red/90 flex flex-col justify-center items-center p-5 opacity-0">
+                        <h3 class="text-2xl font-serif font-bold mb-3">Samurai E-Commerce</h3>
+                        <p class="text-center mb-5 text-sm">Full-stack e-commerce platform with samurai theme</p>
+                        <a href="#" class="portfolio-link px-5 py-2 bg-dark-black rounded text-sm transition-all hover:bg-white hover:text-dark-black">
+                            View Details
+                        </a>
                     </div>
                 </div>
             </div>
             
-            <div class="portfolio-item" data-category="app" data-aos="fade-up" data-aos-delay="300">
-                <div class="portfolio-image">
-                    <img src="images/projects/project2.jpg" alt="Project 2">
-                    <div class="portfolio-overlay">
-                        <h3>Bushido Fitness App</h3>
-                        <p>Mobile application for martial arts training</p>
-                        <a href="#" class="portfolio-link">View Details</a>
+            <!-- Portfolio Item 2 -->
+            <div class="portfolio-item relative overflow-hidden rounded-lg shadow-xl" data-aos="fade-up" data-aos-delay="300" data-category="app">
+                <div class="portfolio-image relative overflow-hidden h-64">
+                    <img src="images/projects/fitness-app.jpg" alt="Bushido Fitness App" class="w-full h-full object-cover">
+                    <div class="portfolio-overlay absolute inset-0 w-full h-full bg-primary-red/90 flex flex-col justify-center items-center p-5 opacity-0">
+                        <h3 class="text-2xl font-serif font-bold mb-3">Bushido Fitness App</h3>
+                        <p class="text-center mb-5 text-sm">Mobile application for martial arts training</p>
+                        <a href="#" class="portfolio-link px-5 py-2 bg-dark-black rounded text-sm transition-all hover:bg-white hover:text-dark-black">
+                            View Details
+                        </a>
                     </div>
                 </div>
             </div>
             
-            <!-- More portfolio items -->
+            <!-- Portfolio Item 3 -->
+            <div class="portfolio-item relative overflow-hidden rounded-lg shadow-xl" data-aos="fade-up" data-aos-delay="400" data-category="design">
+                <div class="portfolio-image relative overflow-hidden h-64">
+                    <img src="images/projects/branding.jpg" alt="Samurai Branding" class="w-full h-full object-cover">
+                    <div class="portfolio-overlay absolute inset-0 w-full h-full bg-primary-red/90 flex flex-col justify-center items-center p-5 opacity-0">
+                        <h3 class="text-2xl font-serif font-bold mb-3">Samurai Branding</h3>
+                        <p class="text-center mb-5 text-sm">Complete branding package for dojo</p>
+                        <a href="#" class="portfolio-link px-5 py-2 bg-dark-black rounded text-sm transition-all hover:bg-white hover:text-dark-black">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Portfolio Item 4 -->
+            <div class="portfolio-item relative overflow-hidden rounded-lg shadow-xl" data-aos="fade-up" data-aos-delay="500" data-category="game">
+                <div class="portfolio-image relative overflow-hidden h-64">
+                    <img src="images/projects/game.jpg" alt="Way of the Warrior Game" class="w-full h-full object-cover">
+                    <div class="portfolio-overlay absolute inset-0 w-full h-full bg-primary-red/90 flex flex-col justify-center items-center p-5 opacity-0">
+                        <h3 class="text-2xl font-serif font-bold mb-3">Way of the Warrior</h3>
+                        <p class="text-center mb-5 text-sm">2D side-scrolling samurai game</p>
+                        <a href="#" class="portfolio-link px-5 py-2 bg-dark-black rounded text-sm transition-all hover:bg-white hover:text-dark-black">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Portfolio Item 5 -->
+            <div class="portfolio-item relative overflow-hidden rounded-lg shadow-xl" data-aos="fade-up" data-aos-delay="600" data-category="web">
+                <div class="portfolio-image relative overflow-hidden h-64">
+                    <img src="images/projects/dojo-website.jpg" alt="Dojo Website" class="w-full h-full object-cover">
+                    <div class="portfolio-overlay absolute inset-0 w-full h-full bg-primary-red/90 flex flex-col justify-center items-center p-5 opacity-0">
+                        <h3 class="text-2xl font-serif font-bold mb-3">Dojo Website</h3>
+                        <p class="text-center mb-5 text-sm">Modern website for martial arts school</p>
+                        <a href="#" class="portfolio-link px-5 py-2 bg-dark-black rounded text-sm transition-all hover:bg-white hover:text-dark-black">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Portfolio Item 6 -->
+            <div class="portfolio-item relative overflow-hidden rounded-lg shadow-xl" data-aos="fade-up" data-aos-delay="700" data-category="app">
+                <div class="portfolio-image relative overflow-hidden h-64">
+                    <img src="images/projects/meditation.jpg" alt="Zen Meditation App" class="w-full h-full object-cover">
+                    <div class="portfolio-overlay absolute inset-0 w-full h-full bg-primary-red/90 flex flex-col justify-center items-center p-5 opacity-0">
+                        <h3 class="text-2xl font-serif font-bold mb-3">Zen Meditation App</h3>
+                        <p class="text-center mb-5 text-sm">Guided meditation for modern warriors</p>
+                        <a href="#" class="portfolio-link px-5 py-2 bg-dark-black rounded text-sm transition-all hover:bg-white hover:text-dark-black">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
         
-        <div class="portfolio-modal">
-            <div class="modal-content">
-                <span class="modal-close">&times;</span>
-                <div class="modal-body">
+        <!-- Portfolio Modal -->
+        <div class="portfolio-modal fixed inset-0 w-full h-full bg-black/80 z-[2000] hidden justify-center items-center opacity-0">
+            <div class="modal-content bg-dark-black w-11/12 max-w-4xl max-h-[90vh] overflow-y-auto rounded-lg relative p-10 border border-primary-red">
+                <span class="modal-close absolute top-5 right-5 text-2xl cursor-pointer transition-all hover:text-primary-red">&times;</span>
+                <div class="modal-body flex flex-col gap-8">
                     <!-- Modal content will be loaded here -->
                 </div>
             </div>
@@ -142,217 +584,346 @@
     </section>
     
     <!-- About Section -->
-    <section id="about" class="about-section">
-        <div class="section-header" data-aos="fade-up">
-            <h2 class="section-title">About <span>Me</span></h2>
-            <p class="section-subtitle">The path I've walked</p>
-            <div class="section-divider">
-                <div class="divider-line"></div>
-                <div class="divider-icon"><i class="fas fa-helmet-battle"></i></div>
-                <div class="divider-line"></div>
+    <section id="about" class="about-section py-24 bg-dark-black">
+        <div class="section-header container mx-auto px-5 text-center" data-aos="fade-up">
+            <h2 class="section-title text-4xl font-serif font-bold mb-4 relative inline-block">
+                About <span class="text-primary-red">Me</span>
+            </h2>
+            <p class="section-subtitle text-lg text-gray-400 mb-5">
+                The path I've walked
+            </p>
+            <div class="section-divider flex items-center justify-center mt-5">
+                <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
+                <div class="divider-icon text-primary-red text-xl"><i class="fas fa-helmet-battle"></i></div>
+                <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
             </div>
         </div>
         
-        <div class="about-content">
-            <div class="about-image" data-aos="fade-right">
-                <img src="images/samurai-profile.jpg" alt="Profile Image">
-                <div class="about-badge">
-                    <span>10+</span>
-                    <small>Years Experience</small>
+        <div class="about-content container mx-auto px-5 flex flex-col md:flex-row items-center gap-12">
+            <div class="about-image relative flex-1" data-aos="fade-right">
+                <img src="images/samurai-profile.jpg" alt="Profile Image" class="rounded-lg shadow-xl border-4 border-primary-red w-full max-w-md mx-auto">
+                <div class="about-badge absolute -bottom-5 -right-5 bg-primary-red text-white w-24 h-24 rounded-full flex flex-col justify-center items-center font-bold shadow-lg">
+                    <span class="text-2xl leading-none">10+</span>
+                    <small class="text-xs uppercase tracking-wider mt-1">Years Experience</small>
                 </div>
             </div>
             
-            <div class="about-text" data-aos="fade-left">
-                <h3>The Warrior's Journey</h3>
-                <p>Like a samurai perfecting his craft, I've dedicated my life to mastering the art of web development. My journey began in the dojo of code, where I learned discipline, patience, and the way of clean, efficient programming.</p>
+            <div class="about-text flex-1" data-aos="fade-left">
+                <h3 class="text-2xl font-serif font-bold mb-5 text-primary-red">The Warrior's Journey</h3>
+                <p class="mb-8">Like a samurai perfecting his craft, I've dedicated my life to mastering the art of web development. My journey began in the dojo of code, where I learned discipline, patience, and the way of clean, efficient programming.</p>
                 
-                <div class="about-timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">2010-2013</div>
+                <div class="about-timeline mb-8">
+                    <div class="timeline-item flex mb-5">
+                        <div class="timeline-date min-w-24 font-bold text-primary-red">2010-2013</div>
                         <div class="timeline-content">
-                            <h4>Apprentice Developer</h4>
-                            <p>Learned the fundamentals at Tokyo Tech Institute</p>
+                            <h4 class="font-serif font-bold mb-1">Apprentice Developer</h4>
+                            <p class="text-sm opacity-80">Learned the fundamentals at Tokyo Tech Institute</p>
                         </div>
                     </div>
                     
-                    <div class="timeline-item">
-                        <div class="timeline-date">2013-2016</div>
+                    <div class="timeline-item flex mb-5">
+                        <div class="timeline-date min-w-24 font-bold text-primary-red">2013-2016</div>
                         <div class="timeline-content">
-                            <h4>Junior Web Samurai</h4>
-                            <p>Worked at Digital Shogun agency</p>
+                            <h4 class="font-serif font-bold mb-1">Junior Web Samurai</h4>
+                            <p class="text-sm opacity-80">Worked at Digital Shogun agency</p>
                         </div>
                     </div>
                     
-                    <!-- More timeline items -->
+                    <div class="timeline-item flex mb-5">
+                        <div class="timeline-date min-w-24 font-bold text-primary-red">2016-2019</div>
+                        <div class="timeline-content">
+                            <h4 class="font-serif font-bold mb-1">Frontend Warrior</h4>
+                            <p class="text-sm opacity-80">Lead developer at Bushido Web Solutions</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item flex">
+                        <div class="timeline-date min-w-24 font-bold text-primary-red">2019-Present</div>
+                        <div class="timeline-content">
+                            <h4 class="font-serif font-bold mb-1">Master Developer</h4>
+                            <p class="text-sm opacity-80">Freelance developer and mentor</p>
+                        </div>
+                    </div>
                 </div>
                 
-                <a href="#" class="btn btn-primary">Download Resume</a>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#" class="btn btn-primary inline-block px-8 py-3 bg-primary-red text-white rounded border-2 border-primary-red uppercase tracking-wider font-medium hover:bg-transparent hover:text-primary-red transition-all">
+                        Download Resume
+                    </a>
+                    <a href="#contact" class="btn btn-outline inline-block px-8 py-3 bg-transparent text-white rounded border-2 border-white uppercase tracking-wider font-medium hover:bg-white hover:text-dark-black transition-all">
+                        Contact Me
+                    </a>
+                </div>
             </div>
         </div>
     </section>
     
     <!-- Skills Section -->
-    <section id="skills" class="skills-section">
-        <div class="section-header" data-aos="fade-up">
-            <h2 class="section-title">My <span>Skills</span></h2>
-            <p class="section-subtitle">Weapons in my arsenal</p>
-            <div class="section-divider">
-                <div class="divider-line"></div>
-                <div class="divider-icon"><i class="fas fa-swords"></i></div>
-                <div class="divider-line"></div>
+    <section id="skills" class="skills-section py-24 bg-purple-black">
+        <div class="section-header container mx-auto px-5 text-center" data-aos="fade-up">
+            <h2 class="section-title text-4xl font-serif font-bold mb-4 relative inline-block">
+                My <span class="text-primary-red">Skills</span>
+            </h2>
+            <p class="section-subtitle text-lg text-gray-400 mb-5">
+                Weapons in my arsenal
+            </p>
+            <div class="section-divider flex items-center justify-center mt-5">
+                <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
+                <div class="divider-icon text-primary-red text-xl"><i class="fas fa-swords"></i></div>
+                <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
             </div>
         </div>
         
-        <div class="skills-container">
-            <div class="skills-chart" data-aos="fade-right">
+        <div class="skills-container container mx-auto px-5 flex flex-col lg:flex-row gap-12">
+            <div class="skills-chart flex-1" data-aos="fade-right">
                 <canvas id="skillsRadarChart"></canvas>
             </div>
             
-            <div class="skills-bars" data-aos="fade-left">
-                <div class="skill-item">
-                    <div class="skill-info">
+            <div class="skills-bars flex-1" data-aos="fade-left">
+                <div class="skill-item mb-6">
+                    <div class="skill-info flex justify-between mb-3">
                         <span>HTML/CSS</span>
                         <span>95%</span>
                     </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="95%"></div>
+                    <div class="skill-bar h-2 bg-white/10 rounded-full overflow-hidden">
+                        <div class="skill-progress h-full bg-primary-red rounded-full" data-width="95%" style="width: 0;"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item mb-6">
+                    <div class="skill-info flex justify-between mb-3">
+                        <span>JavaScript</span>
+                        <span>90%</span>
+                    </div>
+                    <div class="skill-bar h-2 bg-white/10 rounded-full overflow-hidden">
+                        <div class="skill-progress h-full bg-primary-red rounded-full" data-width="90%" style="width: 0;"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item mb-6">
+                    <div class="skill-info flex justify-between mb-3">
+                        <span>React</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="skill-bar h-2 bg-white/10 rounded-full overflow-hidden">
+                        <div class="skill-progress h-full bg-primary-red rounded-full" data-width="85%" style="width: 0;"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item mb-6">
+                    <div class="skill-info flex justify-between mb-3">
+                        <span>Node.js</span>
+                        <span>80%</span>
+                    </div>
+                    <div class="skill-bar h-2 bg-white/10 rounded-full overflow-hidden">
+                        <div class="skill-progress h-full bg-primary-red rounded-full" data-width="80%" style="width: 0;"></div>
+                    </div>
+                </div>
+                
+                <div class="skill-item mb-6">
+                    <div class="skill-info flex justify-between mb-3">
+                        <span>UI/UX Design</span>
+                        <span>75%</span>
+                    </div>
+                    <div class="skill-bar h-2 bg-white/10 rounded-full overflow-hidden">
+                        <div class="skill-progress h-full bg-primary-red rounded-full" data-width="75%" style="width: 0;"></div>
                     </div>
                 </div>
                 
                 <div class="skill-item">
-                    <div class="skill-info">
-                        <span>JavaScript</span>
-                        <span>90%</span>
+                    <div class="skill-info flex justify-between mb-3">
+                        <span>Python</span>
+                        <span>70%</span>
                     </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="90%"></div>
+                    <div class="skill-bar h-2 bg-white/10 rounded-full overflow-hidden">
+                        <div class="skill-progress h-full bg-primary-red rounded-full" data-width="70%" style="width: 0;"></div>
                     </div>
                 </div>
-                
-                <!-- More skill items -->
             </div>
         </div>
     </section>
     
     <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials-section">
-        <div class="section-header" data-aos="fade-up">
-            <h2 class="section-title">Client <span>Testimonials</span></h2>
-            <p class="section-subtitle">Words from those I've served</p>
-            <div class="section-divider">
-                <div class="divider-line"></div>
-                <div class="divider-icon"><i class="fas fa-scroll"></i></div>
-                <div class="divider-line"></div>
+    <section id="testimonials" class="testimonials-section py-24 bg-dark-black">
+        <div class="section-header container mx-auto px-5 text-center" data-aos="fade-up">
+            <h2 class="section-title text-4xl font-serif font-bold mb-4 relative inline-block">
+                Client <span class="text-primary-red">Testimonials</span>
+            </h2>
+            <p class="section-subtitle text-lg text-gray-400 mb-5">
+                Words from those I've served
+            </p>
+            <div class="section-divider flex items-center justify-center mt-5">
+                <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
+                <div class="divider-icon text-primary-red text-xl"><i class="fas fa-scroll"></i></div>
+                <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
             </div>
         </div>
         
-        <div class="testimonials-slider" data-aos="fade-up">
-            <div class="slider-container">
-                <div class="testimonial-slide active">
-                    <div class="testimonial-content">
-                        <div class="testimonial-quote">
-                            <i class="fas fa-quote-left"></i>
-                            <p>Working with this developer was like having a master samurai on our team. His code is as sharp as a katana and just as precise.</p>
-                            <i class="fas fa-quote-right"></i>
+        <div class="testimonials-slider max-w-4xl mx-auto relative" data-aos="fade-up">
+            <div class="slider-container relative h-80 overflow-hidden">
+                <div class="testimonial-slide absolute inset-0 w-full h-full opacity-0 transition-all flex justify-center items-center active opacity-100">
+                    <div class="testimonial-content bg-purple-black p-8 rounded-lg shadow-xl text-center max-w-2xl mx-auto relative border border-primary-red/30">
+                        <div class="testimonial-quote relative mb-8">
+                            <i class="fas fa-quote-left absolute -top-5 -left-3 text-4xl opacity-20 text-primary-red"></i>
+                            <p class="text-lg italic leading-relaxed">
+                                Working with this developer was like having a master samurai on our team. His code is as sharp as a katana and just as precise.
+                            </p>
+                            <i class="fas fa-quote-right absolute -bottom-8 -right-3 text-4xl opacity-20 text-primary-red"></i>
                         </div>
-                        <div class="testimonial-author">
-                            <img src="images/clients/client1.jpg" alt="Client 1">
+                        <div class="testimonial-author flex items-center justify-center">
+                            <img src="images/clients/client1.jpg" alt="Client 1" class="w-16 h-16 rounded-full object-cover mr-4 border-2 border-primary-red">
                             <div class="author-info">
-                                <h4>Daichi Tanaka</h4>
-                                <span>CEO, Sakura Tech</span>
+                                <h4 class="font-serif font-bold text-left">Daichi Tanaka</h4>
+                                <span class="text-sm opacity-70 block text-left">CEO, Sakura Tech</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- More testimonial slides -->
+                <div class="testimonial-slide absolute inset-0 w-full h-full opacity-0 transition-all flex justify-center items-center">
+                    <div class="testimonial-content bg-purple-black p-8 rounded-lg shadow-xl text-center max-w-2xl mx-auto relative border border-primary-red/30">
+                        <div class="testimonial-quote relative mb-8">
+                            <i class="fas fa-quote-left absolute -top-5 -left-3 text-4xl opacity-20 text-primary-red"></i>
+                            <p class="text-lg italic leading-relaxed">
+                                The discipline and attention to detail in this developer's work is unparalleled. Our project was delivered ahead of schedule with zero defects.
+                            </p>
+                            <i class="fas fa-quote-right absolute -bottom-8 -right-3 text-4xl opacity-20 text-primary-red"></i>
+                        </div>
+                        <div class="testimonial-author flex items-center justify-center">
+                            <img src="images/clients/client2.jpg" alt="Client 2" class="w-16 h-16 rounded-full object-cover mr-4 border-2 border-primary-red">
+                            <div class="author-info">
+                                <h4 class="font-serif font-bold text-left">Emiko Sato</h4>
+                                <span class="text-sm opacity-70 block text-left">CTO, Bushido Apps</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-slide absolute inset-0 w-full h-full opacity-0 transition-all flex justify-center items-center">
+                    <div class="testimonial-content bg-purple-black p-8 rounded-lg shadow-xl text-center max-w-2xl mx-auto relative border border-primary-red/30">
+                        <div class="testimonial-quote relative mb-8">
+                            <i class="fas fa-quote-left absolute -top-5 -left-3 text-4xl opacity-20 text-primary-red"></i>
+                            <p class="text-lg italic leading-relaxed">
+                                I've worked with many developers, but none with the combination of technical skill and creative vision that this developer brings to every project.
+                            </p>
+                            <i class="fas fa-quote-right absolute -bottom-8 -right-3 text-4xl opacity-20 text-primary-red"></i>
+                        </div>
+                        <div class="testimonial-author flex items-center justify-center">
+                            <img src="images/clients/client3.jpg" alt="Client 3" class="w-16 h-16 rounded-full object-cover mr-4 border-2 border-primary-red">
+                            <div class="author-info">
+                                <h4 class="font-serif font-bold text-left">Kenji Yamamoto</h4>
+                                <span class="text-sm opacity-70 block text-left">Director, Zen Design Studio</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <div class="slider-controls">
-                <button class="slider-prev"><i class="fas fa-chevron-left"></i></button>
-                <div class="slider-dots"></div>
-                <button class="slider-next"><i class="fas fa-chevron-right"></i></button>
+            <div class="slider-controls flex justify-center items-center mt-8">
+                <button class="slider-prev bg-transparent border-none text-white text-xl cursor-pointer transition-all w-10 h-10 rounded-full flex justify-center items-center hover:bg-primary-red">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="slider-dots flex mx-5">
+                    <div class="slider-dot w-3 h-3 rounded-full bg-white/30 mx-1 cursor-pointer transition-all active bg-primary-red"></div>
+                    <div class="slider-dot w-3 h-3 rounded-full bg-white/30 mx-1 cursor-pointer transition-all"></div>
+                    <div class="slider-dot w-3 h-3 rounded-full bg-white/30 mx-1 cursor-pointer transition-all"></div>
+                </div>
+                <button class="slider-next bg-transparent border-none text-white text-xl cursor-pointer transition-all w-10 h-10 rounded-full flex justify-center items-center hover:bg-primary-red">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </div>
     </section>
     
     <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="section-header" data-aos="fade-up">
-            <h2 class="section-title">Get In <span>Touch</span></h2>
-            <p class="section-subtitle">Send me a message like an ancient scroll</p>
-            <div class="section-divider">
-                <div class="divider-line"></div>
-                <div class="divider-icon"><i class="fas fa-envelope"></i></div>
-                <div class="divider-line"></div>
+    <section id="contact" class="contact-section py-24 bg-purple-black">
+        <div class="section-header container mx-auto px-5 text-center" data-aos="fade-up">
+            <h2 class="section-title text-4xl font-serif font-bold mb-4 relative inline-block">
+                Get In <span class="text-primary-red">Touch</span>
+            </h2>
+            <p class="section-subtitle text-lg text-gray-400 mb-5">
+                Send me a message like an ancient scroll
+            </p>
+            <div class="section-divider flex items-center justify-center mt-5">
+                <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
+                <div class="divider-icon text-primary-red text-xl"><i class="fas fa-envelope"></i></div>
+                <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
             </div>
         </div>
         
-        <div class="contact-container">
-            <div class="contact-info" data-aos="fade-right">
-                <h3>Contact Information</h3>
-                <div class="info-item">
-                    <div class="info-icon">
+        <div class="contact-container container mx-auto px-5 flex flex-col lg:flex-row gap-12">
+            <div class="contact-info flex-1" data-aos="fade-right">
+                <h3 class="text-2xl font-serif font-bold mb-8 text-primary-red">Contact Information</h3>
+                <div class="info-item flex mb-6">
+                    <div class="info-icon w-12 h-12 bg-primary-red/20 rounded-full flex justify-center items-center mr-5 text-primary-red text-xl">
                         <i class="fas fa-map-marker-alt"></i>
                     </div>
                     <div class="info-content">
-                        <h4>Location</h4>
-                        <p>Tokyo, Japan</p>
+                        <h4 class="font-serif font-bold mb-1">Location</h4>
+                        <p class="opacity-80">Tokyo, Japan</p>
                     </div>
                 </div>
                 
-                <div class="info-item">
-                    <div class="info-icon">
+                <div class="info-item flex mb-6">
+                    <div class="info-icon w-12 h-12 bg-primary-red/20 rounded-full flex justify-center items-center mr-5 text-primary-red text-xl">
                         <i class="fas fa-envelope"></i>
                     </div>
                     <div class="info-content">
-                        <h4>Email</h4>
-                        <p>contact@samuraidev.com</p>
+                        <h4 class="font-serif font-bold mb-1">Email</h4>
+                        <p class="opacity-80">contact@samuraidev.com</p>
                     </div>
                 </div>
                 
-                <div class="info-item">
-                    <div class="info-icon">
+                <div class="info-item flex mb-6">
+                    <div class="info-icon w-12 h-12 bg-primary-red/20 rounded-full flex justify-center items-center mr-5 text-primary-red text-xl">
                         <i class="fas fa-phone-alt"></i>
                     </div>
                     <div class="info-content">
-                        <h4>Phone</h4>
-                        <p>+81 80-1234-5678</p>
+                        <h4 class="font-serif font-bold mb-1">Phone</h4>
+                        <p class="opacity-80">+81 80-1234-5678</p>
                     </div>
                 </div>
                 
-                <div class="contact-social">
-                    <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <div class="contact-social flex gap-4 mt-10">
+                    <a href="#" class="social-icon w-10 h-10 rounded-full bg-white/10 flex justify-center items-center transition-all hover:bg-primary-red hover:-translate-y-1">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="social-icon w-10 h-10 rounded-full bg-white/10 flex justify-center items-center transition-all hover:bg-primary-red hover:-translate-y-1">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="social-icon w-10 h-10 rounded-full bg-white/10 flex justify-center items-center transition-all hover:bg-primary-red hover:-translate-y-1">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon w-10 h-10 rounded-full bg-white/10 flex justify-center items-center transition-all hover:bg-primary-red hover:-translate-y-1">
+                        <i class="fab fa-instagram"></i>
+                    </a>
                 </div>
             </div>
             
-            <div class="contact-form" data-aos="fade-left">
+            <div class="contact-form flex-1 bg-dark-black p-8 sm:p-10 rounded-lg shadow-xl" data-aos="fade-left">
                 <form id="contactForm">
-                    <div class="form-group">
-                        <input type="text" id="name" name="name" required>
-                        <label for="name">Your Name</label>
+                    <div class="form-group relative mb-6">
+                        <input type="text" id="name" name="name" class="w-full px-4 py-4 bg-white/5 border border-white/10 rounded text-white font-sans transition-all focus:border-primary-red focus:outline-none" required placeholder=" ">
+                        <label for="name" class="absolute top-4 left-4 pointer-events-none opacity-70">Your Name</label>
                     </div>
                     
-                    <div class="form-group">
-                        <input type="email" id="email" name="email" required>
-                        <label for="email">Your Email</label>
+                    <div class="form-group relative mb-6">
+                        <input type="email" id="email" name="email" class="w-full px-4 py-4 bg-white/5 border border-white/10 rounded text-white font-sans transition-all focus:border-primary-red focus:outline-none" required placeholder=" ">
+                        <label for="email" class="absolute top-4 left-4 pointer-events-none opacity-70">Your Email</label>
                     </div>
                     
-                    <div class="form-group">
-                        <input type="text" id="subject" name="subject" required>
-                        <label for="subject">Subject</label>
+                    <div class="form-group relative mb-6">
+                        <input type="text" id="subject" name="subject" class="w-full px-4 py-4 bg-white/5 border border-white/10 rounded text-white font-sans transition-all focus:border-primary-red focus:outline-none" required placeholder=" ">
+                        <label for="subject" class="absolute top-4 left-4 pointer-events-none opacity-70">Subject</label>
                     </div>
                     
-                    <div class="form-group">
-                        <textarea id="message" name="message" rows="5" required></textarea>
-                        <label for="message">Your Message</label>
+                    <div class="form-group relative mb-8">
+                        <textarea id="message" name="message" rows="5" class="w-full px-4 py-4 bg-white/5 border border-white/10 rounded text-white font-sans transition-all focus:border-primary-red focus:outline-none min-h-[150px]" required placeholder=" "></textarea>
+                        <label for="message" class="absolute top-4 left-4 pointer-events-none opacity-70">Your Message</label>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary">
-                        <span>Send Message</span>
+                    <button type="submit" class="btn btn-primary inline-flex items-center px-8 py-3 bg-primary-red text-white rounded border-2 border-primary-red uppercase tracking-wider font-medium hover:bg-transparent hover:text-primary-red transition-all">
+                        <span class="mr-2">Send Message</span>
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </form>
@@ -361,37 +932,45 @@
     </section>
     
     <!-- Footer -->
-    <footer class="samurai-footer">
-        <div class="footer-content">
-            <div class="footer-logo">
-                <span class="kanji">侍</span>
-                <span class="name">SAMURAI DEV</span>
+    <footer class="samurai-footer bg-dark-black pt-16 pb-5 border-t border-primary-red/20">
+        <div class="footer-content container mx-auto px-5 flex flex-col md:flex-row justify-between items-center mb-10 gap-8">
+            <div class="footer-logo flex items-center font-bold text-xl">
+                <span class="kanji text-3xl mr-2 text-primary-red">侍</span>
+                <span class="name tracking-wider">SAMURAI DEV</span>
             </div>
             
-            <div class="footer-links">
-                <a href="#home">Home</a>
-                <a href="#portfolio">Portfolio</a>
-                <a href="#about">About</a>
-                <a href="#skills">Skills</a>
-                <a href="#testimonials">Testimonials</a>
-                <a href="#contact">Contact</a>
+            <div class="footer-links flex flex-wrap justify-center gap-5">
+                <a href="#home" class="transition-all hover:text-primary-red">Home</a>
+                <a href="#portfolio" class="transition-all hover:text-primary-red">Portfolio</a>
+                <a href="#about" class="transition-all hover:text-primary-red">About</a>
+                <a href="#skills" class="transition-all hover:text-primary-red">Skills</a>
+                <a href="#testimonials" class="transition-all hover:text-primary-red">Testimonials</a>
+                <a href="#contact" class="transition-all hover:text-primary-red">Contact</a>
             </div>
             
-            <div class="footer-social">
-                <a href="#"><i class="fab fa-github"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
+            <div class="footer-social flex gap-4">
+                <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex justify-center items-center transition-all hover:bg-primary-red hover:-translate-y-1">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex justify-center items-center transition-all hover:bg-primary-red hover:-translate-y-1">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex justify-center items-center transition-all hover:bg-primary-red hover:-translate-y-1">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex justify-center items-center transition-all hover:bg-primary-red hover:-translate-y-1">
+                    <i class="fab fa-instagram"></i>
+                </a>
             </div>
         </div>
         
-        <div class="footer-bottom">
-            <p>&copy; 2023 Samurai Dev. All rights reserved. <span>Code with honor.</span></p>
+        <div class="footer-bottom text-center pt-5 border-t border-white/10 text-sm opacity-70">
+            <p>&copy; 2023 Samurai Dev. All rights reserved. <span class="text-primary-red">Code with honor.</span></p>
         </div>
     </footer>
     
     <!-- Back to Top Button -->
-    <a href="#home" class="back-to-top">
+    <a href="#home" class="back-to-top fixed bottom-8 right-8 w-12 h-12 bg-primary-red text-white rounded-full flex justify-center items-center text-xl opacity-0 invisible transition-all hover:-translate-y-1 hover:shadow-lg active opacity-100 visible">
         <i class="fas fa-arrow-up"></i>
     </a>
     
@@ -400,10 +979,338 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/particles.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     
     <!-- Main JavaScript -->
-    <script src="js/gsap-animations.js"></script>
-    <script src="js/main.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        
+        // Loading screen
+        window.addEventListener('load', function() {
+            const loadingScreen = document.querySelector('.loading-screen');
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 1000);
+            
+            // Animate skill bars
+            const skillBars = document.querySelectorAll('.skill-progress');
+            skillBars.forEach(bar => {
+                const width = bar.getAttribute('data-width');
+                bar.style.width = width;
+            });
+        });
+        
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.nav-hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelectorAll('.mobile-menu .nav-link');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('left-[-100%]');
+            mobileMenu.classList.toggle('left-0');
+            
+            // Toggle hamburger animation
+            const lines = hamburger.querySelectorAll('.hamburger-line');
+            if (hamburger.classList.contains('active')) {
+                lines[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                lines[1].style.opacity = '0';
+                lines[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            } else {
+                lines[0].style.transform = 'none';
+                lines[1].style.opacity = '1';
+                lines[2].style.transform = 'none';
+            }
+        });
+        
+        // Close mobile menu when clicking a link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('left-[-100%]');
+                mobileMenu.classList.remove('left-0');
+                hamburger.classList.remove('active');
+                
+                // Reset hamburger animation
+                const lines = hamburger.querySelectorAll('.hamburger-line');
+                lines[0].style.transform = 'none';
+                lines[1].style.opacity = '1';
+                lines[2].style.transform = 'none';
+            });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.samurai-nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled', 'bg-dark-black/90', 'py-4', 'shadow-xl');
+            } else {
+                nav.classList.remove('scrolled', 'bg-dark-black/90', 'py-4', 'shadow-xl');
+            }
+            
+            // Back to top button
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.scrollY > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+        
+        // Portfolio filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterBtns.forEach(btn => btn.classList.remove('active', 'bg-primary-red', 'border-primary-red'));
+                
+                // Add active class to clicked button
+                btn.classList.add('active', 'bg-primary-red', 'border-primary-red');
+                
+                const filter = btn.textContent.trim().toLowerCase();
+                
+                portfolioItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Portfolio modal
+        const portfolioLinks = document.querySelectorAll('.portfolio-link');
+        const portfolioModal = document.querySelector('.portfolio-modal');
+        const modalClose = document.querySelector('.modal-close');
+        
+        portfolioLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                portfolioModal.classList.add('flex');
+                setTimeout(() => {
+                    portfolioModal.classList.add('opacity-100');
+                }, 10);
+            });
+        });
+        
+        modalClose.addEventListener('click', () => {
+            portfolioModal.classList.remove('opacity-100');
+            setTimeout(() => {
+                portfolioModal.classList.remove('flex');
+            }, 300);
+        });
+        
+        // Testimonial slider
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.testimonial-slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        const prevBtn = document.querySelector('.slider-prev');
+        const nextBtn = document.querySelector('.slider-next');
+        
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active', 'opacity-100'));
+            dots.forEach(dot => dot.classList.remove('active', 'bg-primary-red'));
+            
+            slides[index].classList.add('active', 'opacity-100');
+            dots[index].classList.add('active', 'bg-primary-red');
+            currentSlide = index;
+        }
+        
+        prevBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        });
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+        
+        // Initialize first slide
+        showSlide(0);
+        
+        // Skills radar chart
+        const ctx = document.getElementById('skillsRadarChart').getContext('2d');
+        const skillsChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['HTML/CSS', 'JavaScript', 'React', 'Node.js', 'UI/UX', 'Python'],
+                datasets: [{
+                    label: 'Skill Level',
+                    data: [95, 90, 85, 80, 75, 70],
+                    backgroundColor: 'rgba(193, 39, 45, 0.2)',
+                    borderColor: 'rgba(193, 39, 45, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(193, 39, 45, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(193, 39, 45, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    r: {
+                        angleLines: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        pointLabels: {
+                            color: 'white'
+                        },
+                        ticks: {
+                            backdropColor: 'transparent',
+                            color: 'rgba(255, 255, 255, 0.5)',
+                            suggestedMin: 50,
+                            suggestedMax: 100
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                elements: {
+                    line: {
+                        tension: 0.1
+                    }
+                }
+            }
+        });
+        
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Here you would normally send the form data to a server
+            alert('Message sent successfully!');
+            this.reset();
+        });
+        
+        // Initialize particles.js
+        if (document.getElementById('particles-js')) {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#c1272d"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#c1272d",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        }
+    </script>
 </body>
 </html>
