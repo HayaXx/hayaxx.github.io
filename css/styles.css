@@ -1,0 +1,190 @@
+/* Base Styles */
+
+body {
+    scroll-behavior: smooth;
+}
+/* Navbar Fix */
+nav {
+    z-index: 1000; /* Pastikan navbar selalu di atas */
+}
+
+/* Text Visibility */
+.nav-link, #mobile-menu a {
+    color: white !important; /* Pastikan warna teks putih */
+    text-shadow: 0 0 5px rgba(0, 240, 255, 0.3); /* Tambahkan shadow untuk kontras */
+}
+
+/* Mobile Menu Animation */
+#mobile-menu {
+    transition: all 0.3s ease;
+}
+
+/* Glow Effect */
+.glow-animation {
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 0 0 5px rgba(0, 240, 255, 0.5);
+    }
+    to {
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.9);
+    }
+}
+/* Buttons */
+.btn-primary {
+    display: inline-block;
+    padding: 12px 30px;
+    background: linear-gradient(90deg, #00f0ff, #ff00f0);
+    color: #050510;
+    font-weight: 700;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 240, 255, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 240, 255, 0.4);
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 12px 30px;
+    background: transparent;
+    color: #00f0ff;
+    font-weight: 700;
+    border: 2px solid #00f0ff;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: rgba(0, 240, 255, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 240, 255, 0.2);
+}
+
+/* Project Cards */
+.project-card {
+    perspective: 1000px;
+    min-height: 400px;
+}
+
+.project-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.project-card:hover .project-card-inner {
+    transform: rotateY(180deg);
+}
+
+.project-card-front, .project-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.project-card-front {
+    background: #0a0a1a;
+    border: 1px solid rgba(0, 240, 255, 0.1);
+}
+
+.project-card-back {
+    background: #050510;
+    transform: rotateY(180deg);
+    border: 1px solid rgba(255, 0, 240, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Skill Cards */
+.skill-card {
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.skill-card:hover {
+    transform: translateY(-10px);
+}
+
+.skill-icon {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.skill-card:hover .skill-icon {
+    box-shadow: 0 15px 30px rgba(0, 240, 255, 0.3);
+}
+
+/* Social Icons */
+.social-icon {
+    transition: all 0.3s ease;
+}
+
+/* Form Inputs */
+input, textarea {
+    transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus {
+    box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.2);
+}
+
+/* Back to Top Button */
+#back-to-top {
+    transition: all 0.3s ease;
+}
+
+#back-to-top:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 240, 255, 0.4);
+}
+
+/* Mobile Menu */
+#mobile-menu {
+    transition: all 0.3s ease;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .project-card {
+        height: 350px;
+    }
+    
+    .skill-icon {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+@media (max-width: 640px) {
+    .btn-primary, .btn-secondary {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    .project-card {
+        height: 300px;
+    }
+}

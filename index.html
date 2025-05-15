@@ -1,1712 +1,964 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Samurai Portfolio | Code with Honor</title>
-    <meta
-      name="description"
-      content="Professional portfolio with samurai theme featuring stunning animations"
-    />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="images/icons/samurai-favicon.png" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Dev Portfolio | AAA Quality Showcase</title>
+  <meta name="description" content="Professional game developer portfolio with AAA quality animations and effects" />
 
-    <!-- Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Playfair+Display:wght@700&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: {
-                red: "#c1272d",
-              },
-              dark: {
-                black: "#0a0a0a",
-              },
-              purple: {
-                black: "#1a1a2e",
-              },
-              gold: {
-                accent: "#d4af37",
-              },
-              light: {
-                gray: "#f5f5f5",
-              },
-            },
-            fontFamily: {
-              sans: ["Noto Sans JP", "sans-serif"],
-              serif: ["Playfair Display", "serif"],
-            },
-            animation: {
-              float: "float 6s ease-in-out infinite",
-              "pulse-red": "pulse-red 2s infinite",
-              bounce: "bounce 2s infinite",
-              "sword-slash": "sword-slash 1s ease-out",
-            },
-            keyframes: {
-              float: {
-                "0%, 100%": { transform: "translateY(0)" },
-                "50%": { transform: "translateY(-20px)" },
-              },
-              "pulse-red": {
-                "0%, 100%": { "box-shadow": "0 0 0 0 rgba(193, 39, 45, 0.7)" },
-                "70%": { "box-shadow": "0 0 0 10px rgba(193, 39, 45, 0)" },
-              },
-              bounce: {
-                "0%, 20%, 50%, 80%, 100%": {
-                  transform: "rotate(-45deg) translateY(0)",
-                },
-                "40%": { transform: "rotate(-45deg) translateY(-10px)" },
-                "60%": { transform: "rotate(-45deg) translateY(-5px)" },
-              },
-              "sword-slash": {
-                "0%": { transform: "rotate(0) scale(1)", opacity: "0" },
-                "50%": { transform: "rotate(180deg) scale(1.5)", opacity: "1" },
-                "100%": { transform: "rotate(360deg) scale(1)", opacity: "0" },
-              },
-            },
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "neon-blue": "#00f0ff",
+            "neon-pink": "#ff00f0",
+            "dark-bg": "#0a0a1a",
+            "darker-bg": "#050510",
+          },
+          fontFamily: {
+            orbitron: ["Orbitron", "sans-serif"],
+            rajdhani: ["Rajdhani", "sans-serif"],
+          },
+          animation: {
+            "pulse-slow": "pulse 6s infinite",
+            float: "float 6s ease-in-out infinite",
+            glow: "glow 2s ease-in-out infinite alternate",
           },
         },
-      };
-    </script>
+      },
+    };
+  </script>
 
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap"
+    rel="stylesheet" />
 
-    <!-- AOS (Animate On Scroll) -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
-    <!-- Custom CSS -->
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        overflow-x: hidden; /* Cegah scroll horizontal */
-      }
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
 
-      .text-stroke {
-        -webkit-text-stroke: 1px #c1272d;
-        color: transparent;
-      }
+<body class="bg-dark-bg text-white font-rajdhani overflow-x-hidden">
+  <!-- 3D Background Canvas -->
+  <div id="threejs-background" class="fixed top-0 left-0 w-full h-full -z-10"></div>
 
-      .glow-red {
-        text-shadow: 0 0 10px rgba(193, 39, 45, 0.7);
-      }
+  <!-- Particle JS Background -->
+  <div id="particles-js" class="fixed top-0 left-0 w-full h-full -z-10"></div>
 
-      .sword-slash {
-        position: absolute;
-        width: 100px;
-        height: 100px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        pointer-events: none;
-      }
+  <!-- Main Navigation -->
+  <!-- Navigation Bar -->
+  <nav
+    class="fixed w-full z-50 bg-darker-bg/95 backdrop-blur-md border-b border-neon-blue/20 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-20">
+        <!-- Logo -->
+        <div class="flex-shrink-0">
+          <a href="#home" class="flex items-center group">
+            <div class="w-10 h-10 bg-neon-blue rounded-full flex items-center justify-center mr-3 glow-animation">
+              <svg class="w-6 h-6 text-darker-bg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z">
+                </path>
+              </svg>
+            </div>
+            <span
+              class="text-neon-blue font-orbitron text-xl font-bold tracking-widest group-hover:text-white transition-colors duration-300">
+              GAME<span class="text-neon-pink">DEV</span>
+            </span>
+          </a>
+        </div>
 
-      .skill-progress {
-        transition: width 1.5s ease;
-      }
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center space-x-6">
+          <a href="#home"
+            class="nav-link px-3 py-2 text-white hover:text-neon-blue transition-colors duration-300">HOME</a>
+          <a href="#projects"
+            class="nav-link px-3 py-2 text-white hover:text-neon-pink transition-colors duration-300">PROJECTS</a>
+          <a href="#skills"
+            class="nav-link px-3 py-2 text-white hover:text-neon-blue transition-colors duration-300">SKILLS</a>
+          <a href="#about"
+            class="nav-link px-3 py-2 text-white hover:text-neon-pink transition-colors duration-300">ABOUT</a>
+          <a href="#contact"
+            class="nav-link px-3 py-2 text-white hover:text-neon-blue transition-colors duration-300">CONTACT</a>
+          <a href="#"
+            class="ml-4 px-4 py-2 rounded-md text-sm font-medium bg-gradient-to-r from-neon-blue to-neon-pink text-darker-bg hover:shadow-lg hover:shadow-neon-blue/30 transition-all duration-300">
+            RESUME
+          </a>
+        </div>
 
-      .portfolio-overlay {
-        transition: all 0.3s ease;
-      }
-
-      .portfolio-image img {
-        transition: transform 0.5s ease;
-      }
-
-      .portfolio-item:hover .portfolio-overlay {
-        opacity: 1;
-      }
-
-      .portfolio-item:hover .portfolio-image img {
-        transform: scale(1.1);
-      }
-
-      .nav-link::after {
-        content: "";
-        position: relative;
-        bottom: -5px;
-        left: 0;
-        width: 0;
-        height: 2px;
-        background-color: #c1272d;
-        transition: all 0.3s ease;
-      }
-
-      .nav-link:hover::after,
-      .nav-link.active::after {
-        width: 100%;
-      }
-
-      .back-to-top {
-        transition: all 0.3s ease;
-      }
-
-      .loading-screen {
-        transition: opacity 1s ease;
-      }
-
-      .modal-content {
-        transition: all 0.3s ease;
-      }
-
-      .testimonial-slide {
-        transition: all 0.3s ease;
-      }
-
-      .slider-dot {
-        transition: all 0.3s ease;
-      }
-
-      .social-icon,
-      .footer-social a {
-        transition: all 0.3s ease;
-      }
-
-      .filter-btn {
-        transition: all 0.3s ease;
-      }
-
-      .form-group input,
-      .form-group textarea {
-        transition: all 0.3s ease;
-      }
-
-      .form-group label {
-        transition: all 0.3s ease;
-      }
-
-      .form-group input:focus + label,
-      .form-group textarea:focus + label,
-      .form-group input:not(:placeholder-shown) + label,
-      .form-group textarea:not(:placeholder-shown) + label {
-        top: -10px;
-        left: 10px;
-        font-size: 0.8rem;
-        background-color: #0a0a0a;
-        padding: 0 5px;
-        color: #c1272d;
-        opacity: 1;
-      }
-
-      /* Responsive adjustments */
-      @media (max-width: 768px) {
-        .hero-title {
-          font-size: 2.5rem;
-        }
-
-        .hero-subtitle {
-          font-size: 1rem;
-        }
-
-        .about-content {
-          flex-direction: column;
-        }
-
-        .skills-container {
-          flex-direction: column;
-        }
-
-        .contact-container {
-          flex-direction: column;
-        }
-
-        .portfolio-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .testimonial-content {
-          padding: 1.5rem;
-        }
-
-        .footer-content {
-          flex-direction: column;
-          text-align: center;
-          gap: 1.5rem;
-        }
-
-        .footer-links {
-          flex-direction: column;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .hero-title {
-          font-size: 2rem;
-        }
-
-        .hero-buttons .btn {
-          width: 100%;
-          margin-right: 0;
-        }
-
-        .section-title {
-          font-size: 2rem;
-        }
-
-        .portfolio-filters {
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-
-        .filter-btn {
-          margin: 0.25rem;
-          padding: 0.5rem 1rem;
-        }
-      }
-    </style>
-  </head>
-  <body
-    class="font-sans bg-dark-black text-white overflow-x-hidden leading-relaxed w-full"
-  >
-    <!-- Loading Screen -->
-    <div
-      class="loading-screen fixed inset-0 w-full h-full bg-dark-black flex justify-center items-center z-[9999]"
-    >
-      <div class="samurai-loader text-center">
-        <div
-          class="helmet w-24 h-24 bg-[url('./images/samurai-helmet.png')] bg-contain bg-no-repeat bg-center mx-auto mb-8 animate-pulse"
-        ></div>
-        <div
-          class="quote italic text-gray-400 max-w-xs mx-auto animate-fadeIn animate-delay-1000"
-        >
-          "Victory is reserved for those who are willing to pay its price."
+        <!-- Mobile menu button -->
+        <div class="md:hidden flex items-center">
+          <button id="mobile-menu-button"
+            class="text-white hover:text-neon-blue focus:outline-none transition-colors duration-300">
+            <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- Navigation -->
-    <nav
-      class="samurai-nav fixed top-0 left-0 w-full py-5 z-[1000] transition-all"
-    >
-      <div
-        class="nav-container container mx-auto px-5 flex justify-between items-center"
-      >
-        <div class="nav-brand flex items-center font-bold text-xl">
-          <span class="kanji text-3xl mr-2 text-primary-red">侍</span>
-          <span class="name tracking-wider">SAMURAI DEV</span>
+    <!-- Mobile menu -->
+    <div id="mobile-menu"
+      class="hidden md:hidden bg-darker-bg/95 backdrop-blur-lg border-b border-neon-blue/20 transition-all duration-300 overflow-hidden">
+      <div class="px-4 py-2 space-y-2">
+        <a href="#home"
+          class="block px-4 py-3 text-white hover:text-neon-blue hover:bg-gray-800/50 rounded-md transition-all duration-300 flex items-center space-x-3">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+            </path>
+          </svg>
+          <span>HOME</span>
+        </a>
+        <a href="#projects"
+          class="block px-4 py-3 text-white hover:text-neon-pink hover:bg-gray-800/50 rounded-md transition-all duration-300 flex items-center space-x-3">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+            </path>
+          </svg>
+          <span>PROJECTS</span>
+        </a>
+        <a href="#skills"
+          class="block px-4 py-3 text-white hover:text-neon-blue hover:bg-gray-800/50 rounded-md transition-all duration-300 flex items-center space-x-3">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+          <span>SKILLS</span>
+        </a>
+        <a href="#about"
+          class="block px-4 py-3 text-white hover:text-neon-pink hover:bg-gray-800/50 rounded-md transition-all duration-300 flex items-center space-x-3">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+          </svg>
+          <span>ABOUT</span>
+        </a>
+        <a href="#contact"
+          class="block px-4 py-3 text-white hover:text-neon-blue hover:bg-gray-800/50 rounded-md transition-all duration-300 flex items-center space-x-3">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+            </path>
+          </svg>
+          <span>CONTACT</span>
+        </a>
+        <div class="pt-2 pb-1">
+          <a href="#"
+            class="block px-4 py-3 text-center font-medium bg-gradient-to-r from-neon-blue to-neon-pink text-darker-bg rounded-md hover:shadow-lg hover:shadow-neon-pink/30 transition-all duration-300 flex items-center justify-center space-x-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+              </path>
+            </svg>
+            <span>RESUME</span>
+          </a>
         </div>
-        <div class="nav-links hidden md:flex">
-          <a
-            href="#home"
-            class="nav-link relative mx-4 font-medium tracking-wider transition-all active text-primary-red"
-            >Home</a
-          >
-          <a
-            href="#portfolio"
-            class="nav-link relative mx-4 font-medium tracking-wider transition-all"
-            >Portfolio</a
-          >
-          <a
-            href="#about"
-            class="nav-link relative mx-4 font-medium tracking-wider transition-all"
-            >About</a
-          >
-          <a
-            href="#skills"
-            class="nav-link relative mx-4 font-medium tracking-wider transition-all"
-            >Skills</a
-          >
-          <a
-            href="#testimonials"
-            class="nav-link relative mx-4 font-medium tracking-wider transition-all"
-            >Testimonials</a
-          >
-          <a
-            href="#contact"
-            class="nav-link relative mx-4 font-medium tracking-wider transition-all"
-            >Contact</a
-          >
-        </div>
-        <div class="nav-hamburger md:hidden cursor-pointer">
-          <div
-            class="hamburger-line w-6 h-0.5 bg-white my-1 transition-all"
-          ></div>
-          <div
-            class="hamburger-line w-6 h-0.5 bg-white my-1 transition-all"
-          ></div>
-          <div
-            class="hamburger-line w-6 h-0.5 bg-white my-1 transition-all"
-          ></div>
+
+        <div class="pt-3 pb-2 border-t border-gray-700/50 flex justify-center space-x-6">
+          <a href="#" class="text-gray-400 hover:text-neon-blue transition-colors duration-300">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z">
+              </path>
+            </svg>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-neon-pink transition-colors duration-300">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z">
+              </path>
+            </svg>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-neon-blue transition-colors duration-300">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.1 10.1 0 01-3.127 1.195 4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z">
+              </path>
+            </svg>
+          </a>
         </div>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    <!-- Mobile Menu -->
-    <div
-      id="mobileMenu"
-      class="mobile-menu absolute top-full left-0 w-full bg-dark-black z-[999] hidden md:hidden"
-    >
-      <div class="container mx-auto px-5 flex flex-col items-center py-8">
-        <a href="#home" class="nav-link text-2xl my-2 text-primary-red">Home</a>
-        <a href="#portfolio" class="nav-link text-2xl my-2">Portfolio</a>
-        <a href="#about" class="nav-link text-2xl my-2">About</a>
-        <a href="#skills" class="nav-link text-2xl my-2">Skills</a>
-        <a href="#testimonials" class="nav-link text-2xl my-2">Testimonials</a>
-        <a href="#contact" class="nav-link text-2xl my-2">Contact</a>
+  <!-- Hero Section -->
+  <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
+    <!-- Enhanced background with parallax effect -->
+    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-dark-bg via-purple-900/30 to-dark-bg/80 z-10">
+    </div>
+
+    <!-- Animated particles background -->
+    <div id="particles-js" class="absolute top-0 left-0 w-full h-full z-5"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 z-20">
+      <div class="text-center" data-aos="fade-up" data-aos-duration="1000">
+        <h1 class="text-4xl md:text-7xl font-bold mb-6 font-orbitron tracking-wider">
+          <span class="text-neon-blue glitch-text" data-text="CREATE">CREATE</span>
+          <span class="text-white">.</span>
+          <span class="text-neon-pink glitch-text" data-text="PLAY">PLAY</span>
+          <span class="text-white">.</span>
+          <span class="text-neon-blue glitch-text" data-text="INSPIRE">INSPIRE</span>
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-gray-300" data-aos="fade-up" data-aos-delay="200">
+          Crafting immersive gaming experiences with cutting-edge technology
+          and creative vision.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center sm:space-x-6 space-y-4 sm:space-y-0" data-aos="fade-up"
+          data-aos-delay="400">
+          <a href="#projects"
+            class="btn-primary group transition-all duration-300 ease-in-out transform hover:scale-105">
+            <span class="relative z-10">VIEW WORK</span>
+            <span
+              class="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded opacity-0 group-hover:opacity-100 transition-opacity"></span>
+          </a>
+          <a href="#contact"
+            class="btn-secondary group transition-all duration-300 ease-in-out transform hover:scale-105">
+            <span class="relative z-10">CONTACT ME</span>
+            <span
+              class="absolute inset-0 border border-neon-pink rounded opacity-0 group-hover:opacity-100 transition-opacity"></span>
+          </a>
+        </div>
+
+        <!-- Added tech stack icons -->
+        <!-- <div class="mt-16 flex justify-center space-x-8" data-aos="fade-up" data-aos-delay="600">
+          <div class="tech-icon"><i class="fab fa-unity text-2xl"></i><span class="tech-label">Unity</span></div>
+          <div class="tech-icon"><i class="fab fa-unreal-engine text-2xl"></i><span class="tech-label">Unreal</span></div>
+          <div class="tech-icon"><i class="fab fa-js-square text-2xl"></i><span class="tech-label">JavaScript</span></div>
+          <div class="tech-icon"><i class="fab fa-react text-2xl"></i><span class="tech-label">React</span></div>
+          <div class="tech-icon"><i class="fas fa-cube text-2xl"></i><span class="tech-label">3D</span></div>
+        </div> -->
       </div>
     </div>
 
-    <!-- Hero Section -->
-    <section
-      id="home"
-      class="hero-section h-screen relative overflow-hidden flex items-center"
-    >
-      <div
-        id="particles-js"
-        class="particles-bg absolute inset-0 w-full h-full z-10"
-      ></div>
-      <div
-        class="hero-content container mx-auto px-5 relative z-20 flex flex-col md:flex-row items-center pt-20 md:pt-0"
-      >
-        <div
-          class="hero-text flex-1 max-w-2xl text-center md:text-left mb-12 md:mb-0"
-        >
-          <h1
-            class="hero-title text-5xl sm:text-6xl md:text-7xl font-serif font-bold leading-tight mb-5 animate-fadeInDown"
-          >
-            <span class="line1 block">The Way of</span>
-            <span class="line2 block text-primary-red glow-red"
-              >The Samurai</span
-            >
-          </h1>
-          <p
-            class="hero-subtitle text-xl opacity-90 mb-8 animate-fadeIn animate-delay-1000"
-          >
-            Code with honor. Design with discipline. Build with precision.
+    <!-- Enhanced floating game characters with animations -->
+    <div class="absolute bottom-10 left-10 w-32 h-32" data-aos="fade-right" data-aos-delay="600">
+      <img src="./image/anime.png" alt="Game Character"
+        class="w-full h-full object-contain float-animation hover:animate-pulse transition-all duration-300" />
+    </div>
+    <div class="absolute bottom-20 right-10 w-40 h-40" data-aos="fade-left" data-aos-delay="800">
+      <img src="./image/anime.png" alt="Game Character"
+        class="w-full h-full object-contain float-animation-delay hover:animate-pulse transition-all duration-300" />
+    </div>
+    <div class="absolute top-40 right-20 w-24 h-24 hidden md:block" data-aos="fade-down" data-aos-delay="1000">
+      <img src="./image/anime.png" alt="Game Character"
+        class="w-full h-full object-contain float-animation-alt hover:animate-pulse transition-all duration-300" />
+    </div>
+
+    <!-- Scrolldown indicator -->
+    <div class="absolute bottom-8 transform-translate-x-1/2 z-20 animate-bounce hidden md:block">
+      <span class="text-neon-blue text-sm">Scroll Down</span>
+      <div class="mt-2 w-6 h-10 border-2 border-neon-blue rounded-full mx-auto">
+        <div class="w-2 h-2 bg-neon-blue rounded-full mx-auto mt-2 animate-scroll"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+
+<section id="projects" class="py-20 bg-darker-bg bg-opacity-70 relative overflow-hidden">
+    <!-- Background animated elements -->
+    <div class="absolute inset-0 z-0">
+      <div class="cyberpunk-grid"></div>
+      <div class="floating-particles"></div>
+    </div>
+    
+    <!-- Glowing border decorations -->
+    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-neon-blue to-transparent glow-animation"></div>
+    <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-neon-pink to-transparent glow-animation"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center mb-16" data-aos="zoom-in" data-aos-duration="1000">
+        <div class="glitch-wrapper mb-4">
+          <h2 class="text-3xl md:text-5xl font-bold font-orbitron glitch-text">
+            <span class="text-neon-blue">FEATURED</span>
+            <span class="text-white"> PROJECTS</span>
+          </h2>
+        </div>
+        <div class="w-20 h-1 bg-neon-pink mx-auto mb-6 pulse-animation"></div>
+        <p class="text-lg text-gray-300 max-w-2xl mx-auto typing-animation">
+          Check out my latest game development projects with AAA quality
+          graphics and gameplay.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Project 1 -->
+        <div class="project-card" data-aos="flip-left" data-aos-duration="1200" data-aos-delay="100">
+          <div class="project-card-inner">
+            <div class="project-card-front">
+              <div class="overflow-hidden">
+                <img src="./image/anime.png" alt="Project 1" class="w-full h-64 object-cover hover-scale-effect" />
+              </div>
+              <div class="p-6 bg-gradient-to-b from-dark-bg to-darker-bg border-t border-neon-blue">
+                <h3 class="text-xl font-bold mb-2 font-orbitron text-neon-blue shimmer-text">
+                  CYBER REALM
+                </h3>
+                <p class="text-gray-300">
+                  Open-world cyberpunk RPG with dynamic storytelling
+                </p>
+                <div class="tech-tags flex flex-wrap gap-2 mt-3">
+                  <span class="px-2 py-1 bg-neon-blue bg-opacity-20 text-neon-blue text-xs rounded-full">Unreal 5</span>
+                  <span class="px-2 py-1 bg-neon-blue bg-opacity-20 text-neon-blue text-xs rounded-full">AI-Driven</span>
+                </div>
+              </div>
+            </div>
+            <div class="project-card-back bg-gradient-to-br from-dark-bg to-darker-bg border border-neon-blue">
+              <div class="p-6 h-full flex flex-col justify-center">
+                <h3 class="text-xl font-bold mb-4 font-orbitron text-neon-blue shimmer-text">
+                  CYBER REALM
+                </h3>
+                <p class="text-gray-300 mb-4">
+                  A massive open-world game set in a dystopian future with
+                  branching narratives.
+                </p>
+                <ul class="text-sm text-neon-blue mb-4 neon-list">
+                  <li class="mb-1">• Unreal Engine 5</li>
+                  <li class="mb-1">• Photorealistic graphics</li>
+                  <li class="mb-1">• AI-driven NPCs</li>
+                </ul>
+                <a href="#" class="btn-secondary mt-auto hover-glow">VIEW CASE STUDY</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card" data-aos="flip-left" data-aos-duration="1200" data-aos-delay="200">
+          <div class="project-card-inner">
+            <div class="project-card-front">
+              <div class="overflow-hidden">
+                <img src="./image/anime.png" alt="Project 2" class="w-full h-64 object-cover hover-scale-effect" />
+              </div>
+              <div class="p-6 bg-gradient-to-b from-dark-bg to-darker-bg border-t border-neon-pink">
+                <h3 class="text-xl font-bold mb-2 font-orbitron text-neon-pink shimmer-text">
+                  STELLAR ODYSSEY
+                </h3>
+                <p class="text-gray-300">
+                  Space exploration sim with procedural generation
+                </p>
+                <div class="tech-tags flex flex-wrap gap-2 mt-3">
+                  <span class="px-2 py-1 bg-neon-pink bg-opacity-20 text-neon-pink text-xs rounded-full">Unity HDRP</span>
+                  <span class="px-2 py-1 bg-neon-pink bg-opacity-20 text-neon-pink text-xs rounded-full">VR Support</span>
+                </div>
+              </div>
+            </div>
+            <div class="project-card-back bg-gradient-to-br from-dark-bg to-darker-bg border border-neon-pink">
+              <div class="p-6 h-full flex flex-col justify-center">
+                <h3 class="text-xl font-bold mb-4 font-orbitron text-neon-pink shimmer-text">
+                  STELLAR ODYSSEY
+                </h3>
+                <p class="text-gray-300 mb-4">
+                  Explore an infinite universe with unique planets, creatures,
+                  and civilizations.
+                </p>
+                <ul class="text-sm text-neon-pink mb-4 neon-list">
+                  <li class="mb-1">• Unity HDRP</li>
+                  <li class="mb-1">• Procedural generation</li>
+                  <li class="mb-1">• VR support</li>
+                </ul>
+                <a href="#" class="btn-secondary mt-auto hover-glow">VIEW CASE STUDY</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card" data-aos="flip-left" data-aos-duration="1200" data-aos-delay="300">
+          <div class="project-card-inner">
+            <div class="project-card-front">
+              <div class="overflow-hidden">
+                <img src="./image/anime.png" alt="Project 3" class="w-full h-64 object-cover hover-scale-effect" />
+              </div>
+              <div class="p-6 bg-gradient-to-b from-dark-bg to-darker-bg border-t border-neon-green">
+                <h3 class="text-xl font-bold mb-2 font-orbitron text-neon-green shimmer-text">
+                  NECROTIC DAWN
+                </h3>
+                <p class="text-gray-300">
+                  Survival horror with advanced AI enemies
+                </p>
+                <div class="tech-tags flex flex-wrap gap-2 mt-3">
+                  <span class="px-2 py-1 bg-neon-green bg-opacity-20 text-neon-green text-xs rounded-full">Custom Engine</span>
+                  <span class="px-2 py-1 bg-neon-green bg-opacity-20 text-neon-green text-xs rounded-full">ML-Powered</span>
+                </div>
+              </div>
+            </div>
+            <div class="project-card-back bg-gradient-to-br from-dark-bg to-darker-bg border border-neon-green">
+              <div class="p-6 h-full flex flex-col justify-center">
+                <h3 class="text-xl font-bold mb-4 font-orbitron text-neon-green shimmer-text">
+                  NECROTIC DAWN
+                </h3>
+                <p class="text-gray-300 mb-4">
+                  A terrifying survival experience with enemies that learn
+                  from your tactics.
+                </p>
+                <ul class="text-sm text-neon-green mb-4 neon-list">
+                  <li class="mb-1">• Custom game engine</li>
+                  <li class="mb-1">• Machine learning AI</li>
+                  <li class="mb-1">• Dynamic lighting</li>
+                </ul>
+                <a href="#" class="btn-secondary mt-auto hover-glow">VIEW CASE STUDY</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-16" data-aos="fade-up" data-aos-duration="1000">
+        <a href="#" class="btn-primary inline-flex items-center hover-glow-intense">
+          VIEW ALL PROJECTS
+          <svg class="w-5 h-5 ml-2 arrow-animation" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Enhanced floating particles decoration -->
+    <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-neon-blue rounded-full filter blur-3xl opacity-10 pulse-slow"></div>
+    <div class="absolute -top-20 -right-20 w-64 h-64 bg-neon-pink rounded-full filter blur-3xl opacity-10 pulse-slow"></div>
+    <div class="absolute top-1/2 left-1/4 w-32 h-32 bg-neon-green rounded-full filter blur-3xl opacity-5 pulse-slow"></div>
+  </section>
+
+<!-- Skills Section -->
+<section id="skills" class="py-24 relative overflow-hidden bg-gradient-to-b from-dark-bg to-darker-bg">
+  <!-- Animated background elements -->
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-full opacity-10">
+      <div class="absolute top-20 left-10 w-96 h-96 bg-neon-pink rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-pulse-slow"></div>
+      <div class="absolute bottom-10 right-10 w-80 h-80 bg-neon-blue rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-pulse-slower"></div>
+    </div>
+    <!-- Grid pattern overlay -->
+    <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center mb-20" data-aos="fade-up" data-aos-duration="800">
+      <h2 class="text-4xl md:text-6xl font-bold font-orbitron mb-6 text-transparent bg-clip-text bg-gradient-to-r from-neon-pink to-neon-blue">
+        TECHNICAL SKILLS
+      </h2>
+      <div class="w-24 h-1.5 bg-gradient-to-r from-neon-pink to-neon-blue mx-auto mb-8 rounded-full"></div>
+      <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+        Mastery of industry-standard tools and cutting-edge technologies for next-generation game development.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+      <!-- Skill 1 - Enhanced with 3D tilt effect -->
+      <div class="skill-card group" data-aos="zoom-in" data-aos-delay="100">
+        <div class="skill-icon bg-gradient-to-br from-dark-bg to-gray-900 rounded-xl p-4 transform group-hover:-translate-y-2 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-neon-blue/30">
+          <div class="relative">
+            <img src="./image/anime.png" alt="Unreal Engine" class="w-20 h-20 object-contain mx-auto transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-neon-blue rounded-full opacity-0 group-hover:opacity-10 blur-md transition-opacity duration-300"></div>
+          </div>
+        </div>
+        <h3 class="text-xl font-bold mt-6 font-orbitron text-white group-hover:text-neon-blue transition-colors duration-300">
+          Unreal Engine 5
+        </h3>
+        <div class="w-full bg-gray-800 rounded-full h-3 mt-4">
+          <div class="bg-gradient-to-r from-neon-blue to-neon-pink h-3 rounded-full" style="width: 95%">
+            <div class="absolute right-0 -mt-6 text-xs font-mono text-neon-blue">95%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skill 2 -->
+      <div class="skill-card group" data-aos="zoom-in" data-aos-delay="150">
+        <div class="skill-icon bg-gradient-to-br from-dark-bg to-gray-900 rounded-xl p-4 transform group-hover:-translate-y-2 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-neon-pink/30">
+          <div class="relative">
+            <img src="./image/anime.png" alt="Unity" class="w-20 h-20 object-contain mx-auto transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-neon-pink rounded-full opacity-0 group-hover:opacity-10 blur-md transition-opacity duration-300"></div>
+          </div>
+        </div>
+        <h3 class="text-xl font-bold mt-6 font-orbitron text-white group-hover:text-neon-pink transition-colors duration-300">
+          Unity
+        </h3>
+        <div class="w-full bg-gray-800 rounded-full h-3 mt-4">
+          <div class="bg-gradient-to-r from-neon-pink to-purple-500 h-3 rounded-full" style="width: 90%">
+            <div class="absolute right-0 -mt-6 text-xs font-mono text-neon-pink">90%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skill 3 -->
+      <div class="skill-card group" data-aos="zoom-in" data-aos-delay="200">
+        <div class="skill-icon bg-gradient-to-br from-dark-bg to-gray-900 rounded-xl p-4 transform group-hover:-translate-y-2 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-neon-blue/30">
+          <div class="relative">
+            <img src="./image/anime.png" alt="C++" class="w-20 h-20 object-contain mx-auto transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-neon-blue rounded-full opacity-0 group-hover:opacity-10 blur-md transition-opacity duration-300"></div>
+          </div>
+        </div>
+        <h3 class="text-xl font-bold mt-6 font-orbitron text-white group-hover:text-neon-blue transition-colors duration-300">
+          C++
+        </h3>
+        <div class="w-full bg-gray-800 rounded-full h-3 mt-4">
+          <div class="bg-gradient-to-r from-neon-blue to-cyan-500 h-3 rounded-full" style="width: 85%">
+            <div class="absolute right-0 -mt-6 text-xs font-mono text-neon-blue">85%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skill 4 -->
+      <div class="skill-card group" data-aos="zoom-in" data-aos-delay="250">
+        <div class="skill-icon bg-gradient-to-br from-dark-bg to-gray-900 rounded-xl p-4 transform group-hover:-translate-y-2 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-neon-pink/30">
+          <div class="relative">
+            <img src="./image/anime.png" alt="C#" class="w-20 h-20 object-contain mx-auto transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-neon-pink rounded-full opacity-0 group-hover:opacity-10 blur-md transition-opacity duration-300"></div>
+          </div>
+        </div>
+        <h3 class="text-xl font-bold mt-6 font-orbitron text-white group-hover:text-neon-pink transition-colors duration-300">
+          C#
+        </h3>
+        <div class="w-full bg-gray-800 rounded-full h-3 mt-4">
+          <div class="bg-gradient-to-r from-neon-pink to-purple-500 h-3 rounded-full" style="width: 88%">
+            <div class="absolute right-0 -mt-6 text-xs font-mono text-neon-pink">88%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skill 5 -->
+      <div class="skill-card group" data-aos="zoom-in" data-aos-delay="300">
+        <div class="skill-icon bg-gradient-to-br from-dark-bg to-gray-900 rounded-xl p-4 transform group-hover:-translate-y-2 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-neon-blue/30">
+          <div class="relative">
+            <img src="./image/anime.png" alt="Blender" class="w-20 h-20 object-contain mx-auto transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-neon-blue rounded-full opacity-0 group-hover:opacity-10 blur-md transition-opacity duration-300"></div>
+          </div>
+        </div>
+        <h3 class="text-xl font-bold mt-6 font-orbitron text-white group-hover:text-neon-blue transition-colors duration-300">
+          Blender
+        </h3>
+        <div class="w-full bg-gray-800 rounded-full h-3 mt-4">
+          <div class="bg-gradient-to-r from-neon-blue to-cyan-500 h-3 rounded-full" style="width: 80%">
+            <div class="absolute right-0 -mt-6 text-xs font-mono text-neon-blue">80%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Continue with remaining skills in similar fashion -->
+      <!-- Skill 6 -->
+      <div class="skill-card group" data-aos="zoom-in" data-aos-delay="100">
+        <div class="skill-icon bg-gradient-to-br from-dark-bg to-gray-900 rounded-xl p-4 transform group-hover:-translate-y-2 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-neon-pink/30">
+          <div class="relative">
+            <img src="./image/anime.png" alt="Substance" class="w-20 h-20 object-contain mx-auto transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-neon-pink rounded-full opacity-0 group-hover:opacity-10 blur-md transition-opacity duration-300"></div>
+          </div>
+        </div>
+        <h3 class="text-xl font-bold mt-6 font-orbitron text-white group-hover:text-neon-pink transition-colors duration-300">
+          Substance
+        </h3>
+        <div class="w-full bg-gray-800 rounded-full h-3 mt-4">
+          <div class="bg-gradient-to-r from-neon-pink to-purple-500 h-3 rounded-full" style="width: 75%">
+            <div class="absolute right-0 -mt-6 text-xs font-mono text-neon-pink">75%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skill 7 -->
+      <div class="skill-card group" data-aos="zoom-in" data-aos-delay="150">
+        <div class="skill-icon bg-gradient-to-br from-dark-bg to-gray-900 rounded-xl p-4 transform group-hover:-translate-y-2 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-neon-blue/30">
+          <div class="relative">
+            <img src="./image/anime.png" alt="ZBrush" class="w-20 h-20 object-contain mx-auto transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-neon-blue rounded-full opacity-0 group-hover:opacity-10 blur-md transition-opacity duration-300"></div>
+          </div>
+        </div>
+        <h3 class="text-xl font-bold mt-6 font-orbitron text-white group-hover:text-neon-blue transition-colors duration-300">
+          ZBrush
+        </h3>
+        <div class="w-full bg-gray-800 rounded-full h-3 mt-4">
+          <div class="bg-gradient-to-r from-neon-blue to-cyan-500 h-3 rounded-full" style="width: 70%">
+            <div class="absolute right-0 -mt-6 text-xs font-mono text-neon-blue">70%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skill 8 -->
+      <div class="skill-card group" data-aos="zoom-in" data-aos-delay="200">
+        <div class="skill-icon bg-gradient-to-br from-dark-bg to-gray-900 rounded-xl p-4 transform group-hover:-translate-y-2 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-neon-pink/30">
+          <div class="relative">
+            <img src="./image/anime.png" alt="Maya" class="w-20 h-20 object-contain mx-auto transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-neon-pink rounded-full opacity-0 group-hover:opacity-10 blur-md transition-opacity duration-300"></div>
+          </div>
+        </div>
+        <h3 class="text-xl font-bold mt-6 font-orbitron text-white group-hover:text-neon-pink transition-colors duration-300">
+          Maya
+        </h3>
+        <div class="w-full bg-gray-800 rounded-full h-3 mt-4">
+          <div class="bg-gradient-to-r from-neon-pink to-purple-500 h-3 rounded-full" style="width: 78%">
+            <div class="absolute right-0 -mt-6 text-xs font-mono text-neon-pink">78%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skill 9 -->
+      <div class="skill-card group" data-aos="zoom-in" data-aos-delay="250">
+        <div class="skill-icon bg-gradient-to-br from-dark-bg to-gray-900 rounded-xl p-4 transform group-hover:-translate-y-2 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-neon-blue/30">
+          <div class="relative">
+            <img src="./image/anime.png" alt="Houdini" class="w-20 h-20 object-contain mx-auto transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-neon-blue rounded-full opacity-0 group-hover:opacity-10 blur-md transition-opacity duration-300"></div>
+          </div>
+        </div>
+        <h3 class="text-xl font-bold mt-6 font-orbitron text-white group-hover:text-neon-blue transition-colors duration-300">
+          Houdini
+        </h3>
+        <div class="w-full bg-gray-800 rounded-full h-3 mt-4">
+          <div class="bg-gradient-to-r from-neon-blue to-cyan-500 h-3 rounded-full" style="width: 65%">
+            <div class="absolute right-0 -mt-6 text-xs font-mono text-neon-blue">65%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skill 10 -->
+      <div class="skill-card group" data-aos="zoom-in" data-aos-delay="300">
+        <div class="skill-icon bg-gradient-to-br from-dark-bg to-gray-900 rounded-xl p-4 transform group-hover:-translate-y-2 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-neon-pink/30">
+          <div class="relative">
+            <img src="./image/anime.png" alt="Photoshop" class="w-20 h-20 object-contain mx-auto transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-neon-pink rounded-full opacity-0 group-hover:opacity-10 blur-md transition-opacity duration-300"></div>
+          </div>
+        </div>
+        <h3 class="text-xl font-bold mt-6 font-orbitron text-white group-hover:text-neon-pink transition-colors duration-300">
+          Photoshop
+        </h3>
+        <div class="w-full bg-gray-800 rounded-full h-3 mt-4">
+          <div class="bg-gradient-to-r from-neon-pink to-purple-500 h-3 rounded-full" style="width: 85%">
+            <div class="absolute right-0 -mt-6 text-xs font-mono text-neon-pink">85%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ <!-- Bubble animations -->
+  <div class="bubbles absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="bubble absolute rounded-full bg-neon-blue/20 animate-float"></div>
+    <div class="bubble absolute rounded-full bg-neon-pink/20 animate-float-delay"></div>
+    <!-- More bubbles -->
+  </div>
+</section>
+  <!-- About Section -->
+  <section id="about" class="py-20 bg-darker-bg bg-opacity-70 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col lg:flex-row items-center">
+        <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12" data-aos="fade-right">
+          <div class="relative">
+            <div class="w-full h-full border-4 border-neon-blue border-opacity-50 absolute -top-4 -left-4 z-0"></div>
+            <div class="w-full h-full border-4 border-neon-pink border-opacity-50 absolute -bottom-4 -right-4 z-0">
+            </div>
+            <img src="./image/anime.png" alt="Profile" class="relative z-10 w-full h-auto object-cover" />
+          </div>
+        </div>
+        <div class="lg:w-1/2" data-aos="fade-left">
+          <h2 class="text-3xl md:text-5xl font-bold font-orbitron mb-6">
+            <span class="text-neon-blue">ABOUT</span>
+            <span class="text-white"> ME</span>
+          </h2>
+          <div class="w-20 h-1 bg-neon-pink mb-6"></div>
+          <p class="text-lg text-gray-300 mb-6">
+            Passionate game developer with over 10 years of experience
+            creating immersive gaming experiences. Specialized in AAA quality
+            game development with a focus on cutting-edge graphics and
+            innovative gameplay mechanics.
           </p>
-          <div
-            class="hero-buttons flex flex-wrap justify-center md:justify-start animate-fadeIn animate-delay-1500"
-          >
-            <a
-              href="#portfolio"
-              class="btn btn-primary inline-block px-8 py-3 bg-primary-red text-white rounded border-2 border-primary-red uppercase tracking-wider font-medium mr-4 mb-4 hover:bg-transparent hover:text-primary-red transition-all"
-            >
-              View My Work
-            </a>
-            <a
-              href="#contact"
-              class="btn btn-outline inline-block px-8 py-3 bg-transparent text-white rounded border-2 border-white uppercase tracking-wider font-medium mb-4 hover:bg-white hover:text-dark-black transition-all"
-            >
-              Hire Me
-            </a>
-          </div>
-        </div>
-        <div class="hero-image flex-1 text-center animate-fadeInRight">
-          <img
-            src="images/samurai-main.png"
-            alt="Samurai Illustration"
-            class="max-w-full h-auto max-h-[80vh] float"
-          />
-        </div>
-      </div>
-      <div
-        class="scroll-down absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-20 cursor-pointer animate-fadeIn animate-delay-2000"
-      >
-        <span class="mb-2 text-sm tracking-widest">Scroll Down</span>
-        <div
-          class="arrow w-5 h-5 border-l-2 border-b-2 border-white transform -rotate-45 animate-bounce"
-        ></div>
-      </div>
-    </section>
-
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio-section py-24 bg-purple-black">
-      <div
-        class="section-header container mx-auto px-5 text-center"
-        data-aos="fade-up"
-      >
-        <h2
-          class="section-title text-4xl font-serif font-bold mb-4 relative inline-block"
-        >
-          My <span class="text-primary-red">Portfolio</span>
-        </h2>
-        <p class="section-subtitle text-lg text-gray-400 mb-5">
-          Projects forged with honor and precision
-        </p>
-        <div class="section-divider flex items-center justify-center mt-5">
-          <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
-          <div class="divider-icon text-primary-red text-xl">
-            <i class="fas fa-katana"></i>
-          </div>
-          <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
-        </div>
-      </div>
-
-      <div
-        class="portfolio-filters container mx-auto px-5 flex flex-wrap justify-center mb-10"
-        data-aos="fade-up"
-        data-aos-delay="100"
-      >
-        <button
-          class="filter-btn px-5 py-2 bg-transparent text-white border border-gray-600 rounded-full mr-3 mb-3 cursor-pointer transition-all hover:bg-primary-red hover:border-primary-red active"
-        >
-          All
-        </button>
-        <button
-          class="filter-btn px-5 py-2 bg-transparent text-white border border-gray-600 rounded-full mr-3 mb-3 cursor-pointer transition-all hover:bg-primary-red hover:border-primary-red"
-        >
-          Web
-        </button>
-        <button
-          class="filter-btn px-5 py-2 bg-transparent text-white border border-gray-600 rounded-full mr-3 mb-3 cursor-pointer transition-all hover:bg-primary-red hover:border-primary-red"
-        >
-          App
-        </button>
-        <button
-          class="filter-btn px-5 py-2 bg-transparent text-white border border-gray-600 rounded-full mr-3 mb-3 cursor-pointer transition-all hover:bg-primary-red hover:border-primary-red"
-        >
-          Design
-        </button>
-        <button
-          class="filter-btn px-5 py-2 bg-transparent text-white border border-gray-600 rounded-full mr-3 mb-3 cursor-pointer transition-all hover:bg-primary-red hover:border-primary-red"
-        >
-          Game
-        </button>
-      </div>
-
-      <div
-        class="portfolio-grid container mx-auto px-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
-      >
-        <!-- Portfolio Item 1 -->
-        <div
-          class="portfolio-item relative overflow-hidden rounded-lg shadow-xl"
-          data-aos="fade-up"
-          data-aos-delay="200"
-          data-category="web"
-        >
-          <div class="portfolio-image relative overflow-hidden h-64">
-            <img
-              src="images/projects/ecommerce.jpg"
-              alt="Samurai E-Commerce"
-              class="w-full h-full object-cover"
-            />
-            <div
-              class="portfolio-overlay absolute inset-0 w-full h-full bg-primary-red/90 flex flex-col justify-center items-center p-5 opacity-0"
-            >
-              <h3 class="text-2xl font-serif font-bold mb-3">
-                Samurai E-Commerce
-              </h3>
-              <p class="text-center mb-5 text-sm">
-                Full-stack e-commerce platform with samurai theme
-              </p>
-              <a
-                href="#"
-                class="portfolio-link px-5 py-2 bg-dark-black rounded text-sm transition-all hover:bg-white hover:text-dark-black"
-              >
-                View Details
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Portfolio Item 2 -->
-        <div
-          class="portfolio-item relative overflow-hidden rounded-lg shadow-xl"
-          data-aos="fade-up"
-          data-aos-delay="300"
-          data-category="app"
-        >
-          <div class="portfolio-image relative overflow-hidden h-64">
-            <img
-              src="images/projects/fitness-app.jpg"
-              alt="Bushido Fitness App"
-              class="w-full h-full object-cover"
-            />
-            <div
-              class="portfolio-overlay absolute inset-0 w-full h-full bg-primary-red/90 flex flex-col justify-center items-center p-5 opacity-0"
-            >
-              <h3 class="text-2xl font-serif font-bold mb-3">
-                Bushido Fitness App
-              </h3>
-              <p class="text-center mb-5 text-sm">
-                Mobile application for martial arts training
-              </p>
-              <a
-                href="#"
-                class="portfolio-link px-5 py-2 bg-dark-black rounded text-sm transition-all hover:bg-white hover:text-dark-black"
-              >
-                View Details
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Portfolio Item 3 -->
-        <div
-          class="portfolio-item relative overflow-hidden rounded-lg shadow-xl"
-          data-aos="fade-up"
-          data-aos-delay="400"
-          data-category="design"
-        >
-          <div class="portfolio-image relative overflow-hidden h-64">
-            <img
-              src="images/projects/branding.jpg"
-              alt="Samurai Branding"
-              class="w-full h-full object-cover"
-            />
-            <div
-              class="portfolio-overlay absolute inset-0 w-full h-full bg-primary-red/90 flex flex-col justify-center items-center p-5 opacity-0"
-            >
-              <h3 class="text-2xl font-serif font-bold mb-3">
-                Samurai Branding
-              </h3>
-              <p class="text-center mb-5 text-sm">
-                Complete branding package for dojo
-              </p>
-              <a
-                href="#"
-                class="portfolio-link px-5 py-2 bg-dark-black rounded text-sm transition-all hover:bg-white hover:text-dark-black"
-              >
-                View Details
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Portfolio Item 4 -->
-        <div
-          class="portfolio-item relative overflow-hidden rounded-lg shadow-xl"
-          data-aos="fade-up"
-          data-aos-delay="500"
-          data-category="game"
-        >
-          <div class="portfolio-image relative overflow-hidden h-64">
-            <img
-              src="images/projects/game.jpg"
-              alt="Way of the Warrior Game"
-              class="w-full h-full object-cover"
-            />
-            <div
-              class="portfolio-overlay absolute inset-0 w-full h-full bg-primary-red/90 flex flex-col justify-center items-center p-5 opacity-0"
-            >
-              <h3 class="text-2xl font-serif font-bold mb-3">
-                Way of the Warrior
-              </h3>
-              <p class="text-center mb-5 text-sm">
-                2D side-scrolling samurai game
-              </p>
-              <a
-                href="#"
-                class="portfolio-link px-5 py-2 bg-dark-black rounded text-sm transition-all hover:bg-white hover:text-dark-black"
-              >
-                View Details
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Portfolio Item 5 -->
-        <div
-          class="portfolio-item relative overflow-hidden rounded-lg shadow-xl"
-          data-aos="fade-up"
-          data-aos-delay="600"
-          data-category="web"
-        >
-          <div class="portfolio-image relative overflow-hidden h-64">
-            <img
-              src="images/projects/dojo-website.jpg"
-              alt="Dojo Website"
-              class="w-full h-full object-cover"
-            />
-            <div
-              class="portfolio-overlay absolute inset-0 w-full h-full bg-primary-red/90 flex flex-col justify-center items-center p-5 opacity-0"
-            >
-              <h3 class="text-2xl font-serif font-bold mb-3">Dojo Website</h3>
-              <p class="text-center mb-5 text-sm">
-                Modern website for martial arts school
-              </p>
-              <a
-                href="#"
-                class="portfolio-link px-5 py-2 bg-dark-black rounded text-sm transition-all hover:bg-white hover:text-dark-black"
-              >
-                View Details
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Portfolio Item 6 -->
-        <div
-          class="portfolio-item relative overflow-hidden rounded-lg shadow-xl"
-          data-aos="fade-up"
-          data-aos-delay="700"
-          data-category="app"
-        >
-          <div class="portfolio-image relative overflow-hidden h-64">
-            <img
-              src="images/projects/meditation.jpg"
-              alt="Zen Meditation App"
-              class="w-full h-full object-cover"
-            />
-            <div
-              class="portfolio-overlay absolute inset-0 w-full h-full bg-primary-red/90 flex flex-col justify-center items-center p-5 opacity-0"
-            >
-              <h3 class="text-2xl font-serif font-bold mb-3">
-                Zen Meditation App
-              </h3>
-              <p class="text-center mb-5 text-sm">
-                Guided meditation for modern warriors
-              </p>
-              <a
-                href="#"
-                class="portfolio-link px-5 py-2 bg-dark-black rounded text-sm transition-all hover:bg-white hover:text-dark-black"
-              >
-                View Details
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Portfolio Modal -->
-      <div
-        class="portfolio-modal fixed inset-0 w-full h-full bg-black/80 z-[2000] hidden justify-center items-center opacity-0"
-      >
-        <div
-          class="modal-content bg-dark-black w-11/12 max-w-4xl max-h-[90vh] overflow-y-auto rounded-lg relative p-10 border border-primary-red"
-        >
-          <span
-            class="modal-close absolute top-5 right-5 text-2xl cursor-pointer transition-all hover:text-primary-red"
-            >&times;</span
-          >
-          <div class="modal-body flex flex-col gap-8">
-            <!-- Modal content will be loaded here -->
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about-section py-24 bg-dark-black">
-      <div
-        class="section-header container mx-auto px-5 text-center"
-        data-aos="fade-up"
-      >
-        <h2
-          class="section-title text-4xl font-serif font-bold mb-4 relative inline-block"
-        >
-          About <span class="text-primary-red">Me</span>
-        </h2>
-        <p class="section-subtitle text-lg text-gray-400 mb-5">
-          The path I've walked
-        </p>
-        <div class="section-divider flex items-center justify-center mt-5">
-          <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
-          <div class="divider-icon text-primary-red text-xl">
-            <i class="fas fa-helmet-battle"></i>
-          </div>
-          <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
-        </div>
-      </div>
-
-      <div
-        class="about-content container mx-auto px-5 flex flex-col md:flex-row items-center gap-12"
-      >
-        <div class="about-image relative flex-1" data-aos="fade-right">
-          <img
-            src="images/samurai-profile.jpg"
-            alt="Profile Image"
-            class="rounded-lg shadow-xl border-4 border-primary-red w-full max-w-md"
-          />
-          <div
-            class="about-badge absolute -bottom-5 -right-5 bg-primary-red text-white w-24 h-24 rounded-full flex flex-col justify-center items-center font-bold shadow-lg"
-          >
-            <span class="text-2xl leading-none">10+</span>
-            <small class="text-xs uppercase tracking-wider mt-1"
-              >Years Experience</small
-            >
-          </div>
-        </div>
-
-        <div class="about-text flex-1" data-aos="fade-left">
-          <h3 class="text-2xl font-serif font-bold mb-5 text-primary-red">
-            The Warrior's Journey
-          </h3>
-          <p class="mb-8">
-            Like a samurai perfecting his craft, I've dedicated my life to
-            mastering the art of web development. My journey began in the dojo
-            of code, where I learned discipline, patience, and the way of clean,
-            efficient programming.
+          <p class="text-lg text-gray-300 mb-8">
+            My journey began as a modder creating custom content for my
+            favorite games, which evolved into a professional career working
+            with major studios and now leading my own indie projects.
           </p>
 
-          <div class="about-timeline mb-8">
-            <div class="timeline-item flex mb-5">
-              <div class="timeline-date min-w-24 font-bold text-primary-red">
-                2010-2013
+          <div class="grid grid-cols-2 gap-6 mb-8">
+            <div class="flex items-center">
+              <div class="mr-4 text-neon-blue">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                  </path>
+                </svg>
               </div>
-              <div class="timeline-content">
-                <h4 class="font-serif font-bold mb-1">Apprentice Developer</h4>
-                <p class="text-sm opacity-80">
-                  Learned the fundamentals at Tokyo Tech Institute
-                </p>
-              </div>
-            </div>
-
-            <div class="timeline-item flex mb-5">
-              <div class="timeline-date min-w-24 font-bold text-primary-red">
-                2013-2016
-              </div>
-              <div class="timeline-content">
-                <h4 class="font-serif font-bold mb-1">Junior Web Samurai</h4>
-                <p class="text-sm opacity-80">
-                  Worked at Digital Shogun agency
-                </p>
+              <div>
+                <h4 class="font-bold text-lg">Experience</h4>
+                <p class="text-gray-400">10+ Years</p>
               </div>
             </div>
-
-            <div class="timeline-item flex mb-5">
-              <div class="timeline-date min-w-24 font-bold text-primary-red">
-                2016-2019
+            <div class="flex items-center">
+              <div class="mr-4 text-neon-pink">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                  </path>
+                </svg>
               </div>
-              <div class="timeline-content">
-                <h4 class="font-serif font-bold mb-1">Frontend Warrior</h4>
-                <p class="text-sm opacity-80">
-                  Lead developer at Bushido Web Solutions
-                </p>
+              <div>
+                <h4 class="font-bold text-lg">Projects</h4>
+                <p class="text-gray-400">50+ Completed</p>
               </div>
             </div>
-
-            <div class="timeline-item flex">
-              <div class="timeline-date min-w-24 font-bold text-primary-red">
-                2019-Present
+            <div class="flex items-center">
+              <div class="mr-4 text-neon-blue">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                  </path>
+                </svg>
               </div>
-              <div class="timeline-content">
-                <h4 class="font-serif font-bold mb-1">Master Developer</h4>
-                <p class="text-sm opacity-80">Freelance developer and mentor</p>
+              <div>
+                <h4 class="font-bold text-lg">Education</h4>
+                <p class="text-gray-400">MSc Game Design</p>
+              </div>
+            </div>
+            <div class="flex items-center">
+              <div class="mr-4 text-neon-pink">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                  </path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-bold text-lg">Clients</h4>
+                <p class="text-gray-400">100+ Worldwide</p>
               </div>
             </div>
           </div>
 
-          <div class="flex flex-wrap gap-4">
-            <a
-              href="#"
-              class="btn btn-primary inline-block px-8 py-3 bg-primary-red text-white rounded border-2 border-primary-red uppercase tracking-wider font-medium hover:bg-transparent hover:text-primary-red transition-all"
-            >
-              Download Resume
-            </a>
-            <a
-              href="#contact"
-              class="btn btn-outline inline-block px-8 py-3 bg-transparent text-white rounded border-2 border-white uppercase tracking-wider font-medium hover:bg-white hover:text-dark-black transition-all"
-            >
-              Contact Me
-            </a>
-          </div>
+          <a href="#" class="btn-primary inline-flex items-center">
+            DOWNLOAD CV
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+          </a>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills-section py-24 bg-purple-black">
-      <div
-        class="section-header container mx-auto px-5 text-center"
-        data-aos="fade-up"
-      >
-        <h2
-          class="section-title text-4xl font-serif font-bold mb-4 relative inline-block"
-        >
-          My <span class="text-primary-red">Skills</span>
+    <!-- Floating game UI elements -->
+    <div class="absolute top-1/4 right-10 w-24 h-24" data-aos="fade-left" data-aos-delay="300">
+      <img src="./image/anime.png" alt="UI Element" class="w-full h-full object-contain spin-animation" />
+    </div>
+    <div class="absolute bottom-1/4 left-10 w-20 h-20" data-aos="fade-right" data-aos-delay="300">
+      <img src="./image/anime.png" alt="UI Element" class="w-full h-full object-contain pulse-animation" />
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <h2 class="text-3xl md:text-5xl font-bold font-orbitron mb-4">
+          <span class="text-neon-pink">GET</span>
+          <span class="text-white"> IN TOUCH</span>
         </h2>
-        <p class="section-subtitle text-lg text-gray-400 mb-5">
-          Weapons in my arsenal
+        <div class="w-20 h-1 bg-neon-blue mx-auto mb-6"></div>
+        <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+          Have a project in mind or want to discuss potential opportunities?
+          Feel free to reach out!
         </p>
-        <div class="section-divider flex items-center justify-center mt-5">
-          <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
-          <div class="divider-icon text-primary-red text-xl">
-            <i class="fas fa-swords"></i>
-          </div>
-          <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
-        </div>
       </div>
 
-      <div
-        class="skills-container container mx-auto px-5 flex flex-col lg:flex-row gap-12"
-      >
-        <div class="skills-chart flex-1" data-aos="fade-right">
-          <canvas id="skillsRadarChart"></canvas>
-        </div>
-
-        <div class="skills-bars flex-1" data-aos="fade-left">
-          <div class="skill-item mb-6">
-            <div class="skill-info flex justify-between mb-3">
-              <span>HTML/CSS</span>
-              <span>95%</span>
+      <div class="flex flex-col lg:flex-row">
+        <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12" data-aos="fade-right">
+          <form class="space-y-6">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Your Name</label>
+              <input type="text" id="name"
+                class="w-full px-4 py-3 bg-darker-bg border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-neon-blue focus:border-transparent"
+                placeholder="John Doe" />
             </div>
-            <div class="skill-bar h-2 bg-white/10 rounded-full overflow-hidden">
-              <div
-                class="skill-progress h-full bg-primary-red rounded-full"
-                data-width="95%"
-                style="width: 0"
-              ></div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email Address</label>
+              <input type="email" id="email"
+                class="w-full px-4 py-3 bg-darker-bg border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-neon-blue focus:border-transparent"
+                placeholder="john@example.com" />
             </div>
-          </div>
-
-          <div class="skill-item mb-6">
-            <div class="skill-info flex justify-between mb-3">
-              <span>JavaScript</span>
-              <span>90%</span>
+            <div>
+              <label for="subject" class="block text-sm font-medium text-gray-300 mb-1">Subject</label>
+              <input type="text" id="subject"
+                class="w-full px-4 py-3 bg-darker-bg border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-neon-blue focus:border-transparent"
+                placeholder="Project Inquiry" />
             </div>
-            <div class="skill-bar h-2 bg-white/10 rounded-full overflow-hidden">
-              <div
-                class="skill-progress h-full bg-primary-red rounded-full"
-                data-width="90%"
-                style="width: 0"
-              ></div>
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-300 mb-1">Message</label>
+              <textarea id="message" rows="5"
+                class="w-full px-4 py-3 bg-darker-bg border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-neon-blue focus:border-transparent"
+                placeholder="Tell me about your project..."></textarea>
             </div>
-          </div>
-
-          <div class="skill-item mb-6">
-            <div class="skill-info flex justify-between mb-3">
-              <span>React</span>
-              <span>85%</span>
+            <div>
+              <button type="submit" class="btn-primary w-full">
+                SEND MESSAGE
+              </button>
             </div>
-            <div class="skill-bar h-2 bg-white/10 rounded-full overflow-hidden">
-              <div
-                class="skill-progress h-full bg-primary-red rounded-full"
-                data-width="85%"
-                style="width: 0"
-              ></div>
-            </div>
-          </div>
-
-          <div class="skill-item mb-6">
-            <div class="skill-info flex justify-between mb-3">
-              <span>Node.js</span>
-              <span>80%</span>
-            </div>
-            <div class="skill-bar h-2 bg-white/10 rounded-full overflow-hidden">
-              <div
-                class="skill-progress h-full bg-primary-red rounded-full"
-                data-width="80%"
-                style="width: 0"
-              ></div>
-            </div>
-          </div>
-
-          <div class="skill-item mb-6">
-            <div class="skill-info flex justify-between mb-3">
-              <span>UI/UX Design</span>
-              <span>75%</span>
-            </div>
-            <div class="skill-bar h-2 bg-white/10 rounded-full overflow-hidden">
-              <div
-                class="skill-progress h-full bg-primary-red rounded-full"
-                data-width="75%"
-                style="width: 0"
-              ></div>
-            </div>
-          </div>
-
-          <div class="skill-item">
-            <div class="skill-info flex justify-between mb-3">
-              <span>Python</span>
-              <span>70%</span>
-            </div>
-            <div class="skill-bar h-2 bg-white/10 rounded-full overflow-hidden">
-              <div
-                class="skill-progress h-full bg-primary-red rounded-full"
-                data-width="70%"
-                style="width: 0"
-              ></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials-section py-24 bg-dark-black">
-      <div
-        class="section-header container mx-auto px-5 text-center"
-        data-aos="fade-up"
-      >
-        <h2
-          class="section-title text-4xl font-serif font-bold mb-4 relative inline-block"
-        >
-          Client <span class="text-primary-red">Testimonials</span>
-        </h2>
-        <p class="section-subtitle text-lg text-gray-400 mb-5">
-          Words from those I've served
-        </p>
-        <div class="section-divider flex items-center justify-center mt-5">
-          <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
-          <div class="divider-icon text-primary-red text-xl">
-            <i class="fas fa-scroll"></i>
-          </div>
-          <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
-        </div>
-      </div>
-
-      <div
-        class="testimonials-slider max-w-4xl mx-auto relative"
-        data-aos="fade-up"
-      >
-        <div class="slider-container relative h-80 overflow-hidden">
-          <div
-            class="testimonial-slide absolute inset-0 w-full h-full opacity-0 transition-all flex justify-center items-center active opacity-100"
-          >
-            <div
-              class="testimonial-content bg-purple-black p-8 rounded-lg shadow-xl text-center max-w-2xl mx-auto relative border border-primary-red/30"
-            >
-              <div class="testimonial-quote relative mb-8">
-                <i
-                  class="fas fa-quote-left absolute -top-5 -left-3 text-4xl opacity-20 text-primary-red"
-                ></i>
-                <p class="text-lg italic leading-relaxed">
-                  Working with this developer was like having a master samurai
-                  on our team. His code is as sharp as a katana and just as
-                  precise.
-                </p>
-                <i
-                  class="fas fa-quote-right absolute -bottom-8 -right-3 text-4xl opacity-20 text-primary-red"
-                ></i>
-              </div>
-              <div class="testimonial-author flex items-center justify-center">
-                <img
-                  src="images/clients/client1.jpg"
-                  alt="Client 1"
-                  class="w-16 h-16 rounded-full object-cover mr-4 border-2 border-primary-red"
-                />
-                <div class="author-info">
-                  <h4 class="font-serif font-bold text-left">Daichi Tanaka</h4>
-                  <span class="text-sm opacity-70 block text-left"
-                    >CEO, Sakura Tech</span
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="testimonial-slide absolute inset-0 w-full h-full opacity-0 transition-all flex justify-center items-center"
-          >
-            <div
-              class="testimonial-content bg-purple-black p-8 rounded-lg shadow-xl text-center max-w-2xl mx-auto relative border border-primary-red/30"
-            >
-              <div class="testimonial-quote relative mb-8">
-                <i
-                  class="fas fa-quote-left absolute -top-5 -left-3 text-4xl opacity-20 text-primary-red"
-                ></i>
-                <p class="text-lg italic leading-relaxed">
-                  The discipline and attention to detail in this developer's
-                  work is unparalleled. Our project was delivered ahead of
-                  schedule with zero defects.
-                </p>
-                <i
-                  class="fas fa-quote-right absolute -bottom-8 -right-3 text-4xl opacity-20 text-primary-red"
-                ></i>
-              </div>
-              <div class="testimonial-author flex items-center justify-center">
-                <img
-                  src="images/clients/client2.jpg"
-                  alt="Client 2"
-                  class="w-16 h-16 rounded-full object-cover mr-4 border-2 border-primary-red"
-                />
-                <div class="author-info">
-                  <h4 class="font-serif font-bold text-left">Emiko Sato</h4>
-                  <span class="text-sm opacity-70 block text-left"
-                    >CTO, Bushido Apps</span
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="testimonial-slide absolute inset-0 w-full h-full opacity-0 transition-all flex justify-center items-center"
-          >
-            <div
-              class="testimonial-content bg-purple-black p-8 rounded-lg shadow-xl text-center max-w-2xl mx-auto relative border border-primary-red/30"
-            >
-              <div class="testimonial-quote relative mb-8">
-                <i
-                  class="fas fa-quote-left absolute -top-5 -left-3 text-4xl opacity-20 text-primary-red"
-                ></i>
-                <p class="text-lg italic leading-relaxed">
-                  I've worked with many developers, but none with the
-                  combination of technical skill and creative vision that this
-                  developer brings to every project.
-                </p>
-                <i
-                  class="fas fa-quote-right absolute -bottom-8 -right-3 text-4xl opacity-20 text-primary-red"
-                ></i>
-              </div>
-              <div class="testimonial-author flex items-center justify-center">
-                <img
-                  src="images/clients/client3.jpg"
-                  alt="Client 3"
-                  class="w-16 h-16 rounded-full object-cover mr-4 border-2 border-primary-red"
-                />
-                <div class="author-info">
-                  <h4 class="font-serif font-bold text-left">Kenji Yamamoto</h4>
-                  <span class="text-sm opacity-70 block text-left"
-                    >Director, Zen Design Studio</span
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="slider-controls flex justify-center items-center mt-8">
-          <button
-            class="slider-prev bg-transparent border-none text-white text-xl cursor-pointer transition-all w-10 h-10 rounded-full flex justify-center items-center hover:bg-primary-red"
-          >
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <div class="slider-dots flex mx-5">
-            <div
-              class="slider-dot w-3 h-3 rounded-full bg-white/30 mx-1 cursor-pointer transition-all active bg-primary-red"
-            ></div>
-            <div
-              class="slider-dot w-3 h-3 rounded-full bg-white/30 mx-1 cursor-pointer transition-all"
-            ></div>
-            <div
-              class="slider-dot w-3 h-3 rounded-full bg-white/30 mx-1 cursor-pointer transition-all"
-            ></div>
-          </div>
-          <button
-            class="slider-next bg-transparent border-none text-white text-xl cursor-pointer transition-all w-10 h-10 rounded-full flex justify-center items-center hover:bg-primary-red"
-          >
-            <i class="fas fa-chevron-right"></i>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section py-24 bg-purple-black">
-      <div
-        class="section-header container mx-auto px-5 text-center"
-        data-aos="fade-up"
-      >
-        <h2
-          class="section-title text-4xl font-serif font-bold mb-4 relative inline-block"
-        >
-          Get In <span class="text-primary-red">Touch</span>
-        </h2>
-        <p class="section-subtitle text-lg text-gray-400 mb-5">
-          Send me a message like an ancient scroll
-        </p>
-        <div class="section-divider flex items-center justify-center mt-5">
-          <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
-          <div class="divider-icon text-primary-red text-xl">
-            <i class="fas fa-envelope"></i>
-          </div>
-          <div class="divider-line w-12 h-0.5 bg-primary-red mx-4"></div>
-        </div>
-      </div>
-
-      <div
-        class="contact-container container mx-auto px-5 flex flex-col lg:flex-row gap-12"
-      >
-        <div class="contact-info flex-1" data-aos="fade-right">
-          <h3 class="text-2xl font-serif font-bold mb-8 text-primary-red">
-            Contact Information
-          </h3>
-          <div class="info-item flex mb-6">
-            <div
-              class="info-icon w-12 h-12 bg-primary-red/20 rounded-full flex justify-center items-center mr-5 text-primary-red text-xl"
-            >
-              <i class="fas fa-map-marker-alt"></i>
-            </div>
-            <div class="info-content">
-              <h4 class="font-serif font-bold mb-1">Location</h4>
-              <p class="opacity-80">Tokyo, Japan</p>
-            </div>
-          </div>
-
-          <div class="info-item flex mb-6">
-            <div
-              class="info-icon w-12 h-12 bg-primary-red/20 rounded-full flex justify-center items-center mr-5 text-primary-red text-xl"
-            >
-              <i class="fas fa-envelope"></i>
-            </div>
-            <div class="info-content">
-              <h4 class="font-serif font-bold mb-1">Email</h4>
-              <p class="opacity-80">contact@samuraidev.com</p>
-            </div>
-          </div>
-
-          <div class="info-item flex mb-6">
-            <div
-              class="info-icon w-12 h-12 bg-primary-red/20 rounded-full flex justify-center items-center mr-5 text-primary-red text-xl"
-            >
-              <i class="fas fa-phone-alt"></i>
-            </div>
-            <div class="info-content">
-              <h4 class="font-serif font-bold mb-1">Phone</h4>
-              <p class="opacity-80">+81 80-1234-5678</p>
-            </div>
-          </div>
-
-          <div class="contact-social flex gap-4 mt-10">
-            <a
-              href="#"
-              class="social-icon w-10 h-10 rounded-full bg-white/10 flex justify-center items-center transition-all hover:bg-primary-red hover:-translate-y-1"
-            >
-              <i class="fab fa-github"></i>
-            </a>
-            <a
-              href="#"
-              class="social-icon w-10 h-10 rounded-full bg-white/10 flex justify-center items-center transition-all hover:bg-primary-red hover:-translate-y-1"
-            >
-              <i class="fab fa-linkedin"></i>
-            </a>
-            <a
-              href="#"
-              class="social-icon w-10 h-10 rounded-full bg-white/10 flex justify-center items-center transition-all hover:bg-primary-red hover:-translate-y-1"
-            >
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a
-              href="#"
-              class="social-icon w-10 h-10 rounded-full bg-white/10 flex justify-center items-center transition-all hover:bg-primary-red hover:-translate-y-1"
-            >
-              <i class="fab fa-instagram"></i>
-            </a>
-          </div>
-        </div>
-
-        <div
-          class="contact-form flex-1 bg-dark-black p-10 rounded-lg shadow-xl"
-          data-aos="fade-left"
-        >
-          <form id="contactForm">
-            <div class="form-group relative mb-6">
-              <input
-                type="text"
-                id="name"
-                name="name"
-                class="w-full px-4 py-4 bg-white/5 border border-white/10 rounded text-white font-sans transition-all focus:border-primary-red focus:outline-none"
-                required
-                placeholder=" "
-              />
-              <label
-                for="name"
-                class="absolute top-4 left-4 pointer-events-none opacity-70"
-                >Your Name</label
-              >
-            </div>
-
-            <div class="form-group relative mb-6">
-              <input
-                type="email"
-                id="email"
-                name="email"
-                class="w-full px-4 py-4 bg-white/5 border border-white/10 rounded text-white font-sans transition-all focus:border-primary-red focus:outline-none"
-                required
-                placeholder=" "
-              />
-              <label
-                for="email"
-                class="absolute top-4 left-4 pointer-events-none opacity-70"
-                >Your Email</label
-              >
-            </div>
-
-            <div class="form-group relative mb-6">
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                class="w-full px-4 py-4 bg-white/5 border border-white/10 rounded text-white font-sans transition-all focus:border-primary-red focus:outline-none"
-                required
-                placeholder=" "
-              />
-              <label
-                for="subject"
-                class="absolute top-4 left-4 pointer-events-none opacity-70"
-                >Subject</label
-              >
-            </div>
-
-            <div class="form-group relative mb-8">
-              <textarea
-                id="message"
-                name="message"
-                rows="5"
-                class="w-full px-4 py-4 bg-white/5 border border-white/10 rounded text-white font-sans transition-all focus:border-primary-red focus:outline-none min-h-[150px]"
-                required
-                placeholder=" "
-              ></textarea>
-              <label
-                for="message"
-                class="absolute top-4 left-4 pointer-events-none opacity-70"
-                >Your Message</label
-              >
-            </div>
-
-            <button
-              type="submit"
-              class="btn btn-primary inline-flex items-center px-8 py-3 bg-primary-red text-white rounded border-2 border-primary-red uppercase tracking-wider font-medium hover:bg-transparent hover:text-primary-red transition-all"
-            >
-              <span class="mr-2">Send Message</span>
-              <i class="fas fa-paper-plane"></i>
-            </button>
           </form>
         </div>
-      </div>
-    </section>
+        <div class="lg:w-1/2 lg:pl-12" data-aos="fade-left">
+          <div class="bg-darker-bg bg-opacity-70 p-8 rounded-lg border border-gray-700 h-full">
+            <h3 class="text-2xl font-bold font-orbitron mb-6 text-neon-blue">
+              CONTACT INFO
+            </h3>
 
-    <!-- Footer -->
-    <footer
-      class="samurai-footer bg-dark-black pt-16 pb-5 border-t border-primary-red/20"
-    >
-      <div
-        class="footer-content container mx-auto px-5 flex flex-col md:flex-row justify-between items-center mb-10 gap-8"
-      >
-        <div class="footer-logo flex items-center font-bold text-xl">
-          <span class="kanji text-3xl mr-2 text-primary-red">侍</span>
-          <span class="name tracking-wider">SAMURAI DEV</span>
+            <div class="space-y-6">
+              <div class="flex items-start">
+                <div class="flex-shrink-0 mt-1 text-neon-pink">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  </svg>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-bold">Location</h4>
+                  <p class="text-gray-400">San Francisco, CA</p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <div class="flex-shrink-0 mt-1 text-neon-blue">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                    </path>
+                  </svg>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-bold">Email</h4>
+                  <p class="text-gray-400">contact@gamedevportfolio.com</p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <div class="flex-shrink-0 mt-1 text-neon-pink">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                    </path>
+                  </svg>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-bold">Phone</h4>
+                  <p class="text-gray-400">+1 (555) 123-4567</p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <div class="flex-shrink-0 mt-1 text-neon-blue">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                  </svg>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-bold">Social Media</h4>
+                  <div class="flex space-x-4 mt-2">
+                    <a href="#" class="social-icon hover:text-neon-blue">
+                      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                          d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z">
+                        </path>
+                      </svg>
+                    </a>
+                    <a href="#" class="social-icon hover:text-neon-pink">
+                      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                          d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z">
+                        </path>
+                      </svg>
+                    </a>
+                    <a href="#" class="social-icon hover:text-neon-blue">
+                      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                          d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z">
+                        </path>
+                      </svg>
+                    </a>
+                    <a href="#" class="social-icon hover:text-neon-pink">
+                      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                          d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z">
+                        </path>
+                      </svg>
+                    </a>
+                    <a href="#" class="social-icon hover:text-neon-blue">
+                      <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                          d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z">
+                        </path>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
 
-        <div class="footer-links flex flex-wrap justify-center gap-5">
-          <a href="#home" class="transition-all hover:text-primary-red">Home</a>
-          <a href="#portfolio" class="transition-all hover:text-primary-red"
-            >Portfolio</a
-          >
-          <a href="#about" class="transition-all hover:text-primary-red"
-            >About</a
-          >
-          <a href="#skills" class="transition-all hover:text-primary-red"
-            >Skills</a
-          >
-          <a href="#testimonials" class="transition-all hover:text-primary-red"
-            >Testimonials</a
-          >
-          <a href="#contact" class="transition-all hover:text-primary-red"
-            >Contact</a
-          >
+    <!-- Animated contact decoration -->
+    <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-neon-blue rounded-full filter blur-3xl opacity-10"></div>
+    <div class="absolute -top-20 -left-20 w-64 h-64 bg-neon-pink rounded-full filter blur-3xl opacity-10"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 bg-darker-bg border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-6 md:mb-0">
+          <span class="text-neon-blue font-orbitron text-xl font-bold tracking-widest">GAME<span
+              class="text-neon-pink">DEV</span></span>
         </div>
-
-        <div class="footer-social flex gap-4">
-          <a
-            href="#"
-            class="w-10 h-10 rounded-full bg-white/5 flex justify-center items-center transition-all hover:bg-primary-red hover:-translate-y-1"
-          >
-            <i class="fab fa-github"></i>
-          </a>
-          <a
-            href="#"
-            class="w-10 h-10 rounded-full bg-white/5 flex justify-center items-center transition-all hover:bg-primary-red hover:-translate-y-1"
-          >
-            <i class="fab fa-linkedin"></i>
-          </a>
-          <a
-            href="#"
-            class="w-10 h-10 rounded-full bg-white/5 flex justify-center items-center transition-all hover:bg-primary-red hover:-translate-y-1"
-          >
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a
-            href="#"
-            class="w-10 h-10 rounded-full bg-white/5 flex justify-center items-center transition-all hover:bg-primary-red hover:-translate-y-1"
-          >
-            <i class="fab fa-instagram"></i>
-          </a>
+        <div class="flex flex-col items-center md:items-end">
+          <p class="text-gray-400 text-sm mb-4">
+            © 2023 Game Dev Portfolio. All rights reserved.
+          </p>
+          <div class="flex space-x-6">
+            <a href="#" class="text-gray-400 hover:text-neon-blue">
+              Privacy Policy
+            </a>
+            <a href="#" class="text-gray-400 hover:text-neon-pink">
+              Terms of Service
+            </a>
+            <a href="#" class="text-gray-400 hover:text-neon-blue">
+              Sitemap
+            </a>
+          </div>
         </div>
       </div>
+    </div>
+  </footer>
 
-      <div
-        class="footer-bottom text-center pt-5 border-t border-white/10 text-sm opacity-70"
-      >
-        <p>
-          &copy; 2023 Samurai Dev. All rights reserved.
-          <span class="text-primary-red">Code with honor.</span>
-        </p>
-      </div>
-    </footer>
+  <!-- Back to Top Button -->
+  <button id="back-to-top"
+    class="fixed bottom-8 right-8 bg-neon-blue bg-opacity-80 text-white p-3 rounded-full shadow-lg hover:bg-opacity-100 transition-all duration-300 hidden">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+    </svg>
+  </button>
 
-    <!-- Back to Top Button -->
-    <a
-      href="#home"
-      class="back-to-top fixed bottom-8 right-8 w-12 h-12 bg-primary-red text-white rounded-full flex justify-center items-center text-xl opacity-0 invisible transition-all hover:-translate-y-1 hover:shadow-lg active opacity-100 visible"
-    >
-      <i class="fas fa-arrow-up"></i>
-    </a>
+  <!-- Scripts -->
+  <!-- AOS Animation Library -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <!-- GSAP Animation Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
 
-    <!-- Main JavaScript -->
-    <script>
-      // Initialize AOS
-      AOS.init({
-        duration: 800,
-        easing: "ease-in-out",
-        once: true,
-      });
+  <!-- Three.js for 3D Background -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-      // Loading screen
-      window.addEventListener("load", function () {
-        const loadingScreen = document.querySelector(".loading-screen");
-        loadingScreen.style.opacity = "0";
-        setTimeout(() => {
-          loadingScreen.style.display = "none";
-        }, 1000);
+  <!-- Particles.js -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="js/particles-config.js"></script>
+  <script src="js/particles-loader.js"></script>
 
-        // Animate skill bars
-        const skillBars = document.querySelectorAll(".skill-progress");
-        skillBars.forEach((bar) => {
-          const width = bar.getAttribute("data-width");
-          bar.style.width = width;
-        });
-      });
+  <!-- Custom JS -->
+  <script src="js/main.js"></script>
+  <script src="js/threejs-scene.js"></script>
+</body>
 
-      // Mobile menu toggle
-      const hamburger = document.querySelector(".nav-hamburger");
-      const mobileMenu = document.querySelector(".mobile-menu");
-      const navLinks = document.querySelectorAll(".mobile-menu .nav-link");
-
-      hamburger.addEventListener("click", () => {
-        hamburger.classList.toggle("active");
-        mobileMenu.classList.toggle("left-[-100%]");
-        mobileMenu.classList.toggle("left-0");
-
-        // Toggle hamburger animation
-        const lines = hamburger.querySelectorAll(".hamburger-line");
-        if (hamburger.classList.contains("active")) {
-          lines[0].style.transform = "rotate(45deg) translate(5px, 5px)";
-          lines[1].style.opacity = "0";
-          lines[2].style.transform = "rotate(-45deg) translate(5px, -5px)";
-        } else {
-          lines[0].style.transform = "none";
-          lines[1].style.opacity = "1";
-          lines[2].style.transform = "none";
-        }
-      });
-
-      // Close mobile menu when clicking a link
-      navLinks.forEach((link) => {
-        link.addEventListener("click", () => {
-          mobileMenu.classList.add("left-[-100%]");
-          mobileMenu.classList.remove("left-0");
-          hamburger.classList.remove("active");
-
-          // Reset hamburger animation
-          const lines = hamburger.querySelectorAll(".hamburger-line");
-          lines[0].style.transform = "none";
-          lines[1].style.opacity = "1";
-          lines[2].style.transform = "none";
-        });
-      });
-
-      // Navbar scroll effect
-      window.addEventListener("scroll", function () {
-        const nav = document.querySelector(".samurai-nav");
-        if (window.scrollY > 50) {
-          nav.classList.add(
-            "scrolled",
-            "bg-dark-black/90",
-            "py-4",
-            "shadow-xl"
-          );
-        } else {
-          nav.classList.remove(
-            "scrolled",
-            "bg-dark-black/90",
-            "py-4",
-            "shadow-xl"
-          );
-        }
-
-        // Back to top button
-        const backToTop = document.querySelector(".back-to-top");
-        if (window.scrollY > 300) {
-          backToTop.classList.add("active");
-        } else {
-          backToTop.classList.remove("active");
-        }
-      });
-
-      // Portfolio filter
-      const filterBtns = document.querySelectorAll(".filter-btn");
-      const portfolioItems = document.querySelectorAll(".portfolio-item");
-
-      filterBtns.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          // Remove active class from all buttons
-          filterBtns.forEach((btn) =>
-            btn.classList.remove(
-              "active",
-              "bg-primary-red",
-              "border-primary-red"
-            )
-          );
-
-          // Add active class to clicked button
-          btn.classList.add("active", "bg-primary-red", "border-primary-red");
-
-          const filter = btn.textContent.trim().toLowerCase();
-
-          portfolioItems.forEach((item) => {
-            if (
-              filter === "all" ||
-              item.getAttribute("data-category") === filter
-            ) {
-              item.style.display = "block";
-            } else {
-              item.style.display = "none";
-            }
-          });
-        });
-      });
-
-      // Portfolio modal
-      const portfolioLinks = document.querySelectorAll(".portfolio-link");
-      const portfolioModal = document.querySelector(".portfolio-modal");
-      const modalClose = document.querySelector(".modal-close");
-
-      portfolioLinks.forEach((link) => {
-        link.addEventListener("click", (e) => {
-          e.preventDefault();
-          portfolioModal.classList.add("flex");
-          setTimeout(() => {
-            portfolioModal.classList.add("opacity-100");
-          }, 10);
-        });
-      });
-
-      modalClose.addEventListener("click", () => {
-        portfolioModal.classList.remove("opacity-100");
-        setTimeout(() => {
-          portfolioModal.classList.remove("flex");
-        }, 300);
-      });
-
-      // Testimonial slider
-      let currentSlide = 0;
-      const slides = document.querySelectorAll(".testimonial-slide");
-      const dots = document.querySelectorAll(".slider-dot");
-      const prevBtn = document.querySelector(".slider-prev");
-      const nextBtn = document.querySelector(".slider-next");
-
-      function showSlide(index) {
-        slides.forEach((slide) =>
-          slide.classList.remove("active", "opacity-100")
-        );
-        dots.forEach((dot) => dot.classList.remove("active", "bg-primary-red"));
-
-        slides[index].classList.add("active", "opacity-100");
-        dots[index].classList.add("active", "bg-primary-red");
-        currentSlide = index;
-      }
-
-      prevBtn.addEventListener("click", () => {
-        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-        showSlide(currentSlide);
-      });
-
-      nextBtn.addEventListener("click", () => {
-        currentSlide = (currentSlide + 1) % slides.length;
-        showSlide(currentSlide);
-      });
-
-      dots.forEach((dot, index) => {
-        dot.addEventListener("click", () => {
-          showSlide(index);
-        });
-      });
-
-      // Initialize first slide
-      showSlide(0);
-
-      // Skills radar chart
-      const ctx = document.getElementById("skillsRadarChart").getContext("2d");
-      const skillsChart = new Chart(ctx, {
-        type: "radar",
-        data: {
-          labels: [
-            "HTML/CSS",
-            "JavaScript",
-            "React",
-            "Node.js",
-            "UI/UX",
-            "Python",
-          ],
-          datasets: [
-            {
-              label: "Skill Level",
-              data: [95, 90, 85, 80, 75, 70],
-              backgroundColor: "rgba(193, 39, 45, 0.2)",
-              borderColor: "rgba(193, 39, 45, 1)",
-              borderWidth: 2,
-              pointBackgroundColor: "rgba(193, 39, 45, 1)",
-              pointBorderColor: "#fff",
-              pointHoverBackgroundColor: "#fff",
-              pointHoverBorderColor: "rgba(193, 39, 45, 1)",
-            },
-          ],
-        },
-        options: {
-          scales: {
-            r: {
-              angleLines: {
-                color: "rgba(255, 255, 255, 0.1)",
-              },
-              grid: {
-                color: "rgba(255, 255, 255, 0.1)",
-              },
-              pointLabels: {
-                color: "white",
-              },
-              ticks: {
-                backdropColor: "transparent",
-                color: "rgba(255, 255, 255, 0.5)",
-                suggestedMin: 50,
-                suggestedMax: 100,
-              },
-            },
-          },
-          plugins: {
-            legend: {
-              display: false,
-            },
-          },
-          elements: {
-            line: {
-              tension: 0.1,
-            },
-          },
-        },
-      });
-
-      // Form submission
-      const contactForm = document.getElementById("contactForm");
-      contactForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-        // Here you would normally send the form data to a server
-        alert("Message sent successfully!");
-        this.reset();
-      });
-
-      // Initialize particles.js
-      if (document.getElementById("particles-js")) {
-        particlesJS("particles-js", {
-          particles: {
-            number: {
-              value: 80,
-              density: {
-                enable: true,
-                value_area: 800,
-              },
-            },
-            color: {
-              value: "#c1272d",
-            },
-            shape: {
-              type: "circle",
-              stroke: {
-                width: 0,
-                color: "#000000",
-              },
-              polygon: {
-                nb_sides: 5,
-              },
-            },
-            opacity: {
-              value: 0.5,
-              random: false,
-              anim: {
-                enable: false,
-                speed: 1,
-                opacity_min: 0.1,
-                sync: false,
-              },
-            },
-            size: {
-              value: 3,
-              random: true,
-              anim: {
-                enable: false,
-                speed: 40,
-                size_min: 0.1,
-                sync: false,
-              },
-            },
-            line_linked: {
-              enable: true,
-              distance: 150,
-              color: "#c1272d",
-              opacity: 0.4,
-              width: 1,
-            },
-            move: {
-              enable: true,
-              speed: 2,
-              direction: "none",
-              random: false,
-              straight: false,
-              out_mode: "out",
-              bounce: false,
-              attract: {
-                enable: false,
-                rotateX: 600,
-                rotateY: 1200,
-              },
-            },
-          },
-          interactivity: {
-            detect_on: "canvas",
-            events: {
-              onhover: {
-                enable: true,
-                mode: "grab",
-              },
-              onclick: {
-                enable: true,
-                mode: "push",
-              },
-              resize: true,
-            },
-            modes: {
-              grab: {
-                distance: 140,
-                line_linked: {
-                  opacity: 1,
-                },
-              },
-              bubble: {
-                distance: 400,
-                size: 40,
-                duration: 2,
-                opacity: 8,
-                speed: 3,
-              },
-              repulse: {
-                distance: 200,
-                duration: 0.4,
-              },
-              push: {
-                particles_nb: 4,
-              },
-              remove: {
-                particles_nb: 2,
-              },
-            },
-          },
-          retina_detect: true,
-        });
-      }
-    </script>
-  </body>
 </html>

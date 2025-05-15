@@ -1,0 +1,26 @@
+{
+  "name": "hayaxx.github.io",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000h\u0000a\u0000y\u0000a\u0000x\u0000x\u0000.\u0000g\u0000i\u0000t\u0000h\u0000u\u0000b\u0000.\u0000i\u0000o\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HayaXx/hayaxx.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HayaXx/hayaxx.github.io/issues"
+  },
+  "homepage": "https://github.com/HayaXx/hayaxx.github.io#readme",
+  "devDependencies": {
+    "tailwindcss": "^4.1.6"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.6"
+  }
+}
