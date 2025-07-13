@@ -6,319 +6,646 @@
     <title>HayaXx - Gaming & Anime Universe</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-neon: #00f5ff;
             --secondary-neon: #ff006e;
             --accent-gold: #ffd700;
+            --accent-purple: #8b5cf6;
             --dark-bg: #0a0a0a;
-            --card-bg: rgba(20, 20, 30, 0.8);
-            --gradient-neon: linear-gradient(45deg, var(--primary-neon), var(--secondary-neon), var(--accent-gold));
+            --card-bg: rgba(15, 15, 25, 0.95);
+            --glass-bg: rgba(20, 20, 30, 0.85);
+            --gradient-neon: linear-gradient(135deg, var(--primary-neon), var(--secondary-neon), var(--accent-gold));
+            --gradient-purple: linear-gradient(135deg, var(--accent-purple), var(--secondary-neon));
+            --gradient-cyber: linear-gradient(135deg, #00f5ff, #ff006e, #8b5cf6, #ffd700);
         }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Noto Sans JP', sans-serif;
             background-color: var(--dark-bg);
-            color: #e0e0e0;
+            color: #f0f0f0;
+            overflow-x: hidden;
+            line-height: 1.6;
         }
+
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .font-orbitron { font-family: 'Orbitron', monospace; }
+
+        /* Enhanced Animated Background */
         .animated-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: -2;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 245, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 0, 110, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 60% 70%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            animation: bgShift 30s ease-in-out infinite;
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: 
+                linear-gradient(45deg, transparent 30%, rgba(0, 245, 255, 0.03) 50%, transparent 70%),
+                linear-gradient(-45deg, transparent 30%, rgba(255, 0, 110, 0.03) 50%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(90deg) scale(1.1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            75% { transform: rotate(270deg) scale(1.1); }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        /* Floating Particles */
+        .particles {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: -1;
-            background: radial-gradient(circle at 20% 80%, rgba(0, 245, 255, 0.08) 0%, transparent 40%),
-                        radial-gradient(circle at 80% 20%, rgba(255, 0, 110, 0.08) 0%, transparent 40%),
-                        radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.08) 0%, transparent 40%);
-            animation: bgShift 25s ease-in-out infinite;
+            pointer-events: none;
         }
-        @keyframes bgShift {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.2); }
+
+        .particle {
+            position: absolute;
+            width: 2px; height: 2px;
+            background: var(--primary-neon);
+            border-radius: 50%;
+            animation: float 20s linear infinite;
         }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Enhanced Text Effects */
         .neon-text-gradient {
-            background: var(--gradient-neon);
+            background: var(--gradient-cyber);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease-in-out infinite;
         }
-        .text-primary-neon { color: var(--primary-neon); }
-        .hover-glow:hover { box-shadow: 0 0 25px rgba(0, 245, 255, 0.4); }
 
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.5),
+                         0 0 20px rgba(0, 245, 255, 0.3),
+                         0 0 30px rgba(0, 245, 255, 0.1);
+        }
+
+        .typing-animation {
+            overflow: hidden;
+            border-right: 3px solid var(--primary-neon);
+            white-space: nowrap;
+            animation: typing 3s steps(40, end), blink 1s infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        /* Enhanced Glass Effect */
+        .glass-effect {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(120%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-effect-strong {
+            background: var(--card-bg);
+            backdrop-filter: blur(25px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Enhanced Project Cards */
         .project-card {
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .project-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-        .project-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0;
-            height: 3px; background: var(--gradient-neon);
-            transform: scaleX(0); transform-origin: left;
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .project-card:hover::before { transform: scaleX(1); }
-
-        .glass-effect {
-            background: rgba(20, 20, 30, 0.6);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
         }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gradient-cyber);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.02), rgba(255, 0, 110, 0.02));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5),
+                        0 0 30px rgba(0, 245, 255, 0.1);
+            border-color: rgba(0, 245, 255, 0.3);
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .project-card:hover::after {
+            opacity: 1;
+        }
+
+        /* Enhanced Buttons */
+        .btn-primary {
+            background: var(--gradient-cyber);
+            background-size: 200% 200%;
+            border: none;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 245, 255, 0.4);
+        }
+
+        /* Enhanced Tech Badges */
         .tech-badge {
-            background: linear-gradient(45deg, rgba(0, 245, 255, 0.15), rgba(255, 0, 110, 0.15));
-            border: 1px solid rgba(0, 245, 255, 0.2);
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(255, 0, 110, 0.2));
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        .mobile-menu {
+
+        .tech-badge::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
             transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
+            transition: transform 0.5s ease;
         }
-        .mobile-menu.active { transform: translateX(0); }
+
+        .tech-badge:hover::before {
+            transform: translateX(100%);
+        }
+
+        .tech-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
+        }
+
+        /* Scroll Reveal Animations */
         .scroll-reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
+
         .scroll-reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--dark-bg); }
-        ::-webkit-scrollbar-thumb { background: var(--gradient-neon); border-radius: 4px; }
+
+        .scroll-reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scroll-reveal-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scroll-reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .scroll-reveal-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Enhanced Mobile Menu */
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(25px);
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu-item {
+            transform: translateX(-30px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu.active .mobile-menu-item {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .mobile-menu.active .mobile-menu-item:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-menu.active .mobile-menu-item:nth-child(2) { transition-delay: 0.2s; }
+        .mobile-menu.active .mobile-menu-item:nth-child(3) { transition-delay: 0.3s; }
+        .mobile-menu.active .mobile-menu-item:nth-child(4) { transition-delay: 0.4s; }
+
+        /* Enhanced Form Styles */
+        .form-input {
+            background: rgba(30, 30, 40, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary-neon);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
+            outline: none;
+        }
+
+        /* Enhanced Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-cyber);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gradient-purple);
+        }
+
+        /* Loading Animation */
+        .loading-dots {
+            animation: loadingDots 1.5s infinite;
+        }
+
+        @keyframes loadingDots {
+            0%, 20% { color: var(--primary-neon); }
+            40% { color: var(--secondary-neon); }
+            60% { color: var(--accent-gold); }
+            80%, 100% { color: var(--accent-purple); }
+        }
+
+        /* Hero Section Enhancements */
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 900;
+            line-height: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        /* Social Icons */
+        .social-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-cyber);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 25px rgba(0, 245, 255, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .project-card {
+                margin-bottom: 2rem;
+            }
+        }
+
+        /* Performance Optimizations */
+        .will-change-transform {
+            will-change: transform;
+        }
+
+        .will-change-opacity {
+            will-change: opacity;
+        }
     </style>
 </head>
-<body class="text-white overflow-x-hidden">
+<body class="text-white">
+    <!-- Enhanced Background -->
     <div class="animated-bg"></div>
+    <div class="particles" id="particles"></div>
 
-    <nav class="fixed top-0 w-full p-4 z-50 glass-effect">
+    <!-- Enhanced Navigation -->
+    <nav class="fixed top-0 w-full p-4 z-50 glass-effect will-change-transform">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="#home" class="text-2xl font-bold font-mono neon-text-gradient">HayaXx</a>
+            <a href="#home" class="text-3xl font-bold font-orbitron neon-text-gradient hover:scale-105 transition-transform duration-300">
+                HayaXx
+            </a>
             <div class="hidden md:flex space-x-8">
-                <a href="#about" class="hover:text-primary-neon transition-colors duration-300">About</a>
-                <a href="#services" class="hover:text-primary-neon transition-colors duration-300">Services</a>
-                <a href="#projects" class="hover:text-primary-neon transition-colors duration-300">Projects</a>
-                <a href="#contact" class="hover:text-primary-neon transition-colors duration-300">Contact</a>
+                <a href="#about" class="nav-link hover:text-primary-neon transition-all duration-300 font-medium relative">
+                    About
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-pink-500 transition-all duration-300 hover:w-full"></span>
+                </a>
+                <a href="#services" class="nav-link hover:text-primary-neon transition-all duration-300 font-medium relative">
+                    Services
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-pink-500 transition-all duration-300 hover:w-full"></span>
+                </a>
+                <a href="#projects" class="nav-link hover:text-primary-neon transition-all duration-300 font-medium relative">
+                    Projects
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-pink-500 transition-all duration-300 hover:w-full"></span>
+                </a>
+                <a href="#contact" class="nav-link hover:text-primary-neon transition-all duration-300 font-medium relative">
+                    Contact
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-pink-500 transition-all duration-300 hover:w-full"></span>
+                </a>
             </div>
-            <button id="mobile-menu-btn" class="md:hidden text-white text-xl z-50">
+            <button id="mobile-menu-btn" class="md:hidden text-white text-2xl z-50 hover:text-primary-neon transition-colors duration-300">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
     </nav>
 
-    <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 h-full w-64 glass-effect z-40 md:hidden">
-        <ul class="pt-24 px-6 space-y-6">
-            <li><a href="#about" class="mobile-link block text-white hover:text-primary-neon transition-colors">About</a></li>
-            <li><a href="#services" class="mobile-link block text-white hover:text-primary-neon transition-colors">Services</a></li>
-            <li><a href="#projects" class="mobile-link block text-white hover:text-primary-neon transition-colors">Projects</a></li>
-            <li><a href="#contact" class="mobile-link block text-white hover:text-primary-neon transition-colors">Contact</a></li>
-        </ul>
+    <!-- Enhanced Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 h-full w-80 glass-effect-strong z-40 md:hidden">
+        <div class="pt-24 px-8">
+            <div class="space-y-6">
+                <div class="mobile-menu-item">
+                    <a href="#about" class="mobile-link block text-white hover:text-primary-neon transition-colors duration-300 text-xl font-medium py-3">
+                        <i class="fas fa-user mr-3"></i>About
+                    </a>
+                </div>
+                <div class="mobile-menu-item">
+                    <a href="#services" class="mobile-link block text-white hover:text-primary-neon transition-colors duration-300 text-xl font-medium py-3">
+                        <i class="fas fa-cogs mr-3"></i>Services
+                    </a>
+                </div>
+                <div class="mobile-menu-item">
+                    <a href="#projects" class="mobile-link block text-white hover:text-primary-neon transition-colors duration-300 text-xl font-medium py-3">
+                        <i class="fas fa-folder-open mr-3"></i>Projects
+                    </a>
+                </div>
+                <div class="mobile-menu-item">
+                    <a href="#contact" class="mobile-link block text-white hover:text-primary-neon transition-colors duration-300 text-xl font-medium py-3">
+                        <i class="fas fa-envelope mr-3"></i>Contact
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <main class="relative z-10">
-        <section id="home" class="min-h-screen flex items-center justify-center text-center px-4">
-            <div>
-                <h1 class="text-6xl md:text-8xl font-black font-mono neon-text-gradient mb-6 animate-pulse">HayaXx</h1>
-                <p class="text-xl md:text-2xl text-gray-300 mb-8 scroll-reveal">
-                    ゲーム開発者 & アニメ愛好家<br>
-                    Game Developer & Anime Enthusiast
+        <!-- Enhanced Hero Section -->
+        <section id="home" class="min-h-screen flex items-center justify-center text-center px-4 relative">
+            <div class="will-change-transform will-change-opacity">
+                <h1 class="hero-title font-orbitron neon-text-gradient text-glow animate-pulse">
+                    HayaXx
+                </h1>
+                <p class="hero-subtitle text-gray-300 scroll-reveal">
+                    <span class="typing-animation">ゲーム開発者 & アニメ愛好家</span><br>
+                    <span class="text-lg opacity-80">Game Developer & Anime Enthusiast</span>
                 </p>
-                <a href="#projects" class="inline-block bg-gradient-to-r from-cyan-400 to-pink-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform duration-300 hover-glow scroll-reveal">
-                    探索を始める / Start Exploring
-                </a>
+                <div class="scroll-reveal">
+                    <a href="#projects" class="btn-primary inline-block px-10 py-4 rounded-full font-bold text-lg will-change-transform">
+                        <i class="fas fa-rocket mr-2"></i>
+                        探索を始める / Start Exploring
+                    </a>
+                </div>
             </div>
         </section>
 
-        <section id="about" class="py-24 px-4 max-w-7xl mx-auto scroll-reveal">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 neon-text-gradient font-mono">私について / About Me</h2>
+        <!-- Enhanced About Section -->
+        <section id="about" class="py-32 px-4 max-w-7xl mx-auto">
+            <div class="scroll-reveal text-center mb-20">
+                <h2 class="text-5xl md:text-6xl font-bold neon-text-gradient font-orbitron mb-6">
+                    私について / About Me
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Passionate creator blending technology with art to build immersive digital experiences
+                </p>
+            </div>
+            
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="project-card p-8 rounded-2xl text-center">
-                    <div class="text-5xl mb-4">🎮</div>
-                    <h3 class="text-xl font-bold mb-4 font-mono text-primary-neon">Game Development</h3>
-                    <p class="text-gray-300">Creating immersive gaming experiences with cutting-edge technology and innovative gameplay mechanics.</p>
+                <div class="scroll-reveal-left project-card p-8 rounded-3xl text-center will-change-transform">
+                    <div class="text-6xl mb-6">🎮</div>
+                    <h3 class="text-2xl font-bold mb-4 font-orbitron neon-text-gradient">Game Development</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Creating immersive gaming experiences with cutting-edge technology and innovative gameplay mechanics that captivate players worldwide.
+                    </p>
                 </div>
-                <div class="project-card p-8 rounded-2xl text-center">
-                    <div class="text-5xl mb-4">🎨</div>
-                    <h3 class="text-xl font-bold mb-4 font-mono text-primary-neon">Anime Art</h3>
-                    <p class="text-gray-300">Passionate about anime culture and creating stunning visual content inspired by Japanese aesthetics.</p>
+                
+                <div class="scroll-reveal project-card p-8 rounded-3xl text-center will-change-transform">
+                    <div class="text-6xl mb-6">🎨</div>
+                    <h3 class="text-2xl font-bold mb-4 font-orbitron neon-text-gradient">Anime Art</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Passionate about anime culture and creating stunning visual content inspired by Japanese aesthetics and storytelling traditions.
+                    </p>
                 </div>
-                 <div class="project-card p-8 rounded-2xl text-center">
-                    <div class="text-5xl mb-4">💻</div>
-                    <h3 class="text-xl font-bold mb-4 font-mono text-primary-neon">Web Development</h3>
-                    <p class="text-gray-300">Building modern, responsive websites with the latest technologies and frameworks.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="services" class="py-24 px-4 max-w-7xl mx-auto scroll-reveal">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 neon-text-gradient font-mono">サービス / Services</h2>
-             <div class="grid md:grid-cols-3 gap-8">
-                <div class="project-card p-8 rounded-2xl text-center">
-                    <div class="text-5xl mb-4">🚀</div>
-                    <h3 class="text-xl font-bold mb-4 font-mono text-primary-neon">Game Design</h3>
-                    <p class="text-gray-300">From concept to completion, I create engaging games that captivate players and deliver memorable experiences.</p>
-                </div>
-                <div class="project-card p-8 rounded-2xl text-center">
-                    <div class="text-5xl mb-4">🎭</div>
-                    <h3 class="text-xl font-bold mb-4 font-mono text-primary-neon">Character Design</h3>
-                    <p class="text-gray-300">Designing unique characters with anime-inspired aesthetics for games, manga, and digital media.</p>
-                </div>
-                <div class="project-card p-8 rounded-2xl text-center">
-                    <div class="text-5xl mb-4">⚡</div>
-                    <h3 class="text-xl font-bold mb-4 font-mono text-primary-neon">Performance Optimization</h3>
-                    <p class="text-gray-300">Optimizing games and applications for maximum performance across all platforms and devices.</p>
+                
+                <div class="scroll-reveal-right project-card p-8 rounded-3xl text-center will-change-transform">
+                    <div class="text-6xl mb-6">💻</div>
+                    <h3 class="text-2xl font-bold mb-4 font-orbitron neon-text-gradient">Web Development</h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Building modern, responsive websites with the latest technologies and frameworks for optimal user experience.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <section id="projects" class="py-24 px-4 max-w-7xl mx-auto scroll-reveal">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 neon-text-gradient font-mono">My Projects</h2>
+        <!-- Enhanced Services Section -->
+        <section id="services" class="py-32 px-4 max-w-7xl mx-auto">
+            <div class="scroll-reveal text-center mb-20">
+                <h2 class="text-5xl md:text-6xl font-bold neon-text-gradient font-orbitron mb-6">
+                    サービス / Services
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Comprehensive digital solutions tailored to bring your vision to life
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="scroll-reveal-left project-card p-8 rounded-3xl text-center will-change-transform">
+                    <div class="text-6xl mb-6">🚀</div>
+                    <h3 class="text-2xl font-bold mb-4 font-orbitron neon-text-gradient">Game Design</h3>
+                    <p class="text-gray-300 leading-relaxed mb-6">
+                        From concept to completion, I create engaging games that captivate players and deliver memorable experiences across all platforms.
+                    </p>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <span class="tech-badge px-3 py-1 rounded-full text-sm font-bold">Unity</span>
+                        <span class="tech-badge px-3 py-1 rounded-full text-sm font-bold">Unreal</span>
+                        <span class="tech-badge px-3 py-1 rounded-full text-sm font-bold">C#</span>
+                    </div>
+                </div>
+                
+                <div class="scroll-reveal project-card p-8 rounded-3xl text-center will-change-transform">
+                    <div class="text-6xl mb-6">🎭</div>
+                    <h3 class="text-2xl font-bold mb-4 font-orbitron neon-text-gradient">Character Design</h3>
+                    <p class="text-gray-300 leading-relaxed mb-6">
+                        Designing unique characters with anime-inspired aesthetics for games, manga, and digital media projects.
+                    </p>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <span class="tech-badge px-3 py-1 rounded-full text-sm font-bold">Photoshop</span>
+                        <span class="tech-badge px-3 py-1 rounded-full text-sm font-bold">Blender</span>
+                        <span class="tech-badge px-3 py-1 rounded-full text-sm font-bold">Illustrator</span>
+                    </div>
+                </div>
+                
+                <div class="scroll-reveal-right project-card p-8 rounded-3xl text-center will-change-transform">
+                    <div class="text-6xl mb-6">⚡</div>
+                    <h3 class="text-2xl font-bold mb-4 font-orbitron neon-text-gradient">Performance Optimization</h3>
+                    <p class="text-gray-300 leading-relaxed mb-6">
+                        Optimizing games and applications for maximum performance across all platforms and devices.
+                    </p>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <span class="tech-badge px-3 py-1 rounded-full text-sm font-bold">Optimization</span>
+                        <span class="tech-badge px-3 py-1 rounded-full text-sm font-bold">Profiling</span>
+                        <span class="tech-badge px-3 py-1 rounded-full text-sm font-bold">Debug</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enhanced Projects Section -->
+        <section id="projects" class="py-32 px-4 max-w-7xl mx-auto">
+            <div class="scroll-reveal text-center mb-20">
+                <h2 class="text-5xl md:text-6xl font-bold neon-text-gradient font-orbitron mb-6">
+                    My Projects
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Showcasing my latest works and creative endeavors
+                </p>
+            </div>
             
             <div id="projects-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <p id="loading-indicator" class="col-span-full text-center text-primary-neon">Fetching projects from GitHub...</p>
+                <div class="col-span-full text-center">
+                    <div class="loading-dots text-2xl font-bold text-primary-neon">
+                        <i class="fas fa-code mr-2"></i>
+                        Fetching projects from GitHub...
+                    </div>
+                </div>
             </div>
 
-            <div class="text-center mt-16">
-                <a href="https://github.com/HayaXx" target="_blank" class="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform duration-300 hover-glow">
+            <div class="text-center mt-16 scroll-reveal">
+                <a href="https://github.com/HayaXx" target="_blank" class="btn-primary inline-block px-10 py-4 rounded-full font-bold text-lg will-change-transform">
                     <i class="fab fa-github mr-2"></i>View All on GitHub
                 </a>
             </div>
         </section>
 
-        <section id="contact" class="py-24 px-4 max-w-4xl mx-auto scroll-reveal">
-            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 neon-text-gradient font-mono">お問い合わせ / Contact</h2>
-            <form class="glass-effect p-8 rounded-2xl">
-                <div class="mb-6">
-                    <label class="block text-white mb-2 font-bold">Name / 名前</label>
-                    <input type="text" class="w-full p-4 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-primary-neon focus:outline-none transition-colors">
-                </div>
-                <div class="mb-6">
-                    <label class="block text-white mb-2 font-bold">Email / メール</label>
-                    <input type="email" class="w-full p-4 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-primary-neon focus:outline-none transition-colors">
-                </div>
-                <div class="mb-6">
-                    <label class="block text-white mb-2 font-bold">Message / メッセージ</label>
-                    <textarea rows="5" class="w-full p-4 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-primary-neon focus:outline-none transition-colors"></textarea>
-                </div>
-                <button type="submit" class="w-full bg-gradient-to-r from-cyan-400 to-pink-500 text-white py-4 rounded-lg font-bold text-lg hover:scale-105 transition-transform duration-300">
-                    送信 / Send Message
-                </button>
-            </form>
-        </section>
-    </main>
-
-    <footer class="py-12 text-center glass-effect mt-24">
-        <div class="flex justify-center space-x-6 mb-6">
-            <a href="https://github.com/HayaXx" target="_blank" class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                <i class="fab fa-github text-xl"></i>
-            </a>
-             </div>
-        <p class="text-gray-400">&copy; 2025 HayaXx. All rights reserved.</p>
-    </footer>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-
-        // --- GitHub Projects ---
-        const GITHUB_USERNAME = 'HayaXx'; // <-- GANTI DENGAN USERNAME GITHUB ANDA
-
-        async function fetchGitHubProjects() {
-            const container = document.getElementById('projects-container');
-            const loadingIndicator = document.getElementById('loading-indicator');
+        <!-- Enhanced Contact Section -->
+        <section id="contact" class="py-32 px-4 max-w-4xl mx-auto">
+            <div class="scroll-reveal text-center mb-16">
+                <h2 class="text-5xl md:text-6xl font-bold neon-text-gradient font-orbitron mb-6">
+                    お問い合わせ / Contact
+                </h2>
+                <p class="text-xl text-gray-300">
+                    Let's collaborate and create something amazing together
+                </p>
+            </div>
             
-            try {
-                // Fetch repos, sorted by last push
-                const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=pushed&per_page=6`);
-                if (!response.ok) {
-                    throw new Error(`GitHub API Error: ${response.status}`);
-                }
-                const repos = await response.json();
+            <form class="glass-effect-strong p-10 rounded-3xl scroll-reveal">
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-white mb-3 font-bold text-lg">
+                            <i class="fas fa-user mr-2 text-primary-neon"></i>
+                            Name / 名前
+                        </label>
+                        <input type="text" class="form-input w-full p-4 rounded-xl text-white" placeholder="Enter your name">
+                    </div>
+                    <div>
+                        <label class="block text-white mb-3 font-bold text-lg">
+                            <i class="fas fa-envelope mr-2 text-primary-neon"></i>
+                            Email / メール
+                        </label>
+                        <input type="email" class="form-input w-full p-4 rounded-xl text-white" placeholder="Enter your email">
+                    </div>
+                </div>
                 
-                // Hide loading indicator
-                if (loadingIndicator) loadingIndicator.style.display = 'none';
-
-                // Render projects
-                container.innerHTML = repos.map(repo => {
-                    // Smart image URL: uses a service to generate an image from your repo name.
-                    // You can also set a "Social media preview" in your repo settings for a custom image.
-                    const imageUrl = `https://socialify.git.ci/${GITHUB_USERNAME}/${repo.name}/image?theme=Dark&font=Inter&pattern=Plus`;
-                    
-                    const description = repo.description || 'No description provided.';
-                    const topics = repo.topics || [];
-
-                    return `
-                        <div class="project-card p-6 rounded-2xl relative overflow-hidden flex flex-col">
-                            <div class="mb-4">
-                                <img src="${imageUrl}" alt="${repo.name}" class="w-full h-48 object-cover rounded-lg bg-gray-800">
-                            </div>
-                            <div class="flex-grow">
-                                <h3 class="text-xl font-bold mb-2 text-primary-neon font-mono">${repo.name}</h3>
-                                <p class="text-gray-300 mb-4 text-sm">${description}</p>
-                            </div>
-                            <div class="flex-none">
-                                <div class="flex flex-wrap gap-2 mb-4">
-                                    ${topics.map(tech => `<span class="tech-badge px-3 py-1 rounded-full text-xs font-bold">${tech}</span>`).join('')}
-                                    ${topics.length === 0 ? `<span class="tech-badge px-3 py-1 rounded-full text-xs font-bold">code</span>` : ''}
-                                </div>
-                                <div class="flex justify-between items-center mt-auto">
-                                    <a href="${repo.html_url}" target="_blank" class="text-cyan-400 hover:text-cyan-200 transition-colors duration-300">
-                                        <i class="fab fa-github mr-2"></i>View Code
-                                    </a>
-                                    ${repo.homepage ? `
-                                    <a href="${repo.homepage}" target="_blank" class="text-pink-400 hover:text-pink-200 transition-colors duration-300">
-                                        <i class="fas fa-external-link-alt mr-2"></i>Live Demo
-                                    </a>` : ''}
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-
-            } catch (error) {
-                console.error("Failed to fetch projects:", error);
-                if (loadingIndicator) {
-                    loadingIndicator.textContent = 'Failed to load projects. Please check the console.';
-                    loadingIndicator.style.color = 'var(--secondary-neon)';
-                }
-            }
-        }
-
-        // --- Mobile Menu ---
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-        
-        function toggleMobileMenu() {
-            mobileMenu.classList.toggle('active');
-            // Change icon
-            const icon = mobileMenuBtn.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
-        }
-
-        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-        mobileLinks.forEach(link => link.addEventListener('click', toggleMobileMenu));
-
-
-        // --- Scroll Animations ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); // Animate only once
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.scroll-reveal').forEach(el => {
-            observer.observe(el);
-        });
-
-        // --- Initial Load ---
-        fetchGitHubProjects();
-    });
-    </script>
-</body>
-</html>
+                <div
