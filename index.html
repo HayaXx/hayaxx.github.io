@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,499 +14,311 @@
             --accent-gold: #ffd700;
             --dark-bg: #0a0a0a;
             --card-bg: rgba(20, 20, 30, 0.8);
-            --gradient-neon: linear-gradient(45deg, #00f5ff, #ff006e, #ffd700);
+            --gradient-neon: linear-gradient(45deg, var(--primary-neon), var(--secondary-neon), var(--accent-gold));
         }
-
         body {
             font-family: 'Noto Sans JP', sans-serif;
-            background: var(--dark-bg);
+            background-color: var(--dark-bg);
+            color: #e0e0e0;
         }
-
         .animated-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: -1;
-            background: radial-gradient(circle at 20% 80%, rgba(0, 245, 255, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(255, 0, 110, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
-            animation: bgShift 20s ease-in-out infinite;
+            background: radial-gradient(circle at 20% 80%, rgba(0, 245, 255, 0.08) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 0, 110, 0.08) 0%, transparent 40%),
+                        radial-gradient(circle at 40% 40%, rgba(255, 215, 0, 0.08) 0%, transparent 40%);
+            animation: bgShift 25s ease-in-out infinite;
         }
-
         @keyframes bgShift {
             0%, 100% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.1); }
+            50% { transform: rotate(180deg) scale(1.2); }
         }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: var(--primary-neon);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-            opacity: 0.7;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-
-        .neon-text {
+        .neon-text-gradient {
             background: var(--gradient-neon);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
-        .hover-glow:hover {
-            box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
-        }
+        .text-primary-neon { color: var(--primary-neon); }
+        .hover-glow:hover { box-shadow: 0 0 25px rgba(0, 245, 255, 0.4); }
 
         .project-card {
             background: var(--card-bg);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
         .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 245, 255, 0.2);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
-
         .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gradient-neon);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 3px; background: var(--gradient-neon);
+            transform: scaleX(0); transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-
-        .project-card:hover::before {
-            transform: scaleX(1);
-        }
+        .project-card:hover::before { transform: scaleX(1); }
 
         .glass-effect {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(20, 20, 30, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
         .tech-badge {
-            background: linear-gradient(45deg, rgba(0, 245, 255, 0.2), rgba(255, 0, 110, 0.2));
-            border: 1px solid rgba(0, 245, 255, 0.3);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(45deg, rgba(0, 245, 255, 0.15), rgba(255, 0, 110, 0.15));
+            border: 1px solid rgba(0, 245, 255, 0.2);
         }
-
         .mobile-menu {
             transform: translateX(-100%);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease-in-out;
         }
-
-        .mobile-menu.active {
-            transform: translateX(0);
-        }
-
-        .fade-in {
+        .mobile-menu.active { transform: translateX(0); }
+        .scroll-reveal {
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.6s ease;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
-
-        .fade-in.visible {
+        .scroll-reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--dark-bg);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--gradient-neon);
-            border-radius: 4px;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--gradient-neon); border-radius: 4px; }
     </style>
 </head>
 <body class="text-white overflow-x-hidden">
     <div class="animated-bg"></div>
-    
-    <!-- Navigation -->
+
     <nav class="fixed top-0 w-full p-4 z-50 glass-effect">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="#home" class="text-2xl font-bold font-mono neon-text">HayaXx</a>
-            <ul class="nav-links hidden md:flex space-x-8">
-                <li><a href="#home" class="hover:text-cyan-300 transition-colors">Home</a></li>
-                <li><a href="#about" class="hover:text-cyan-300 transition-colors">About</a></li>
-                <li><a href="#services" class="hover:text-cyan-300 transition-colors">Services</a></li>
-                <li><a href="#projects" class="hover:text-cyan-300 transition-colors">My Projects</a></li>
-                <li><a href="#contact" class="hover:text-cyan-300 transition-colors">Contact</a></li>
-            </ul>
-            <button class="md:hidden text-white text-xl" onclick="toggleMobileMenu()">
+            <a href="#home" class="text-2xl font-bold font-mono neon-text-gradient">HayaXx</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#about" class="hover:text-primary-neon transition-colors duration-300">About</a>
+                <a href="#services" class="hover:text-primary-neon transition-colors duration-300">Services</a>
+                <a href="#projects" class="hover:text-primary-neon transition-colors duration-300">Projects</a>
+                <a href="#contact" class="hover:text-primary-neon transition-colors duration-300">Contact</a>
+            </div>
+            <button id="mobile-menu-btn" class="md:hidden text-white text-xl z-50">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
     </nav>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu fixed top-0 left-0 h-full w-64 glass-effect z-40 md:hidden">
-        <div class="p-6 pt-20">
-            <ul class="space-y-6">
-                <li><a href="#home" class="block text-white hover:text-cyan-300 transition-colors" onclick="toggleMobileMenu()">Home</a></li>
-                <li><a href="#about" class="block text-white hover:text-cyan-300 transition-colors" onclick="toggleMobileMenu()">About</a></li>
-                <li><a href="#services" class="block text-white hover:text-cyan-300 transition-colors" onclick="toggleMobileMenu()">Services</a></li>
-                <li><a href="#projects" class="block text-white hover:text-cyan-300 transition-colors" onclick="toggleMobileMenu()">My Projects</a></li>
-                <li><a href="#contact" class="block text-white hover:text-cyan-300 transition-colors" onclick="toggleMobileMenu()">Contact</a></li>
-            </ul>
-        </div>
+    <div id="mobile-menu" class="mobile-menu fixed top-0 left-0 h-full w-64 glass-effect z-40 md:hidden">
+        <ul class="pt-24 px-6 space-y-6">
+            <li><a href="#about" class="mobile-link block text-white hover:text-primary-neon transition-colors">About</a></li>
+            <li><a href="#services" class="mobile-link block text-white hover:text-primary-neon transition-colors">Services</a></li>
+            <li><a href="#projects" class="mobile-link block text-white hover:text-primary-neon transition-colors">Projects</a></li>
+            <li><a href="#contact" class="mobile-link block text-white hover:text-primary-neon transition-colors">Contact</a></li>
+        </ul>
     </div>
 
-    <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex items-center justify-center text-center relative overflow-hidden">
-        <div class="max-w-4xl mx-auto px-4 z-10">
-            <h1 class="text-6xl md:text-8xl font-bold font-mono neon-text mb-6 animate-pulse">HayaXx</h1>
-            <p class="text-xl md:text-2xl text-gray-300 mb-8 fade-in">
-                ゲーム開発者 & アニメ愛好家<br>
-                Game Developer & Anime Enthusiast
-            </p>
-            <a href="#about" class="inline-block bg-gradient-to-r from-cyan-400 to-pink-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform hover-glow">
-                探索を始める / Start Exploring
-            </a>
-        </div>
-    </section>
+    <main class="relative z-10">
+        <section id="home" class="min-h-screen flex items-center justify-center text-center px-4">
+            <div>
+                <h1 class="text-6xl md:text-8xl font-black font-mono neon-text-gradient mb-6 animate-pulse">HayaXx</h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-8 scroll-reveal">
+                    ゲーム開発者 & アニメ愛好家<br>
+                    Game Developer & Anime Enthusiast
+                </p>
+                <a href="#projects" class="inline-block bg-gradient-to-r from-cyan-400 to-pink-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform duration-300 hover-glow scroll-reveal">
+                    探索を始める / Start Exploring
+                </a>
+            </div>
+        </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-20 px-4 max-w-7xl mx-auto fade-in">
-        <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 neon-text font-mono">私について / About Me</h2>
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="project-card p-8 rounded-2xl relative overflow-hidden text-center">
-                <div class="text-5xl mb-4">🎮</div>
-                <h3 class="text-xl font-bold mb-4 font-mono">Game Development</h3>
-                <p class="text-gray-300">Creating immersive gaming experiences with cutting-edge technology and innovative gameplay mechanics.</p>
+        <section id="about" class="py-24 px-4 max-w-7xl mx-auto scroll-reveal">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 neon-text-gradient font-mono">私について / About Me</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="project-card p-8 rounded-2xl text-center">
+                    <div class="text-5xl mb-4">🎮</div>
+                    <h3 class="text-xl font-bold mb-4 font-mono text-primary-neon">Game Development</h3>
+                    <p class="text-gray-300">Creating immersive gaming experiences with cutting-edge technology and innovative gameplay mechanics.</p>
+                </div>
+                <div class="project-card p-8 rounded-2xl text-center">
+                    <div class="text-5xl mb-4">🎨</div>
+                    <h3 class="text-xl font-bold mb-4 font-mono text-primary-neon">Anime Art</h3>
+                    <p class="text-gray-300">Passionate about anime culture and creating stunning visual content inspired by Japanese aesthetics.</p>
+                </div>
+                 <div class="project-card p-8 rounded-2xl text-center">
+                    <div class="text-5xl mb-4">💻</div>
+                    <h3 class="text-xl font-bold mb-4 font-mono text-primary-neon">Web Development</h3>
+                    <p class="text-gray-300">Building modern, responsive websites with the latest technologies and frameworks.</p>
+                </div>
             </div>
-            <div class="project-card p-8 rounded-2xl relative overflow-hidden text-center">
-                <div class="text-5xl mb-4">🎨</div>
-                <h3 class="text-xl font-bold mb-4 font-mono">Anime Art</h3>
-                <p class="text-gray-300">Passionate about anime culture and creating stunning visual content inspired by Japanese aesthetics.</p>
-            </div>
-            <div class="project-card p-8 rounded-2xl relative overflow-hidden text-center">
-                <div class="text-5xl mb-4">💻</div>
-                <h3 class="text-xl font-bold mb-4 font-mono">Web Development</h3>
-                <p class="text-gray-300">Building modern, responsive websites with the latest technologies and frameworks.</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Services Section -->
-    <section id="services" class="py-20 px-4 max-w-7xl mx-auto fade-in">
-        <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 neon-text font-mono">サービス / Services</h2>
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="project-card p-8 rounded-2xl relative overflow-hidden text-center">
-                <div class="text-5xl mb-4">🚀</div>
-                <h3 class="text-xl font-bold mb-4 font-mono">Game Design</h3>
-                <p class="text-gray-300">From concept to completion, I create engaging games that captivate players and deliver memorable experiences.</p>
+        <section id="services" class="py-24 px-4 max-w-7xl mx-auto scroll-reveal">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 neon-text-gradient font-mono">サービス / Services</h2>
+             <div class="grid md:grid-cols-3 gap-8">
+                <div class="project-card p-8 rounded-2xl text-center">
+                    <div class="text-5xl mb-4">🚀</div>
+                    <h3 class="text-xl font-bold mb-4 font-mono text-primary-neon">Game Design</h3>
+                    <p class="text-gray-300">From concept to completion, I create engaging games that captivate players and deliver memorable experiences.</p>
+                </div>
+                <div class="project-card p-8 rounded-2xl text-center">
+                    <div class="text-5xl mb-4">🎭</div>
+                    <h3 class="text-xl font-bold mb-4 font-mono text-primary-neon">Character Design</h3>
+                    <p class="text-gray-300">Designing unique characters with anime-inspired aesthetics for games, manga, and digital media.</p>
+                </div>
+                <div class="project-card p-8 rounded-2xl text-center">
+                    <div class="text-5xl mb-4">⚡</div>
+                    <h3 class="text-xl font-bold mb-4 font-mono text-primary-neon">Performance Optimization</h3>
+                    <p class="text-gray-300">Optimizing games and applications for maximum performance across all platforms and devices.</p>
+                </div>
             </div>
-            <div class="project-card p-8 rounded-2xl relative overflow-hidden text-center">
-                <div class="text-5xl mb-4">🎭</div>
-                <h3 class="text-xl font-bold mb-4 font-mono">Character Design</h3>
-                <p class="text-gray-300">Designing unique characters with anime-inspired aesthetics for games, manga, and digital media.</p>
-            </div>
-            <div class="project-card p-8 rounded-2xl relative overflow-hidden text-center">
-                <div class="text-5xl mb-4">⚡</div>
-                <h3 class="text-xl font-bold mb-4 font-mono">Performance Optimization</h3>
-                <p class="text-gray-300">Optimizing games and applications for maximum performance across all platforms and devices.</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- My Projects Section -->
-    <section id="projects" class="py-20 px-4 max-w-7xl mx-auto fade-in">
-        <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 neon-text font-mono">My Projects</h2>
-        
-        <!-- Project Filter -->
-        <div class="flex flex-wrap justify-center gap-4 mb-12">
-            <button class="filter-btn px-6 py-2 rounded-full bg-gradient-to-r from-cyan-400 to-pink-500 text-white font-bold hover:scale-105 transition-transform" data-filter="all">All Projects</button>
-            <button class="filter-btn px-6 py-2 rounded-full glass-effect hover:scale-105 transition-transform" data-filter="games">Games</button>
-            <button class="filter-btn px-6 py-2 rounded-full glass-effect hover:scale-105 transition-transform" data-filter="web">Web Apps</button>
-            <button class="filter-btn px-6 py-2 rounded-full glass-effect hover:scale-105 transition-transform" data-filter="mobile">Mobile Apps</button>
-        </div>
+        <section id="projects" class="py-24 px-4 max-w-7xl mx-auto scroll-reveal">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 neon-text-gradient font-mono">My Projects</h2>
+            
+            <div id="projects-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <p id="loading-indicator" class="col-span-full text-center text-primary-neon">Fetching projects from GitHub...</p>
+            </div>
 
-        <div id="projects-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Projects will be dynamically loaded here -->
-        </div>
+            <div class="text-center mt-16">
+                <a href="https://github.com/HayaXx" target="_blank" class="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform duration-300 hover-glow">
+                    <i class="fab fa-github mr-2"></i>View All on GitHub
+                </a>
+            </div>
+        </section>
 
-        <!-- View All Projects Button -->
-        <div class="text-center mt-12">
-            <a href="https://github.com/HayaXx" target="_blank" class="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform hover-glow">
-                <i class="fab fa-github mr-2"></i>View All on GitHub
-            </a>
-        </div>
-    </section>
+        <section id="contact" class="py-24 px-4 max-w-4xl mx-auto scroll-reveal">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 neon-text-gradient font-mono">お問い合わせ / Contact</h2>
+            <form class="glass-effect p-8 rounded-2xl">
+                <div class="mb-6">
+                    <label class="block text-white mb-2 font-bold">Name / 名前</label>
+                    <input type="text" class="w-full p-4 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-primary-neon focus:outline-none transition-colors">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-white mb-2 font-bold">Email / メール</label>
+                    <input type="email" class="w-full p-4 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-primary-neon focus:outline-none transition-colors">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-white mb-2 font-bold">Message / メッセージ</label>
+                    <textarea rows="5" class="w-full p-4 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-primary-neon focus:outline-none transition-colors"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-cyan-400 to-pink-500 text-white py-4 rounded-lg font-bold text-lg hover:scale-105 transition-transform duration-300">
+                    送信 / Send Message
+                </button>
+            </form>
+        </section>
+    </main>
 
-    <!-- Stats Section -->
-    <section class="py-20 px-4 max-w-7xl mx-auto fade-in">
-        <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 neon-text font-mono">実績 / Achievements</h2>
-        <div class="grid md:grid-cols-4 gap-8">
-            <div class="text-center p-8 glass-effect rounded-2xl">
-                <div class="text-4xl font-bold neon-text font-mono mb-2">50+</div>
-                <div class="text-gray-300">Projects Completed</div>
-            </div>
-            <div class="text-center p-8 glass-effect rounded-2xl">
-                <div class="text-4xl font-bold neon-text font-mono mb-2">10k+</div>
-                <div class="text-gray-300">Code Lines</div>
-            </div>
-            <div class="text-center p-8 glass-effect rounded-2xl">
-                <div class="text-4xl font-bold neon-text font-mono mb-2">25+</div>
-                <div class="text-gray-300">Happy Clients</div>
-            </div>
-            <div class="text-center p-8 glass-effect rounded-2xl">
-                <div class="text-4xl font-bold neon-text font-mono mb-2">3+</div>
-                <div class="text-gray-300">Years Experience</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 px-4 max-w-4xl mx-auto fade-in">
-        <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 neon-text font-mono">お問い合わせ / Contact</h2>
-        <form class="glass-effect p-8 rounded-2xl">
-            <div class="mb-6">
-                <label class="block text-white mb-2 font-bold">Name / 名前</label>
-                <input type="text" class="w-full p-4 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none">
-            </div>
-            <div class="mb-6">
-                <label class="block text-white mb-2 font-bold">Email / メール</label>
-                <input type="email" class="w-full p-4 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none">
-            </div>
-            <div class="mb-6">
-                <label class="block text-white mb-2 font-bold">Message / メッセージ</label>
-                <textarea rows="5" class="w-full p-4 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none"></textarea>
-            </div>
-            <button type="submit" class="w-full bg-gradient-to-r from-cyan-400 to-pink-500 text-white py-4 rounded-lg font-bold text-lg hover:scale-105 transition-transform">
-                送信 / Send Message
-            </button>
-        </form>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-12 text-center glass-effect">
+    <footer class="py-12 text-center glass-effect mt-24">
         <div class="flex justify-center space-x-6 mb-6">
-            <a href="https://github.com/HayaXx" target="_blank" class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+            <a href="https://github.com/HayaXx" target="_blank" class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform duration-300">
                 <i class="fab fa-github text-xl"></i>
             </a>
-            <a href="#" class="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
-                <i class="fab fa-twitter text-xl"></i>
-            </a>
-            <a href="#" class="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
-                <i class="fab fa-discord text-xl"></i>
-            </a>
-            <a href="#" class="w-12 h-12 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
-                <i class="fab fa-instagram text-xl"></i>
-            </a>
-        </div>
-        <p class="text-gray-400">&copy; 2025 HayaXx. All rights reserved. | Made with ❤️ for the gaming community</p>
+             </div>
+        <p class="text-gray-400">&copy; 2025 HayaXx. All rights reserved.</p>
     </footer>
 
     <script>
-        // GitHub Projects Data
-        const projectsData = {
-            games: [
-                {
-                    name: "Anime Fighting Game",
-                    description: "A 2D fighting game with anime-style characters and special moves",
-                    tech: ["Unity", "C#", "Photoshop"],
-                    category: "games",
-                    image: "https://via.placeholder.com/400x250/667eea/ffffff?text=Anime+Fighting+Game"
-                },
-                {
-                    name: "RPG Adventure",
-                    description: "Open-world RPG with rich storyline and character progression",
-                    tech: ["Unreal Engine", "Blueprint", "3D Modeling"],
-                    category: "games",
-                    image: "https://via.placeholder.com/400x250/764ba2/ffffff?text=RPG+Adventure"
-                },
-                {
-                    name: "Puzzle Platformer",
-                    description: "Mind-bending puzzle game with unique mechanics",
-                    tech: ["Godot", "GDScript", "Aseprite"],
-                    category: "games",
-                    image: "https://via.placeholder.com/400x250/f093fb/ffffff?text=Puzzle+Platformer"
-                }
-            ],
-            web: [
-                {
-                    name: "Anime Streaming Platform",
-                    description: "Modern streaming platform for anime content",
-                    tech: ["React", "Node.js", "MongoDB"],
-                    category: "web",
-                    image: "https://via.placeholder.com/400x250/4facfe/ffffff?text=Anime+Streaming"
-                },
-                {
-                    name: "Gaming Community Hub",
-                    description: "Social platform for gamers to connect and share",
-                    tech: ["Vue.js", "Firebase", "Tailwind CSS"],
-                    category: "web",
-                    image: "https://via.placeholder.com/400x250/00f2fe/ffffff?text=Gaming+Community"
-                },
-                {
-                    name: "Portfolio Website",
-                    description: "Interactive portfolio showcasing creative works",
-                    tech: ["HTML5", "CSS3", "JavaScript"],
-                    category: "web",
-                    image: "https://via.placeholder.com/400x250/4338ca/ffffff?text=Portfolio+Website"
-                }
-            ],
-            mobile: [
-                {
-                    name: "Anime Quiz App",
-                    description: "Interactive quiz app testing anime knowledge",
-                    tech: ["React Native", "TypeScript", "SQLite"],
-                    category: "mobile",
-                    image: "https://via.placeholder.com/400x250/ec4899/ffffff?text=Anime+Quiz+App"
-                },
-                {
-                    name: "Game Tracker",
-                    description: "Track gaming progress and achievements",
-                    tech: ["Flutter", "Dart", "Firebase"],
-                    category: "mobile",
-                    image: "https://via.placeholder.com/400x250/8b5cf6/ffffff?text=Game+Tracker"
-                }
-            ]
-        };
+    document.addEventListener('DOMContentLoaded', () => {
 
-        // Initialize projects
-        function initializeProjects() {
+        // --- GitHub Projects ---
+        const GITHUB_USERNAME = 'HayaXx'; // <-- GANTI DENGAN USERNAME GITHUB ANDA
+
+        async function fetchGitHubProjects() {
             const container = document.getElementById('projects-container');
-            const allProjects = [...projectsData.games, ...projectsData.web, ...projectsData.mobile];
+            const loadingIndicator = document.getElementById('loading-indicator');
             
-            container.innerHTML = allProjects.map(project => `
-                <div class="project-card p-6 rounded-2xl relative overflow-hidden project-item" data-category="${project.category}">
-                    <div class="mb-4">
-                        <img src="${project.image}" alt="${project.name}" class="w-full h-48 object-cover rounded-lg">
-                    </div>
-                    <h3 class="text-xl font-bold mb-2 neon-text font-mono">${project.name}</h3>
-                    <p class="text-gray-300 mb-4">${project.description}</p>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        ${project.tech.map(tech => `<span class="tech-badge px-3 py-1 rounded-full text-sm font-bold">${tech}</span>`).join('')}
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <a href="https://github.com/HayaXx" target="_blank" class="text-cyan-400 hover:text-cyan-300 transition-colors">
-                            <i class="fab fa-github mr-2"></i>View Code
-                        </a>
-                        <a href="#" class="text-pink-400 hover:text-pink-300 transition-colors">
-                            <i class="fas fa-external-link-alt mr-2"></i>Live Demo
-                        </a>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Project filtering
-        function setupProjectFilters() {
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const projectItems = document.querySelectorAll('.project-item');
-
-            filterButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const filter = button.dataset.filter;
-                    
-                    // Update active button
-                    filterButtons.forEach(btn => {
-                        btn.classList.remove('bg-gradient-to-r', 'from-cyan-400', 'to-pink-500');
-                        btn.classList.add('glass-effect');
-                    });
-                    button.classList.add('bg-gradient-to-r', 'from-cyan-400', 'to-pink-500');
-                    button.classList.remove('glass-effect');
-
-                    // Filter projects
-                    projectItems.forEach(item => {
-                        if (filter === 'all' || item.dataset.category === filter) {
-                            item.style.display = 'block';
-                            item.classList.add('fade-in');
-                        } else {
-                            item.style.display = 'none';
-                        }
-                    });
-                });
-            });
-        }
-
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const mobileMenu = document.querySelector('.mobile-menu');
-            mobileMenu.classList.toggle('active');
-        }
-
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+            try {
+                // Fetch repos, sorted by last push
+                const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=pushed&per_page=6`);
+                if (!response.ok) {
+                    throw new Error(`GitHub API Error: ${response.status}`);
                 }
-            });
-        });
+                const repos = await response.json();
+                
+                // Hide loading indicator
+                if (loadingIndicator) loadingIndicator.style.display = 'none';
 
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+                // Render projects
+                container.innerHTML = repos.map(repo => {
+                    // Smart image URL: uses a service to generate an image from your repo name.
+                    // You can also set a "Social media preview" in your repo settings for a custom image.
+                    const imageUrl = `https://socialify.git.ci/${GITHUB_USERNAME}/${repo.name}/image?theme=Dark&font=Inter&pattern=Plus`;
+                    
+                    const description = repo.description || 'No description provided.';
+                    const topics = repo.topics || [];
 
+                    return `
+                        <div class="project-card p-6 rounded-2xl relative overflow-hidden flex flex-col">
+                            <div class="mb-4">
+                                <img src="${imageUrl}" alt="${repo.name}" class="w-full h-48 object-cover rounded-lg bg-gray-800">
+                            </div>
+                            <div class="flex-grow">
+                                <h3 class="text-xl font-bold mb-2 text-primary-neon font-mono">${repo.name}</h3>
+                                <p class="text-gray-300 mb-4 text-sm">${description}</p>
+                            </div>
+                            <div class="flex-none">
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    ${topics.map(tech => `<span class="tech-badge px-3 py-1 rounded-full text-xs font-bold">${tech}</span>`).join('')}
+                                    ${topics.length === 0 ? `<span class="tech-badge px-3 py-1 rounded-full text-xs font-bold">code</span>` : ''}
+                                </div>
+                                <div class="flex justify-between items-center mt-auto">
+                                    <a href="${repo.html_url}" target="_blank" class="text-cyan-400 hover:text-cyan-200 transition-colors duration-300">
+                                        <i class="fab fa-github mr-2"></i>View Code
+                                    </a>
+                                    ${repo.homepage ? `
+                                    <a href="${repo.homepage}" target="_blank" class="text-pink-400 hover:text-pink-200 transition-colors duration-300">
+                                        <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                                    </a>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            } catch (error) {
+                console.error("Failed to fetch projects:", error);
+                if (loadingIndicator) {
+                    loadingIndicator.textContent = 'Failed to load projects. Please check the console.';
+                    loadingIndicator.style.color = 'var(--secondary-neon)';
+                }
+            }
+        }
+
+        // --- Mobile Menu ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('active');
+            // Change icon
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMobileMenu));
+
+
+        // --- Scroll Animations ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Animate only once
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.fade-in').forEach(el => {
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
             observer.observe(el);
         });
 
-        // Create floating particles
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 6 + 's';
-            particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
-            document.body.appendChild(particle);
-
-            setTimeout(() => {
-                particle.remove();
-            }, 6000);
-        }
-
-        // Initialize everything
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeProjects();
-            setupProjectFilters();
-            setInterval(createParticle, 300);
-        });
+        // --- Initial Load ---
+        fetchGitHubProjects();
+    });
     </script>
 </body>
 </html>
