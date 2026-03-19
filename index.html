@@ -463,7 +463,9 @@
       cloud:  _('ZHJwZWFjbDZw'),
       preset: _('bmV3ZXdldw=='),
       bin:    _('aHR0cHM6Ly9hcGkuanNvbmJpbi5pby92My9iLzY5YmM0YWUyYWE3N2I4MWRhOWZkNzc3ZA=='),
-      key:    _('$2a$10$TKv9amui/g7t8RCGvhwU1OLbCzSChe4g.25vlhLx/juUNeBkyTEtG'),
+      // X-Access-Key untuk read/write bin publik
+      key:    _('JDJhJDEwJFRLdjlhbXVpL2c3dDhSQ0d2aHdVMU9MYkN6U0NoZTRnLjI1dmxoTHgvanVVTmVCa3lURXRH'),
+      // decoded: $2a$10$TKv9amui/g7t8RCGvhwU1OLbCzSChe4g.25vlhLx/juUNeBkyTEtG
     };
   })();
 
@@ -544,7 +546,7 @@
 
   async function fetchData() {
     try {
-      const res  = await fetch(cfg.bin, { headers: { 'X-Master-Key': cfg.key } });
+      const res  = await fetch(cfg.bin, { headers: { 'X-Access-Key': cfg.key } });
       if (!res.ok) throw 0;
       const data = await res.json();
       const items = data.record?.images ?? [];
@@ -560,7 +562,7 @@
   async function saveData(images) {
     const res = await fetch(cfg.bin, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'X-Master-Key': cfg.key },
+      headers: { 'Content-Type': 'application/json', 'X-Access-Key': cfg.key },
       body: JSON.stringify({ images })
     });
     if (!res.ok) throw new Error('Save failed');
