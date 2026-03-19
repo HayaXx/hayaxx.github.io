@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Cloud Image Upload (Online Storage)</title>
+  <title>Global Image Sharing</title>
   <style>
     body { font-family: Arial; padding: 20px; }
     img { width: 200px; margin: 10px; display: block; }
@@ -11,24 +11,27 @@
 </head>
 <body>
 
-<h2>Upload & Download Image (Cloudinary)</h2>
+<h2>🌍 Global Image Upload & Download</h2>
 <input type="file" id="fileInput" multiple>
 
 <div id="gallery"></div>
 
 <script>
-// ===== CONFIG (GANTI INI) =====
+// ===== CONFIG =====
 const CLOUD_NAME = "drpeacl6pE";
 const UPLOAD_PRESET = "JkQgW5eZG7s1d8SfgqX2nwpV-9g";
 
+// ===== PUBLIC IMAGE LIST (shared via JSONBin API) =====
+const API_URL = "https://api.jsonbin.io/v3/b/69bc4ae2aa77b81da9fd777d"; // GANTI nanti
+const API_KEY = "$2a$10$FBlS5ykRnxuwoNus0HLSneTBdfO7nuVVidNELmZ59NHhQxEy3Iru."; // GANTI nanti
+
 const gallery = document.getElementById('gallery');
 
-// Load images from localStorage (list URL)
-function loadImages() {
+// Render images
+function renderImages(images) {
   gallery.innerHTML = '';
-  const images = JSON.parse(localStorage.getItem('images') || '[]');
 
-  images.forEach((url, index) => {
+  images.forEach((url) => {
     const div = document.createElement('div');
     div.className = 'card';
 
@@ -46,7 +49,32 @@ function loadImages() {
   });
 }
 
-// Upload handler
+// Fetch global images
+async function fetchImages() {
+  try {
+    const res = await fetch(API_URL, {
+      headers: { "X-Master-Key": API_KEY }
+    });
+    const data = await res.json();
+    return data.record.images || [];
+  } catch {
+    return [];
+  }
+}
+
+// Save global images
+async function saveImages(images) {
+  await fetch(API_URL, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Master-Key": API_KEY
+    },
+    body: JSON.stringify({ images })
+  });
+}
+
+// Upload to Cloudinary
 async function uploadToCloudinary(file) {
   const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
 
@@ -63,21 +91,31 @@ async function uploadToCloudinary(file) {
   return data.secure_url;
 }
 
-// Handle file input
-document.getElementById('fileInput').addEventListener('change', async function(e) {
+// Handle upload
+async function handleUpload(e) {
   const files = e.target.files;
-  const existing = JSON.parse(localStorage.getItem('images') || '[]');
+
+  let images = await fetchImages();
 
   for (let file of files) {
-    const imageUrl = await uploadToCloudinary(file);
-    existing.push(imageUrl);
+    const url = await uploadToCloudinary(file);
+    images.unshift(url); // tambah ke depan
   }
 
-  localStorage.setItem('images', JSON.stringify(existing));
-  loadImages();
-});
+  await saveImages(images);
+  renderImages(images);
+}
 
-loadImages();
+// Init
+async function init() {
+  const images = await fetchImages();
+  renderImages(images);
+}
+
+// Event
+document.getElementById('fileInput').addEventListener('change', handleUpload);
+
+init();
 </script>
 
 </body>
